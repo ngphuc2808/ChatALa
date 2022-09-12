@@ -1,6 +1,6 @@
 import Title from "../src/components/About/Title";
 
-const about = () => {
+const About = () => {
   return (
     <>
       <Title />
@@ -8,4 +8,4 @@ const about = () => {
   );
 };
 
-export default about;
+export default About;

@@ -1,10 +1,12 @@
 import * as S from "./Title.styled";
 
 const Title = () => {
+
   return (
-    <S.Title>
-      Title of About
-    </S.Title>
+    <>
+      <S.Title>Title 1 of About</S.Title>
+      <S.Title2>Title 2"</S.Title2>
+    </>
   );
 };
 
