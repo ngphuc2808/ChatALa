@@ -37,7 +37,7 @@ const Login = () => {
                             <S.Input 
                                 placeholder='Phone number'
                                 name="phoneNumber"
-                                error={errors.phoneNumber && touched.phoneNumber ? 'true' : 'false'}
+                                error={errors.phoneNumber && touched.phoneNumber ? 1 : 0}
                             />
                             <ErrorMessage name='phoneNumber' component={S.ErrorMsg}/>
 
@@ -45,7 +45,7 @@ const Login = () => {
                                 placeholder="Password"
                                 type="password"
                                 name="password"
-                                error={errors.password && touched.password ? 'true' : 'false'}
+                                error={errors.password && touched.password ? 1 : 0}
                             />
                             <ErrorMessage name='password' component={S.ErrorMsg}/>
 
