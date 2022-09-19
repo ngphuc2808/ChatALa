@@ -32,7 +32,7 @@ const Login = () => {
                 }} 
             >
                 {({errors, touched}) => (
-                    <S.NewForm className={S.Forgot}>
+                    <S.NewForm>
                         <S.SetWidth>
                             <S.Input 
                                 placeholder='Phone number'
