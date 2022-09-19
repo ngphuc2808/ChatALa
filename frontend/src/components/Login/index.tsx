@@ -6,11 +6,11 @@ import * as Yup from "yup";
 
 const Login = () => {
     const initialValues = {
-        phonenumber: '',
+        phoneNumber: '',
         password: '',
     }
     const validationSchema = Yup.object().shape({
-        phonenumber: Yup.string().required('This field is required.').matches(
+        phoneNumber: Yup.string().required('This field is required.').matches(
             /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
             'Phone number invalid!'
         ),
@@ -36,10 +36,10 @@ const Login = () => {
                         <S.SetWidth>
                             <S.Input 
                                 placeholder='Phone number'
-                                name="phonenumber"
-                                error={errors.phonenumber && touched.phonenumber ? 'true' : 'false'}
+                                name="phoneNumber"
+                                error={errors.phoneNumber && touched.phoneNumber ? 'true' : 'false'}
                             />
-                            <ErrorMessage name='phonenumber' component={S.ErrorMsg}/>
+                            <ErrorMessage name='phoneNumber' component={S.ErrorMsg}/>
 
                             <S.Input 
                                 placeholder="Password"
