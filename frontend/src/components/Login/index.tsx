@@ -14,14 +14,14 @@ const Login = () => {
                 .required('This field is required.')
                 .matches(
                     /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
-                    'Phone number invalid!'
+                    'Phone number invalid.'
                 ),
 
         password: Yup.string()
                 .required('This field is required.')
                 .matches(
                     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-                    'Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number!'
+                    'Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number.'
                 ),
     })
     return (
