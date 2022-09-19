@@ -8,7 +8,6 @@ export const Wrapper = styled.div`
   align-items: center;
   flex-direction: column;
   background-color: #0154b1;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
   border-radius: 50px;
   z-index: 1;
   &::before {
@@ -16,6 +15,7 @@ export const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     background-color: #fff;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
     transform: translate(-10px, -10px);
     border-radius: 50px;
     position: absolute;
