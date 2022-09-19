@@ -16,7 +16,7 @@ export const Input = styled(Field)<{error: boolean}>`
     outline: none;
     margin-top: 24px;
     padding: 8px 16px;
-    ${({error}) => error ? `border: 1px solid red;` : `border-bottom: 1px solid #0154b1;`};
+    ${({error}) => error === 'true' ? `border: 1px solid red;` : `border-bottom: 1px solid #0154b1;`};
 `;
 
 export const Forgot = styled.div`
@@ -37,12 +37,15 @@ export const Button = styled.button`
     padding: 8px 16px;
     font-weight: bold;
     margin: 36px auto 0 auto;
+    &:hover {
+        opacity: 0.8;
+    }
 `;
 
 export const Register = styled.div`
     font-size: 14px;
     color: green;
-    margin-top: 12px;
+    margin: 12px 0 30px;
     font-style: italic;
 `;
 

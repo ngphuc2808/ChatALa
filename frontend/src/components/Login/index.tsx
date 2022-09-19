@@ -1,25 +1,24 @@
 import FormTemplate from "../Global/FormTemplate/FormTemplate"
-import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage} from "formik"
+import { Formik, ErrorMessage} from "formik"
 import Link from "next/link";
 import * as S from "./Login.styled";
 import * as Yup from "yup";
 
 const Login = () => {
-    const [numberphone, setNumberphone] = useState('')
-    const [passsword, setPassword] = useState('')
     const initialValues = {
-        numberphone: '',
+        phonenumber: '',
         password: '',
     }
     const validationSchema = Yup.object().shape({
-        numberphone: Yup.string().required('This field is required.').matches(
+        phonenumber: Yup.string().required('This field is required.').matches(
             /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
-            'Number phone invalid!'
+            'Phone number invalid!'
         ),
-        password: Yup.string().required('This field is required.')
+        password: Yup.string().required('This field is required.').matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+            'Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number!'
+        )
     })
-    console.log(numberphone)
     return (
         <FormTemplate>
             <S.Suggest>
@@ -32,21 +31,21 @@ const Login = () => {
                     console.log("submits: ", data)
                 }} 
             >
-                {({errors}) => (
+                {({errors, touched}) => (
                     <S.NewForm className={S.Forgot}>
                         <S.SetWidth>
                             <S.Input 
-                                placeholder='Number phone'
-                                name="numberphone"
-                                error={errors.numberphone ? true : false}
+                                placeholder='Phone number'
+                                name="phonenumber"
+                                error={errors.phonenumber && touched.phonenumber ? 'true' : 'false'}
                             />
-                            <ErrorMessage name='numberphone' component={S.ErrorMsg}/>
+                            <ErrorMessage name='phonenumber' component={S.ErrorMsg}/>
 
                             <S.Input 
                                 placeholder="Password"
                                 type="password"
                                 name="password"
-                                error={errors.password ? true : false}
+                                error={errors.password && touched.password ? 'true' : 'false'}
                             />
                             <ErrorMessage name='password' component={S.ErrorMsg}/>
 
