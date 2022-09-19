@@ -16,7 +16,7 @@ export const Input = styled(Field)<{error: boolean}>`
     outline: none;
     margin-top: 24px;
     padding: 8px 16px;
-    ${({error}) => error === 'true' ? `border: 1px solid red;` : `border-bottom: 1px solid #0154b1;`};
+    ${({error}) => error === 1 ? `border: 1px solid red;` : `border-bottom: 1px solid #0154b1;`};
 `;
 
 export const Forgot = styled.div`
