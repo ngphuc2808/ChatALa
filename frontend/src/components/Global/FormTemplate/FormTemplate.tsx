@@ -8,13 +8,12 @@ interface childrenProps {
 const FormTemplate = ({children}: childrenProps) => {
     return (
         <S.Content>
-            <S.BgWhite>
+            <S.Wrapper>
                 <S.Logo>
                     <Image src={LogoFullLong}/>
                 </S.Logo>
                 {children}
-            </S.BgWhite>
-            <S.BgBlue />
+            </S.Wrapper>
         </S.Content>
     );
 }

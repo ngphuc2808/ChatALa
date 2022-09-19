@@ -1,27 +1,26 @@
 import styled from "styled-components";
 import tw from "twin.macro";
 
-export const BgWhite = styled.div`
+export const Wrapper = styled.div`
   width: 550px;
-  height: 500px;
   display: flex;
+  position: relative;
   align-items: center;
   flex-direction: column;
-  background-color: #fff;
-  box-shadow: 0 0 4px rgb(0 0 0 / 25%);
+  background-color: #0154b1;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
   border-radius: 50px;
   z-index: 1;
-`;
-
-export const BgBlue = styled.div`
-  width: 550px;
-  height: 500px;
-  position: absolute;
-  transform: translate(10px, 10px);
-  background-color: #0154b1;
-  box-shadow: 0 3px 6px rgb(0 0 0 / 25%);
-  z-index: 0;
-  border-radius: 50px;
+  &::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    transform: translate(-10px, -10px);
+    border-radius: 50px;
+    position: absolute;
+    z-index: -1;
+  }
 `;
 
 export const Logo = styled.figure `
