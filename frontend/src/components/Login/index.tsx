@@ -1,4 +1,4 @@
-import FormTemplate from "../Global/FormTemplate/FormTemplate"
+import FormTemplate from "../Global/FormTemplate"
 import { Formik, ErrorMessage} from "formik"
 import Link from "next/link";
 import * as S from "./Login.styled";
