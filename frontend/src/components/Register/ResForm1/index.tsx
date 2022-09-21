@@ -1,7 +1,7 @@
 import FormTemplate from "../../Global/FormTemplate/FormTemplate"
 import { Formik, ErrorMessage } from "formik"
 import Link from "next/link";
-import * as S from "./Register1.styled";
+import * as S from "./ResForm1.styled";
 import * as Yup from "yup";
 
 const Register = () => {

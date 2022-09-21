@@ -1,7 +1,7 @@
 import FormTemplate from "../../Global/FormTemplate/FormTemplate"
 import { Formik, ErrorMessage } from "formik"
 import Link from "next/link";
-import * as S from "./CodeValidation.styled";
+import * as S from "./ResForm2.styled";
 
 const OTPCode = () => {
     const initialValues = {
