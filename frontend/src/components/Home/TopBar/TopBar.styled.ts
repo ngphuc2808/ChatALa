@@ -3,6 +3,7 @@ import tw from "twin.macro";
 import { BiSearchAlt } from "react-icons/bi";
 import { RiSettings3Fill } from "react-icons/ri";
 import { FiLogOut } from "react-icons/fi";
+import { IoNotificationsCircleSharp } from "react-icons/io5";
 
 export const Avatar = styled.figure`
   ${tw`w-[75px] h-[75px] rounded-full overflow-hidden absolute shadow-md`}
@@ -60,3 +61,7 @@ export const OptionSetting = styled(RiSettings3Fill)`
 export const OptionLogOut = styled(FiLogOut)`
   ${tw`hover:cursor-pointer mx-2`}
 `;
+
+export const OptionNotify = styled(IoNotificationsCircleSharp)`
+  ${tw`hover:cursor-pointer mx-2 text-[30px]`}
+`

@@ -55,3 +55,21 @@ export const ChatListArray = [
     msg: "Đứa nào làm em buồn"
   },
 ]
+
+export const NotiListArray = [
+  {
+    avatar: Avatar,
+    name: "Soobin",
+    numFriends: 69
+  },
+  {
+    avatar: Avatar,
+    name: "Bích Phương",
+    numFriends: 96
+  },
+  {
+    avatar: Avatar,
+    name: "Phúc Du",
+    numFriends: 21
+  },
+]

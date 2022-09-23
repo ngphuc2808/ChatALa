@@ -6,8 +6,7 @@ import MoreOptions from "../MoreOptions";
 import React from "react";
 
 const ChatList = () => {
-  const [activeModal, setActiveModal] = useState(-1);
-  const [selected, setSelected] = useState(-1)
+  const [selected, setSelected] = useState(-1);
 
   return (
     <S.Wrapper>
@@ -19,15 +18,8 @@ const ChatList = () => {
             name={data.name}
             id={index}
             bgColor={selected === index ? "#AAC4FF" : undefined}
-            setActiveModal={setActiveModal}
             setSelected={setSelected}
           />
-          {activeModal === index && (
-            <MoreOptions
-              setActiveModal={setActiveModal}
-              activeModal={activeModal}
-            />
-          )}
         </React.Fragment>
       ))}
     </S.Wrapper>
