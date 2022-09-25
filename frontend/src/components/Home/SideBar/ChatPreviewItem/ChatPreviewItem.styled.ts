@@ -2,11 +2,11 @@ import styled from "styled-components";
 import tw from "twin.macro";
 
 export const ChatAvatar = styled.figure`
-  ${tw`w-[55px] h-[55px] rounded-full overflow-hidden`}
+  ${tw`w-[55px] h-[55px] rounded-full overflow-hidden flex-shrink-0`}
   border: 2px solid black;
 `;
 export const Content = styled.div`
-  ${tw`ml-3.5`}
+  ${tw`ml-3.5 overflow-hidden`}
 `;
 
 export const Name = styled.div`
@@ -14,10 +14,11 @@ export const Name = styled.div`
 `;
 
 export const Msg = styled.div`
-  ${tw`text-[#434343] text-[16px]`}
+  ${tw`text-[#434343] text-[16px] w-full overflow-hidden whitespace-nowrap`}
+  text-overflow: ellipsis;
 `;
 
-export const Wrapper = styled.div<{ bgColor?: string }>`
+export const Wrapper = styled.div`
   ${tw`flex px-3 py-2.5 items-center relative w-full`}
 `;
 
