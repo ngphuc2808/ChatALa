@@ -1,7 +1,8 @@
 import Image from "next/image";
 import * as S from "./ChatArea.styled";
-import { UserAvatar, UserName } from "../../../utils/dataConfig";
+import { ChatMsgArray, UserAvatar, UserName } from "../../../utils/dataConfig";
 import { useEffect, useRef } from "react";
+import ChatMsg from "./ChatMsg";
 
 const ChatArea = () => {
   const status = 1;
@@ -25,7 +26,11 @@ const ChatArea = () => {
         <S.ChatAreaHeadOption />
       </S.ChatAreaHead>
       <S.ChatAreaMain>
-        <S.ChatAreaMainMsg></S.ChatAreaMainMsg>
+        <S.ChatAreaMainMsg>
+          {ChatMsgArray.map((data, index) => (
+            <ChatMsg msg={data.msg} index={index} key={index} />
+          ))}
+        </S.ChatAreaMainMsg>
         <S.ChatAreaMainInput>
           <S.ChatAreaMainInputFile>+</S.ChatAreaMainInputFile>
           <S.ChatAreaMainInputMsg>
@@ -34,7 +39,6 @@ const ChatArea = () => {
               username={UserName}
               contentEditable
               ref={message}
-              onChange={() => console.log(message)}
             />
             <S.ChatAreaMainInputSend />
           </S.ChatAreaMainInputMsg>

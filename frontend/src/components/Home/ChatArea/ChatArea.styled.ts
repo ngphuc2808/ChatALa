@@ -6,7 +6,7 @@ import { BsEmojiLaughingFill } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
 
 export const ChatArea = styled.div`
-  ${tw`bg-[#C9D9E5] rounded-[50px] flex-grow flex flex-col overflow-hidden`}
+  ${tw`bg-[#C9D9E5] shadow-md rounded-[50px] flex-grow flex flex-col`}
 `;
 
 export const ChatAreaHead = styled.div`
@@ -21,6 +21,7 @@ export const ChatAreaHeadAvatar = styled.figure`
   ${tw`w-[60px] h-[60px] rounded-full overflow-hidden flex-shrink-0`}
   border: 2px solid black;
 `;
+
 export const ChatAreaHeadNameWrapper = styled.div`
   ${tw`ml-3.5`}
 `;
@@ -43,11 +44,25 @@ export const ChatAreaHeadOption = styled(IoMenu)`
 `;
 
 export const ChatAreaMain = styled.div`
-  ${tw`flex flex-col flex-grow bg-[#5A7FA0] rounded-t-[50px] overflow-hidden px-6 py-4`}
+  ${tw`flex flex-col flex-grow bg-[#5A7FA0] rounded-t-[50px] px-6 py-4 rounded-[50px]`}
 `;
 
 export const ChatAreaMainMsg = styled.div`
-  ${tw`flex-grow`}
+  ${tw`flex-grow flex flex-col justify-end mb-5 overflow-y-auto`}
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 50px;
+    background-color: #C9D9E5
+  }
 `;
 
 export const ChatAreaMainInput = styled.div`
@@ -55,11 +70,11 @@ export const ChatAreaMainInput = styled.div`
 `;
 
 export const ChatAreaMainInputFile = styled.div`
-  ${tw`flex flex-shrink-0 bg-[#A6BBF1] rounded-full w-12 h-12 items-center justify-center text-4xl hover:cursor-pointer hover:opacity-80`}
+  ${tw`flex flex-shrink-0 shadow text-[#002B98] bg-[#A6BBF1] rounded-full w-12 h-12 items-center justify-center text-4xl hover:cursor-pointer hover:opacity-80`}
 `;
 
 export const ChatAreaMainInputMsg = styled.div`
-  ${tw`flex flex-grow items-center p-1.5 bg-[#DFE2E2] ml-2.5 rounded-[50px] relative`}
+  ${tw`flex flex-grow shadow items-center p-1.5 bg-[#DFE2E2] ml-2.5 rounded-[50px] relative`}
 `;
 
 export const ChatAreaMainInputIcon = styled(BsEmojiLaughingFill)`
@@ -67,7 +82,7 @@ export const ChatAreaMainInputIcon = styled(BsEmojiLaughingFill)`
 `;
 
 export const ChatAreaMainInputText = styled.span<{ username: string }>`
-  ${tw`flex-grow outline-none bg-transparent text-xl ml-2.5 w-1 overflow-auto max-h-24 whitespace-normal`}
+  ${tw`flex-grow outline-none bg-transparent text-xl ml-2.5 w-1 overflow-auto max-h-24 whitespace-normal hover:cursor-text`}
 
   &:empty::before {
     content: 'Write something to ${({ username }) => username}...';
