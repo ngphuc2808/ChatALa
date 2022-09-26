@@ -18,7 +18,3 @@ export const Wrapper = styled.div`
     background-color: #C9D9E5
   }
 `
-
-export const ChatPreviewItem = styled.div`
-  ${tw`relative`}
-`;

@@ -1,12 +1,14 @@
 import { ChatListArray } from "../../../../utils/dataConfig";
 import ChatPreviewItem from "../ChatPreviewItem";
 import * as S from "./ChatList.styled";
-import { useState } from "react";
-import MoreOptions from "../MoreOptions";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
-const ChatList = () => {
-  const [selected, setSelected] = useState(-1);
+interface IChatList {
+  selected: number,
+  setSelected: Dispatch<SetStateAction<number>>
+}
+
+const ChatList = ({selected, setSelected} : IChatList) => {
 
   return (
     <S.Wrapper>

@@ -33,7 +33,7 @@ const ChatPreviewItem = ({
           )}
           <S.Content>
             <S.Name>{name}</S.Name>
-            <S.Msg>{shorterText(msg)}</S.Msg>
+            <S.Msg>{msg}</S.Msg>
           </S.Content>
         </S.Wrapper>
       </S.ChatPreviewItem>
