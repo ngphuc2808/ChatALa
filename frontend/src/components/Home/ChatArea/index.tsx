@@ -1,12 +1,26 @@
 import Image from "next/image";
 import * as S from "./ChatArea.styled";
 import { ChatMsgArray, UserAvatar, UserName } from "../../../utils/dataConfig";
-import { useEffect, useRef } from "react";
+import { useRef, useState } from "react";
 import ChatMsg from "./ChatMsg";
+import EmojiPicker, {
+  EmojiStyle,
+  SkinTones,
+  Theme,
+  Categories,
+  EmojiClickData,
+  Emoji,
+} from "emoji-picker-react";
 
 const ChatArea = () => {
   const status = 1;
   const message = useRef<HTMLSpanElement>(null);
+  const [toggleEmoji, setToggleEmoji] = useState(false);
+
+  const EmojiClicked = (emoData: EmojiClickData, e: MouseEvent) => {
+    message.current!.innerText = message.current!.innerText + emoData.emoji
+    console.log(emoData.unified, emoData.emoji);
+  }
 
   return (
     <S.ChatArea>
@@ -32,9 +46,22 @@ const ChatArea = () => {
           ))}
         </S.ChatAreaMainMsg>
         <S.ChatAreaMainInput>
+          {toggleEmoji && (
+            <S.ChatAreaMainInputEmojiPicker>
+              <EmojiPicker
+                skinTonesDisabled={true}
+                emojiStyle={EmojiStyle.FACEBOOK}
+                height={400}
+                width={300}
+                onEmojiClick={EmojiClicked}
+              />
+            </S.ChatAreaMainInputEmojiPicker>
+          )}
           <S.ChatAreaMainInputFile>+</S.ChatAreaMainInputFile>
           <S.ChatAreaMainInputMsg>
-            <S.ChatAreaMainInputIcon />
+            <S.ChatAreaMainInputEmoji
+              onClick={() => setToggleEmoji(!toggleEmoji)}
+            />
             <S.ChatAreaMainInputText
               username={UserName}
               contentEditable
