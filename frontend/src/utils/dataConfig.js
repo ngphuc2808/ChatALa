@@ -85,6 +85,14 @@ export const ChatMsgArray = [
   },
   {
     avatar: Avatar,
+    msg: "1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.",
+  },
+  {
+    avatar: Avatar,
+    msg: "1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.",
+  },
+  {
+    avatar: Avatar,
     msg: "2I've written a few thousand words on why traditional “semantic class names” are the reason CSS is hard to maintain, but the truth is you're never going to believe me until you actually try it. If you can suppress the urge to retch long enough to give it a chance, I really think you'll wonder how you ever worked with CSS any other way. I've written a few thousand words on why traditional “semantic class names” are the reason CSS is hard to maintain, but the truth is you're never going to believe me until you actually try it. If you can suppress the urge to retch long enough to give it a chance, I really think you'll wonder how you ever worked with CSS any other way.",
   },
   {

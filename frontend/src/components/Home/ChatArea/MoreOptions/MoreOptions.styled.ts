@@ -4,8 +4,7 @@ import tw from "twin.macro";
 export const MoreOptions = styled.div``
 
 export const Wrapper = styled.div`
-  ${tw`px-2 py-3 bg-blue-100 absolute rounded-2xl shadow-md z-30`}
-  transform: translate(380px,-50px)
+  ${tw`px-2 py-3 bg-blue-50 absolute rounded-2xl shadow-md z-30 right-[25px] top-[55px]`}
 `
 
 export const optionItem = styled.div<{color?: string}>`

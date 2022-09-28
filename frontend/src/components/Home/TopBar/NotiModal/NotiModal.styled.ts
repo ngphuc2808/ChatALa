@@ -14,7 +14,7 @@ const fadeInAnimate = keyframes`${fadeIn}`;
 
 export const NotiBody = styled.div`
   ${tw`bg-[#ECF2F7] flex flex-col py-2.5 px-3.5 rounded-[25px] absolute shadow-md right-32 top-20`}
-  animation: 1s ${fadeInAnimate}
+  animation: 0.5s ${fadeInAnimate}
 `;
 
 export const NotiTitles = styled.div`

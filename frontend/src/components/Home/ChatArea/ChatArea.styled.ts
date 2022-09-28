@@ -6,11 +6,11 @@ import { BsEmojiLaughingFill } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { zoomIn } from "react-animations";
 export const ChatArea = styled.div`
-  ${tw`bg-[#C9D9E5] shadow-md rounded-[50px] flex-grow flex flex-col`}
+  ${tw`relative bg-[#C9D9E5] shadow-md rounded-[50px] flex-grow flex flex-col`}
 `;
 
 export const ChatAreaHead = styled.div`
-  ${tw`flex justify-between items-center py-1.5 px-7`}
+  ${tw`relative flex justify-between items-center py-1.5 px-7`}
 `;
 
 export const ChatAreaHeadInfo = styled.div`
@@ -44,11 +44,12 @@ export const ChatAreaHeadOption = styled(IoMenu)`
 `;
 
 export const ChatAreaMain = styled.div`
-  ${tw`flex flex-col flex-grow bg-[#5A7FA0] rounded-t-[50px] px-6 py-4 rounded-[50px]`}
+  ${tw`flex flex-col flex-grow bg-[#75A6C2] rounded-t-[50px] px-6 pb-4 pt-0 rounded-[50px]`}
+  box-shadow: 0 0 4px gray
 `;
 
 export const ChatAreaMainMsg = styled.div`
-  ${tw`flex-grow flex flex-col justify-end mb-5 overflow-y-auto`}
+  ${tw`flex-grow overflow-y-scroll h-0 mb-5 rounded-3xl pr-1.5`}
 
   &::-webkit-scrollbar-track {
     background-color: transparent;
@@ -63,6 +64,10 @@ export const ChatAreaMainMsg = styled.div`
     border-radius: 50px;
     background-color: #c9d9e5;
   }
+`;
+
+export const ChatAreaMainMsgInner = styled.div`
+  ${tw``}
 `;
 
 export const ChatAreaMainInput = styled.div`
@@ -84,9 +89,9 @@ export const ChatAreaMainInputEmoji = styled(BsEmojiLaughingFill)`
 const ZoomInAnimation = keyframes`${zoomIn}`;
 
 export const ChatAreaMainInputEmojiPicker = styled.div`
-  ${tw`absolute rounded-[25px] overflow-hidden`}
+  ${tw`absolute rounded-[30px] overflow-hidden`}
   transform: translate(55px, -230px);
-  animation: 0.1s ${ZoomInAnimation}
+  animation: 0.1s ${ZoomInAnimation};
 `;
 
 export const ChatAreaMainInputText = styled.span<{ username: string }>`
