@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import tw from "twin.macro";
-import { fadeIn } from "react-animations";
+import { merge, zoomIn, slideInRight, slideInDown } from "react-animations";
 
 export const NotiModal = styled.div`
   ${tw`fixed top-0 left-0 bottom-0 right-0 z-30`}
@@ -10,15 +10,18 @@ export const NotiOverlay = styled.div`
   ${tw`absolute bg-[#00000080] h-full w-full`}
 `;
 
-const fadeInAnimate = keyframes`${fadeIn}`;
+const cbAnimate1 = merge(slideInRight, slideInDown)
+const NotiAnimate = keyframes`${merge(zoomIn, cbAnimate1)}`;
 
-export const NotiBody = styled.div`
-  ${tw`bg-[#ECF2F7] flex flex-col py-2.5 px-3.5 rounded-[25px] absolute shadow-md right-32 top-20`}
-  animation: 0.5s ${fadeInAnimate}
+export const Noti = styled.div`
+  ${tw`bg-[#7199BA] flex flex-col py-2.5 px-3.5 rounded-[25px] absolute shadow-md right-[170px] top-[35px] z-10`}
+  animation: 0.2s ${NotiAnimate};
+  border: 2px solid #ecf2f7;
 `;
 
 export const NotiTitles = styled.div`
-  ${tw`rounded-[50px] text-white text-lg font-semibold bg-[#7199BA] px-8 py-1.5 mb-1.5`}
+  ${tw`rounded-[50px] text-gray-600 text-lg font-semibold bg-[#AAC4FF] px-8 py-1.5 mb-1.5`}
+  text-shadow: 0 0 5px #AAC4FF;
   width: fit-content;
 `;
 
