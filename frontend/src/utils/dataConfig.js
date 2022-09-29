@@ -75,7 +75,14 @@ export const NotiListArray = [
 ];
 
 export const ChatMsgArray = [
-  
+  {
+    avatar: Avatar,
+    msg: "1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.",
+  },
+  {
+    avatar: Avatar,
+    msg: "1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.",
+  },
   {
     avatar: Avatar,
     msg: "1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.",
@@ -94,6 +101,6 @@ export const ChatMsgArray = [
   },
   {
     avatar: Avatar,
-    msg: "4TailwindCSS",
+    msg: "4TailwindCSS 😁",
   },
 ];

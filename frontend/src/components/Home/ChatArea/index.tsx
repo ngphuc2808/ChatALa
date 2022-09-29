@@ -1,12 +1,27 @@
 import Image from "next/image";
 import * as S from "./ChatArea.styled";
 import { ChatMsgArray, UserAvatar, UserName } from "../../../utils/dataConfig";
-import { useEffect, useRef } from "react";
+import { useRef, useState } from "react";
 import ChatMsg from "./ChatMsg";
+import EmojiPicker, {
+  EmojiStyle,
+  SkinTones,
+  Theme,
+  Categories,
+  EmojiClickData,
+  Emoji,
+} from "emoji-picker-react";
+import MoreOptions from "./MoreOptions";
 
 const ChatArea = () => {
   const status = 1;
   const message = useRef<HTMLSpanElement>(null);
+  const [toggleEmoji, setToggleEmoji] = useState(false);
+  const [toggleOption, setToggleOption] = useState(false);
+
+  const EmojiClicked = (emoData: EmojiClickData, e: MouseEvent) => {
+    message.current!.innerText = message.current!.innerText + emoData.emoji;
+  };
 
   return (
     <S.ChatArea>
@@ -23,18 +38,34 @@ const ChatArea = () => {
             </S.ChatAreaHeadStatus>
           </S.ChatAreaHeadNameWrapper>
         </S.ChatAreaHeadInfo>
-        <S.ChatAreaHeadOption />
+        <S.ChatAreaHeadOption onClick={() => setToggleOption(true)} />
       </S.ChatAreaHead>
+      {toggleOption && <MoreOptions setToggleOption={setToggleOption} />}
       <S.ChatAreaMain>
         <S.ChatAreaMainMsg>
-          {ChatMsgArray.map((data, index) => (
-            <ChatMsg msg={data.msg} index={index} key={index} />
-          ))}
+          <S.ChatAreaMainMsgInner>
+            {ChatMsgArray.map((data, index) => (
+              <ChatMsg msg={data.msg} index={index} key={index} />
+            ))}
+          </S.ChatAreaMainMsgInner>
         </S.ChatAreaMainMsg>
         <S.ChatAreaMainInput>
+          {toggleEmoji && (
+            <S.ChatAreaMainInputEmojiPicker>
+              <EmojiPicker
+                skinTonesDisabled={true}
+                emojiStyle={EmojiStyle.TWITTER}
+                height={400}
+                width={400}
+                onEmojiClick={EmojiClicked}
+              />
+            </S.ChatAreaMainInputEmojiPicker>
+          )}
           <S.ChatAreaMainInputFile>+</S.ChatAreaMainInputFile>
           <S.ChatAreaMainInputMsg>
-            <S.ChatAreaMainInputIcon />
+            <S.ChatAreaMainInputEmoji
+              onClick={() => setToggleEmoji(!toggleEmoji)}
+            />
             <S.ChatAreaMainInputText
               username={UserName}
               contentEditable

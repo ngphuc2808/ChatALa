@@ -2,8 +2,7 @@ import * as S from "./MoreOptions.styled";
 import { useRef, useState, useEffect } from "react";
 
 interface IMoreOptions {
-  setActiveModal: (id: number) => void;
-  activeModal: number;
+  setToggleOption: (toggle: boolean) => void;
 }
 
 const useOutsideClick = (callback: () => void) => {
@@ -23,34 +22,17 @@ const useOutsideClick = (callback: () => void) => {
   return ref;
 };
 
-const MoreOptions = ({ setActiveModal, activeModal }: IMoreOptions) => {
+const MoreOptions = ({ setToggleOption }: IMoreOptions) => {
   const handleOutsideClick = () => {
-    if (activeModal !== -1) {
-      setActiveModal(-1);
-    }
+    setToggleOption(false);
   };
 
   const moreOptionsRef = useOutsideClick(handleOutsideClick);
-  // const wrapperRef = useRef<HTMLInputElement>(null);
-  // const [isOverBottom, setIsOverBottom] = useState(0)
-
-  // useEffect(() => {
-  //   const rect = wrapperRef.current?.getBoundingClientRect();
-  //   if (rect) {
-  //     const isOverBottom =
-  //       rect.bottom >=
-  //       (window.innerHeight || document.documentElement.clientHeight) - 50;
-  //     if(isOverBottom) setIsOverBottom(1)
-  //     else setIsOverBottom(0)
-  //   }
-  // }, []);
 
   return (
     <S.MoreOptions ref={moreOptionsRef}>
       <S.Wrapper>
-        <S.NormalItem>Normal option</S.NormalItem>
-        <S.NormalItem>Normal option</S.NormalItem>
-        <S.NormalItem>Normal option</S.NormalItem>
+        <S.NormalItem>Friend's profile</S.NormalItem>
         <S.DeteleItem>Delete this chat</S.DeteleItem>
       </S.Wrapper>
     </S.MoreOptions>
