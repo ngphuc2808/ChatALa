@@ -1,5 +1,5 @@
 import * as S from "./MoreOptions.styled";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 
 interface IMoreOptions {
   setToggleOption: (toggle: boolean) => void;

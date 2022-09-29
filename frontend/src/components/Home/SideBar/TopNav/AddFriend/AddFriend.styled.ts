@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import tw from "twin.macro";
-import {zoomIn} from 'react-animations'
+import { zoomIn } from "react-animations";
 import { BiSearchAlt } from "react-icons/bi";
 
 export const AddFriendModal = styled.div`
@@ -16,7 +16,7 @@ const fadeInAnimate = keyframes`${zoomIn}`;
 export const AddFriendBody = styled.div`
   ${tw`m-auto bg-[#7199BA] py-2.5 px-3.5 rounded-[25px] z-10`}
   border: 2px solid #ECF2F7;
-  animation: 0.25s ${fadeInAnimate}
+  animation: 0.25s ${fadeInAnimate};
 `;
 
 export const AddFriendSearch = styled.div`
@@ -58,8 +58,8 @@ export const AddFriendNumFriend = styled.div`
 export const AddFriendOption = styled.div`
   ${tw`text-[#4898FF] bg-[#43556C] rounded-[50px] font-semibold text-sm px-5 py-2.5 ml-1 hover:cursor-pointer opacity-90`}
   text-shadow: 0 0 2px #4898FF;
-  &:hover{
+  &:hover {
     opacity: 1;
-    text-shadow: 0 0 5px #4898FF;
+    text-shadow: 0 0 5px #4898ff;
   }
 `;

@@ -3,14 +3,7 @@ import * as S from "./ChatArea.styled";
 import { ChatMsgArray, UserAvatar, UserName } from "../../../utils/dataConfig";
 import { useRef, useState } from "react";
 import ChatMsg from "./ChatMsg";
-import EmojiPicker, {
-  EmojiStyle,
-  SkinTones,
-  Theme,
-  Categories,
-  EmojiClickData,
-  Emoji,
-} from "emoji-picker-react";
+import EmojiPicker, { EmojiStyle, EmojiClickData } from "emoji-picker-react";
 import MoreOptions from "./MoreOptions";
 
 const ChatArea = () => {
