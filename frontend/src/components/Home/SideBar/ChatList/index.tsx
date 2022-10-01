@@ -7,7 +7,7 @@ import React from "react";
 
 const ChatList = () => {
   const [activeModal, setActiveModal] = useState(-1);
-  const [selected, setSelected] = useState(-1)
+  const [selected, setSelected] = useState(-1);
 
   return (
     <S.Wrapper>

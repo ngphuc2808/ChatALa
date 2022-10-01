@@ -1,13 +1,15 @@
 import Image from "next/image";
 import * as S from "./TopBar.styled";
+import React, { useState } from "react"
 import { UserAvatar, UserName } from "../../../utils/dataConfig";
 import Logo from "../../../assets/imgs/LogoFullLong.png";
-
+import UserInfo  from "./UserInfo"
 const TopBar = () => {
+  const [userInfoModal, setUserInfoModal] = useState(false);
   return (
     <S.Container>
       <S.Wrapper>
-        <S.LeftWrapper>
+        <S.LeftWrapper onClick={() => setUserInfoModal(true)}>
           <S.Avatar>
             <Image src={UserAvatar} alt="avatar" />
           </S.Avatar>
@@ -28,6 +30,15 @@ const TopBar = () => {
             <S.OptionLogOut />
           </S.Option>
         </S.RightWrapper>
+        {userInfoModal && (
+          <UserInfo 
+          phoneNumber="+84 123456789"
+          name={UserName}
+          gender="Nam"
+          dob="1 tháng 1 năm 2001"
+          setUserInfoModal={setUserInfoModal}
+          />
+        )}
       </S.Wrapper>
     </S.Container>
   );

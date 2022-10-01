@@ -2,6 +2,7 @@ import Avatar from '../assets/imgs/avatar.png'
 
 export const UserAvatar = Avatar;
 export const UserName = "Nguyễn Văn XYZ";
+export const DoB = "01/01/2001";
 
 export const ChatListArray = [
   {

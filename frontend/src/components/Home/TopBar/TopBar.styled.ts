@@ -18,7 +18,7 @@ export const Wrapper = styled.div`
 `;
 
 export const LeftWrapper = styled.div`
-  ${tw`flex items-center`}
+  ${tw`flex items-center relative cursor-pointer`}
 `;
 
 export const RightWrapper = styled.div`
