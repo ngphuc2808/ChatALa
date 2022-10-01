@@ -3,7 +3,7 @@ import Image from "next/image";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { HiOutlineX } from "react-icons/hi";
 import { AiFillCamera } from "react-icons/ai";
 
@@ -19,7 +19,6 @@ interface ISetingInfo {
   dob: string;
   avatar: string;
   setEditInfo: (settingInfo: boolean) => void;
-  setUserInfoModal: (userInfo: boolean) => void;
 }
 
 const SettingInfo = ({
@@ -28,39 +27,51 @@ const SettingInfo = ({
   dob,
   avatar,
   setEditInfo,
-  setUserInfoModal,
 }: ISetingInfo) => {
-  const [previewAvt, setPreviewAvt] = useState<any>(avatar);
+  const [previewAvt, setPreviewAvt] = useState<any>(UserAvatar);
 
   const initialValues = {
     name: name || "",
     gender: gender || "male",
     dob: dob || new Date(),
-    avatar: "",
+    avatar: avatar || "",
   };
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .min(3, "Name must be at least 3 characters.")
-      .matches(/^([^0-9]*)$/, "Please enter the correct name format.")
       .required("This field is required."),
   });
 
   const toggleEvent = () => {
     setEditInfo(false);
-    setUserInfoModal(false);
   };
 
-  const handleAvatar = (e: any, setFieldValue: any) => {
-    if (e.target.files[0]) {
-        setFieldValue("avatar", e.target.files[0]);
-        const reader = new FileReader();
-        reader.addEventListener("load", () => {
-          setPreviewAvt(reader.result);
-        });
-        reader.readAsDataURL(e.target.files[0]);
-      }
-  }
+  const handleAvatar = (
+    e: ChangeEvent,
+    setFieldValue: (field: string, value: any) => void
+  ) => {
+    const input = e.target as HTMLInputElement;
+    if (input.files?.length) {
+      setFieldValue("avatar", input.files[0]);
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        setPreviewAvt(reader.result);
+      });
+      reader.readAsDataURL(input.files[0]);
+    }
+  };
+
+  const onSubmit = (values: {
+    name: string;
+    gender: string;
+    dob: string | Date;
+    avatar: string;
+  }) => {
+    const newData = values;
+    newData.name = values.name.trim().replace(/ +/g, " ");
+    console.log("submits: ", newData);
+  };
 
   return (
     <S.Modal>
@@ -69,11 +80,7 @@ const SettingInfo = ({
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={(data) => {
-            const newData = data;
-            newData.name = data.name.trim().replace(/ +/g, " ");
-            console.log("submits: ", newData);
-          }}
+          onSubmit={onSubmit}
         >
           {({ setFieldValue, values, errors, touched }) => (
             <>
@@ -86,7 +93,7 @@ const SettingInfo = ({
                   <Image src={UserAvatar} />
                 </S.Banner>
                 <S.Avatar>
-                  <Image layout="fill" src={previewAvt || UserAvatar} />
+                  <Image layout="fill" src={previewAvt} />
                 </S.Avatar>
               </S.Header>
               <S.Content>
