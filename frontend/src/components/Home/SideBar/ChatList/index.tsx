@@ -1,13 +1,14 @@
 import { ChatListArray } from "../../../../utils/dataConfig";
 import ChatPreviewItem from "../ChatPreviewItem";
 import * as S from "./ChatList.styled";
-import { useState } from "react";
-import MoreOptions from "../MoreOptions";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
-const ChatList = () => {
-  const [activeModal, setActiveModal] = useState(-1);
-  const [selected, setSelected] = useState(-1);
+interface IChatList {
+  selected: number,
+  setSelected: Dispatch<SetStateAction<number>>
+}
+
+const ChatList = ({selected, setSelected} : IChatList) => {
 
   return (
     <S.Wrapper>
@@ -19,15 +20,8 @@ const ChatList = () => {
             name={data.name}
             id={index}
             bgColor={selected === index ? "#AAC4FF" : undefined}
-            setActiveModal={setActiveModal}
             setSelected={setSelected}
           />
-          {activeModal === index && (
-            <MoreOptions
-              setActiveModal={setActiveModal}
-              activeModal={activeModal}
-            />
-          )}
         </React.Fragment>
       ))}
     </S.Wrapper>

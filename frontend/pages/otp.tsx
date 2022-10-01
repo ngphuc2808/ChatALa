@@ -1,4 +1,4 @@
-import OTPCode from "../src/components/Register/ResForm2";
+import OTPCode from "../src/components/OTPForm";
 
 const CodeValidation = () => {
     return (

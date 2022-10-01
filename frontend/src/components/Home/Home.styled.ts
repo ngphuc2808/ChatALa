@@ -6,5 +6,5 @@ export const HomeContainer = styled.div`
 `
 
 export const Wrapper = styled.div`
-  ${tw`flex h-full`}
+  ${tw`flex h-full gap-5`}
 `

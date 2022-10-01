@@ -9,7 +9,6 @@ interface IChatPreviewItem {
   msg: string;
   name?: string;
   id: number;
-  setActiveModal?: (id: number) => void;
   setSelected?: (id: number) => void;
 }
 
@@ -19,7 +18,6 @@ const ChatPreviewItem = ({
   name = "Chat Bot",
   bgColor,
   id,
-  setActiveModal,
   setSelected,
 }: IChatPreviewItem) => {
   return (
@@ -35,12 +33,9 @@ const ChatPreviewItem = ({
           )}
           <S.Content>
             <S.Name>{name}</S.Name>
-            <S.Msg>{shorterText(msg)}</S.Msg>
+            <S.Msg>{msg}</S.Msg>
           </S.Content>
         </S.Wrapper>
-        {avatar && (
-          <S.MoreIcon onClick={() => setActiveModal && setActiveModal(id)} />
-        )}
       </S.ChatPreviewItem>
     </>
   );

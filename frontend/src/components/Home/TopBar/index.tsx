@@ -4,8 +4,13 @@ import React, { useState } from "react"
 import { UserAvatar, UserName } from "../../../utils/dataConfig";
 import Logo from "../../../assets/imgs/LogoFullLong.png";
 import UserInfo  from "./UserInfo"
+import NotiModal from "./NotiModal";
+
 const TopBar = () => {
+  
   const [userInfoModal, setUserInfoModal] = useState(false);
+  const [activeNotiModal, setActiveNotiModal] = useState(false)
+
   return (
     <S.Container>
       <S.Wrapper>
@@ -26,6 +31,8 @@ const TopBar = () => {
             <S.SearchInput placeholder="Search..." />
           </S.Search>
           <S.Option>
+            <S.OptionNotify onClick={() => setActiveNotiModal(true)} />
+            {activeNotiModal && <NotiModal setActiveNotiModal={setActiveNotiModal} />}
             <S.OptionSetting />
             <S.OptionLogOut />
           </S.Option>
@@ -34,8 +41,10 @@ const TopBar = () => {
           <UserInfo 
           phoneNumber="+84 123456789"
           name={UserName}
-          gender="Nam"
-          dob="1 tháng 1 năm 2001"
+          gender="male"
+          dob="01/01/2001"
+          avatar=""
+          banner=""
           setUserInfoModal={setUserInfoModal}
           />
         )}

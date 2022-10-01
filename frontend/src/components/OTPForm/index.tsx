@@ -1,7 +1,7 @@
-import FormTemplate from "../../Global/FormTemplate"
-import { Formik, ErrorMessage } from "formik"
+import FormTemplate from "../Global/FormTemplate"
+import { Formik } from "formik"
 import Link from "next/link";
-import * as S from "./ResForm2.styled";
+import * as S from "./OTPForm.styled";
 
 const OTPCode = () => {
     const initialValues = {
