@@ -1,19 +1,26 @@
 const Room = {
-  users: [uid1, uid2],
-  last_msg
-}
+  roomName,
+  isGroup,
+  users: [
+    { uid1, role },
+    { uid2, role },
+  ],
+  last_msg,
+};
 
 const Message = {
   roomId,
   senderId,
   msg,
-  unSend
-}
+  unSend,
+};
 
 const User = {
   avatar,
   banner,
   name,
+  password,
+  phone,
   gender,
-  dob
-}
+  dob,
+};
