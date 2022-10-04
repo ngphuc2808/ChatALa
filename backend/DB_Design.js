@@ -1,16 +1,16 @@
 const Room = {
-  _id,
-  users: [uid1, uid2]
+  users: [uid1, uid2],
+  last_msg
 }
 
 const Message = {
   roomId,
   senderId,
   msg,
+  unSend
 }
 
 const User = {
-  _id,
   avatar,
   banner,
   name,
