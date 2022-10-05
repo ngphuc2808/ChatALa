@@ -18,53 +18,70 @@ interface IUserInfo {
 
 const UserInfo = ({phoneNumber, avatar, banner, name, gender, dob, setUserInfoModal}: IUserInfo) => {
     const [editInfo, setEditInfo] = useState(false);
+    const [seeAvatar, setSeeAvatar] = useState(false);
     return (
-        <S.Modal>
-            <S.ModalOverlay onClick={() => setUserInfoModal(false)}/>
-            <S.ModalBody>
-                <S.Header>
+        <>
+            {seeAvatar && (
+                <S.ModalAvatar>
+                    <S.ModalOverlay onClick={() => setSeeAvatar(false)} />
+                    <S.ModalAvatarBody>
                     <S.Title>
-                        Account information
-                        <HiOutlineX onClick={() => setUserInfoModal(false)}/>
+                        Avatar
+                        <HiOutlineX onClick={() => setSeeAvatar(false)}/>
                     </S.Title>
-                    <S.Banner>
+                    <S.Figure>
                         <Image src={UserAvatar} />
-                    </S.Banner>
-                    <S.Avatar>
-                        <Image layout="fill" src={UserAvatar} />
-                    </S.Avatar>
-                </S.Header>
-                <S.Content>
-                    <S.Description>
-                        <span>Phone</span>
-                        <span>Fullname</span>
-                        <span>Gender</span>
-                        <span>Date of Birth</span>
-                    </S.Description>
-                    <S.Info>
-                        <span>{phoneNumber}</span>
-                        <span>{name}</span>
-                        <span>{gender}</span>
-                        <span>{dob}</span>
-                    </S.Info>
-                </S.Content>
-                <S.Button>
-                    <HiPencil />
-                    <span onClick={() => setEditInfo(true)}>Update information</span>
-                </S.Button>
-                {
-                    editInfo &&  
-                    <SettingInfo 
-                        name={UserName}
-                        gender= 'male'
-                        dob='01/01/2001'
-                        avatar=''
-                        setEditInfo={setEditInfo}
-                        setUserInfoModal={setUserInfoModal}
-                    />
-                }
-            </S.ModalBody>
-        </S.Modal>
+                    </S.Figure>
+                    </S.ModalAvatarBody>
+                </S.ModalAvatar>
+            )}
+            <S.Modal>
+                <S.ModalOverlay onClick={() => setUserInfoModal(false)}/>
+                <S.ModalBody>
+                    <S.Header>
+                        <S.Title>
+                            Account information
+                            <HiOutlineX onClick={() => setUserInfoModal(false)}/>
+                        </S.Title>
+                        <S.Banner>
+                            <Image src={UserAvatar}/>
+                        </S.Banner>
+                        <S.Avatar onClick={() => setSeeAvatar(true)} >
+                            <Image layout="fill" src={UserAvatar} />
+                        </S.Avatar>
+                    </S.Header>
+                    <S.Content>
+                        <S.Description>
+                            <span>Phone</span>
+                            <span>Fullname</span>
+                            <span>Gender</span>
+                            <span>Date of Birth</span>
+                        </S.Description>
+                        <S.Info>
+                            <span>{phoneNumber}</span>
+                            <span>{name}</span>
+                            <span>{gender}</span>
+                            <span>{dob}</span>
+                        </S.Info>
+                    </S.Content>
+                    <S.Button>
+                        <HiPencil />
+                        <span onClick={() => setEditInfo(true)}>Update information</span>
+                    </S.Button>
+                    {
+                        editInfo &&  
+                        <SettingInfo 
+                            name={UserName}
+                            gender= 'male'
+                            dob='01/01/2001'
+                            avatar=''
+                            setEditInfo={setEditInfo}
+                            setUserInfoModal={setUserInfoModal}
+                        />
+                    }
+                </S.ModalBody>
+            </S.Modal>
+        </>
     );
 }
 
