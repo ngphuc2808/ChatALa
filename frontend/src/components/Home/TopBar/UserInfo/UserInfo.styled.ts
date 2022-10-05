@@ -105,6 +105,9 @@ export const Figure = styled.figure`
     height: 100%;
     display: grid;
     padding: 40px;
+    background-color: #ECF2F7;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
 `;
 
 export const Banner = styled.figure`
