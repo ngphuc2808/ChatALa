@@ -3,7 +3,8 @@ import Image from "next/image";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import { useState } from "react";
+import Cropper from "react-easy-crop";
+import { useState, ChangeEvent } from "react";
 import { HiOutlineX } from "react-icons/hi";
 import { AiFillCamera } from "react-icons/ai";
 
@@ -12,6 +13,7 @@ import { Formik, ErrorMessage } from "formik";
 
 import * as S from "./SettingInfo.styled";
 import { UserAvatar } from "../../../../utils/dataConfig";
+import CropImage from "./CropImage";
 
 interface ISetingInfo {
   name: string;
@@ -31,12 +33,14 @@ const SettingInfo = ({
   setUserInfoModal,
 }: ISetingInfo) => {
   const [previewAvt, setPreviewAvt] = useState<any>(avatar);
+  const [cropImage, setCropImage] = useState<any>();
+  const [modalCrop, setModalCrop] = useState(false);
 
   const initialValues = {
     name: name || "",
     gender: gender || "male",
     dob: dob || new Date(),
-    avatar: "",
+    avatar: avatar || "",
   };
 
   const validationSchema = Yup.object().shape({
@@ -51,15 +55,16 @@ const SettingInfo = ({
     setUserInfoModal(false);
   };
 
-  const handleAvatar = (e: any, setFieldValue: any) => {
-    if (e.target.files[0]) {
-        setFieldValue("avatar", e.target.files[0]);
-        const reader = new FileReader();
-        reader.addEventListener("load", () => {
-          setPreviewAvt(reader.result);
-        });
-        reader.readAsDataURL(e.target.files[0]);
-      }
+  const handleCrop = (e: ChangeEvent) => {
+    const input = e.target as HTMLInputElement
+    if (input.files?.length) {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        setModalCrop(true);
+        setCropImage(reader.result);
+      });
+      reader.readAsDataURL(input.files[0]);
+    }
   }
 
   return (
@@ -77,6 +82,14 @@ const SettingInfo = ({
         >
           {({ setFieldValue, values, errors, touched }) => (
             <>
+              {modalCrop && (
+                <CropImage
+                  image={cropImage}
+                  setModalCrop={setModalCrop}
+                  setPreviewAvt={setPreviewAvt}
+                  setFieldValue={setFieldValue}
+                />
+              )}
               <S.Header>
                 <S.Title>
                   Update information
@@ -86,7 +99,7 @@ const SettingInfo = ({
                   <Image src={UserAvatar} />
                 </S.Banner>
                 <S.Avatar>
-                  <Image layout="fill" src={previewAvt || UserAvatar} />
+                  <S.AvatarLabel htmlFor="avatar"><Image layout="fill" src={previewAvt || UserAvatar} /></S.AvatarLabel>
                 </S.Avatar>
               </S.Header>
               <S.Content>
@@ -98,7 +111,7 @@ const SettingInfo = ({
                         type="file"
                         id="avatar"
                         name="avatar"
-                        onChange={(e) => handleAvatar(e, setFieldValue)}
+                        onChange={(e) => handleCrop(e)}
                       />
                     </S.UpdateAvatar>
                     <S.Label htmlFor="name">Full name</S.Label>

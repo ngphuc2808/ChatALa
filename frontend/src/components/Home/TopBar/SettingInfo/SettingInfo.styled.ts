@@ -133,7 +133,7 @@ export const GroupButton = styled.div`
         &:last-child {
             margin-left: 4px;
         }
-      }
+    }
 `;
 
 export const NewForm = styled(Form)`
@@ -222,4 +222,8 @@ export const UpdateAvatar = styled.label`
     input {
         display: none;
     }
+`;
+
+export const AvatarLabel = styled.label`
+    cursor: pointer;
 `;

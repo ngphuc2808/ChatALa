@@ -18,6 +18,19 @@ const growth = keyframes`
     }
 `;
 
+export const ModalAvatar = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: ${fadeIn} linear 0.15s;
+    z-index: 9999;
+`;
+
 export const Modal = styled.div`
     position: fixed;
     top: 0;
@@ -41,6 +54,18 @@ export const ModalOverlay = styled.div`
 
 export const ModalBody = styled.div`
     width: 400px;
+    border-radius: 50px;
+    background-color: #ECF2F7;
+    box-shadow: 2px 2px 16px rgb(0 0 0 / 15%);
+    z-index: 1;
+    animation: ${growth} linear 0.15s;
+`;
+
+export const ModalAvatarBody = styled.div`
+    min-width: 600px;
+    min-height: 600px;
+    max-width: 1000px;
+    max-height: 1000px;
     border-radius: 50px;
     background-color: #ECF2F7;
     box-shadow: 2px 2px 16px rgb(0 0 0 / 15%);
@@ -73,6 +98,16 @@ export const Title = styled.div`
             background-color: rgba(0, 0, 0, 0.2);
         }
     }
+`;
+
+export const Figure = styled.figure`
+    width: 100%;
+    height: 100%;
+    display: grid;
+    padding: 40px;
+    background-color: #ECF2F7;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
 `;
 
 export const Banner = styled.figure`
