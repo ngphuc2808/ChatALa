@@ -13,4 +13,13 @@ const connectDB = async () => {
   }
 };
 
-module.exports = connectDB;
+const COLLECTION_USERS = "Users";
+const COLLECTION_MESSAGES = "Messages";
+const COLLECTION_ROOMS = "Rooms";
+
+module.exports = {
+  connectDB,
+  COLLECTION_USERS,
+  COLLECTION_MESSAGES,
+  COLLECTION_ROOMS,
+};

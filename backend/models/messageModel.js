@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { COLLECTION_MESSAGES } = require("../config/db");
 
 const messageModel = mongoose.Schema(
   {
@@ -10,6 +11,6 @@ const messageModel = mongoose.Schema(
   { timestamps: true }
 );
 
-const Messages = mongoose.model("Messages", messageModel);
+const Messages = mongoose.model("Messages", messageModel, COLLECTION_MESSAGES);
 
 module.exports = Messages;
