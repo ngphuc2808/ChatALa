@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { COLLECTION_USERS } = require("../config/db");
+const bcrypt = require("bcryptjs");
 
 const userModel = mongoose.Schema(
   {
@@ -22,6 +23,16 @@ const userModel = mongoose.Schema(
   { timestamps: true },
   { collection: "Users" }
 );
+
+userModel.methods.matchPassword = function (password) {
+  return bcrypt.compareSync(password, this.password);
+};
+
+userModel.pre("save", async function (next) {
+  if (!this.isModified) next();
+
+  this.password = await bcrypt.hashSync(this.password);
+});
 
 const Users = mongoose.model("Users", userModel, COLLECTION_USERS);
 
