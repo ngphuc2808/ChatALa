@@ -2,7 +2,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 
 export const ChatAvatar = styled.figure`
-  ${tw`w-[55px] h-[55px] rounded-full overflow-hidden flex-shrink-0`}
+  ${tw`relative w-[55px] h-[55px] rounded-full overflow-hidden flex-shrink-0`}
   border: 2px solid black;
 `;
 export const Content = styled.div`

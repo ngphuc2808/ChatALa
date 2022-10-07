@@ -16,7 +16,7 @@ const TopBar = () => {
       <S.Wrapper>
         <S.LeftWrapper onClick={() => setUserInfoModal(true)}>
           <S.Avatar>
-            <Image src={UserAvatar} alt="avatar" />
+            <Image src={UserAvatar} alt="avatar" layout="fill" objectFit="contain" />
           </S.Avatar>
           <S.UserName>{UserName}</S.UserName>
         </S.LeftWrapper>

@@ -8,6 +8,9 @@ const nextConfig = {
     config.resolve.fallback = { fs: false, module: false }
     return config
   },
+  images: {
+    domains: ['icon-library.com', 'localhost'],
+  },
 }
 
 module.exports = nextConfig

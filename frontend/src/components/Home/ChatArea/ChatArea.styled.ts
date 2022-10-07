@@ -18,7 +18,7 @@ export const ChatAreaHeadInfo = styled.div`
 `;
 
 export const ChatAreaHeadAvatar = styled.figure`
-  ${tw`w-[60px] h-[60px] rounded-full overflow-hidden flex-shrink-0`}
+  ${tw`relative w-[60px] h-[60px] rounded-full overflow-hidden flex-shrink-0`}
   border: 2px solid black;
 `;
 

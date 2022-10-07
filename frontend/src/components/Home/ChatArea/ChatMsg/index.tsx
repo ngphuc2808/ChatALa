@@ -11,7 +11,7 @@ const ChatMsg = ({ msg, index }: IChatMsg) => {
   return index % 2 === 0 ? (
     <S.ChatMsgLeft>
       <S.ChatMsgAvatar>
-        <Image src={UserAvatar} alt="avatar" />
+        <Image src={UserAvatar} alt="avatar" layout="fill" objectFit="contain" />
       </S.ChatMsgAvatar>
       <S.ChatMsgTextTail />
       <S.ChatMsgText>{msg}</S.ChatMsgText>
@@ -19,7 +19,7 @@ const ChatMsg = ({ msg, index }: IChatMsg) => {
   ) : (
     <S.ChatMsgRight>
       <S.ChatMsgAvatar>
-        <Image src={UserAvatar} alt="avatar" />
+        <Image src={UserAvatar} alt="avatar" layout="fill" objectFit="contain" />
       </S.ChatMsgAvatar>
       <S.ChatMsgTextTail />
       <S.ChatMsgText>{msg}</S.ChatMsgText>

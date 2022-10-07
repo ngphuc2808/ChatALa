@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { shorterText } from "../../../Global/ProcessFunctions";
 import * as S from "./ChatPreviewItem.styled";
 import { VscHubot } from "react-icons/vsc";
 
 interface IChatPreviewItem {
-  avatar?: any;
+  avatar: string;
   bgColor?: string;
   msg: string;
   name?: string;
@@ -26,7 +25,7 @@ const ChatPreviewItem = ({
         <S.Wrapper onClick={() => setSelected && setSelected(id)}>
           {avatar ? (
             <S.ChatAvatar>
-              <Image src={avatar} alt="avatar" />
+              <Image src={avatar} alt="avatar" layout="fill" objectFit="contain" />
             </S.ChatAvatar>
           ) : (
             <VscHubot size={55} />

@@ -1,57 +1,57 @@
 import Avatar from "../assets/imgs/avatar.png";
 
-export const UserAvatar = Avatar;
+export const UserAvatar = "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg";
 export const UserName = "Nguyễn Văn XYZ";
 export const DoB = "01/01/2001";
 
 export const ChatListArray = [
   {
-    avatar: Avatar,
+    avatar: UserAvatar,
     name: "Tăng Duy Tân",
     msg: "Em ơi đừng khóc, bóng tối trước mắt sẽ bắt em đi",
   },
   {
-    avatar: Avatar,
+    avatar: UserAvatar,
     name: "Hieuthuhai",
     msg: "-273C vẫn okee",
   },
   {
-    avatar: Avatar,
+    avatar: UserAvatar,
     name: "Gducky",
     msg: "Order pizza, cà phê trứng, thêm ly matchiato",
   },
   {
-    avatar: Avatar,
+    avatar: UserAvatar,
     name: "MCK",
     msg: "Rap chậm thôi",
   },
   {
-    avatar: Avatar,
+    avatar: UserAvatar,
     name: "Tlinh",
     msg: "Hello anh, đã lâu không gặp",
   },
   {
-    avatar: Avatar,
+    avatar: UserAvatar,
     name: "Binz",
     msg: "Sao cũng được",
   },
   {
-    avatar: Avatar,
+    avatar: UserAvatar,
     name: "Đen Vâu",
     msg: "Mang tiền về cho mẹ",
   },
   {
-    avatar: Avatar,
+    avatar: UserAvatar,
     name: "Soobin",
     msg: "Ai đi theo em mấy chiều...phố mưa",
   },
   {
-    avatar: Avatar,
+    avatar: UserAvatar,
     name: "Bích Phương",
     msg: "Đi đu đưa đi",
   },
   {
-    avatar: Avatar,
+    avatar: UserAvatar,
     name: "Phúc Du",
     msg: "Đứa nào làm em buồn",
   },

@@ -28,7 +28,7 @@ const ChatArea = () => {
       <S.ChatAreaHead>
         <S.ChatAreaHeadInfo>
           <S.ChatAreaHeadAvatar>
-            <Image src={UserAvatar} alt="avatar" />
+            <Image src={UserAvatar} alt="avatar" layout="fill" objectFit="contain" />
           </S.ChatAreaHeadAvatar>
           <S.ChatAreaHeadNameWrapper>
             <S.ChatAreaHeadName>{UserName}</S.ChatAreaHeadName>

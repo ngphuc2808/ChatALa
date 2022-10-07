@@ -7,9 +7,9 @@ import { MdCancelPresentation } from 'react-icons/md';
 import getCroppedImg from '../../../../Global/ProcessFunctions'
 
 interface ICrop {
-  image: any
+  image: string | ArrayBuffer | null
   setModalCrop: (modalCrop: boolean) => void
-  setPreviewAvt: (avatar: any) => void
+  setPreviewAvt: (avatar: string) => void
   setFieldValue: (field: string, value: any, shouldValidate?: boolean | undefined) => void
 }
 
@@ -46,7 +46,7 @@ const CropImage = ({
           <S.Title>Crop Profile Photo</S.Title>
           <S.Content>
             <Cropper
-                  image={image}
+                  image={image as string | undefined}
                   crop={crop}
                   zoom={zoom}
                   maxZoom={10}

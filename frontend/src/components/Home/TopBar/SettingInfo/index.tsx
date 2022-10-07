@@ -30,8 +30,9 @@ const SettingInfo = ({
   avatar,
   setEditInfo,
 }: ISetingInfo) => {
-  const [previewAvt, setPreviewAvt] = useState<any>(avatar);
-  const [cropImage, setCropImage] = useState<any>();
+  const [previewAvt, setPreviewAvt] = useState<string>(avatar);
+  // const [cropImage, setCropImage] = useState<any>();
+  const [cropImage, setCropImage] = useState<string | ArrayBuffer | null>(null);
   const [modalCrop, setModalCrop] = useState(false);
 
   const initialValues = {
@@ -53,7 +54,7 @@ const SettingInfo = ({
   };
 
   const handleCrop = (e: ChangeEvent) => {
-    const input = e.target as HTMLInputElement
+    const input = e.target as HTMLInputElement;
     if (input.files?.length) {
       const reader = new FileReader();
       reader.addEventListener("load", () => {
@@ -62,7 +63,7 @@ const SettingInfo = ({
       });
       reader.readAsDataURL(input.files[0]);
     }
-  }
+  };
 
   return (
     <S.Modal>
@@ -93,11 +94,11 @@ const SettingInfo = ({
                   <HiOutlineX onClick={() => toggleEvent()} />
                 </S.Title>
                 <S.Banner>
-                  <Image src={UserAvatar} />
+                  <Image src={UserAvatar} layout="fill" objectFit="cover" />
                 </S.Banner>
-                <S.Avatar>
-                  <S.AvatarLabel htmlFor="avatar"><Image layout="fill" src={previewAvt || UserAvatar} /></S.AvatarLabel>
-                </S.Avatar>
+                <S.AvatarLabel htmlFor="avatar">
+                  <Image src={previewAvt} layout="fill" objectFit="contain" />
+                </S.AvatarLabel>
               </S.Header>
               <S.Content>
                 <S.NewForm>

@@ -54,7 +54,7 @@ export const ChatMsgRight = styled(ChatMsg)`
 `;
 
 export const ChatMsgAvatar = styled.figure`
-  ${tw`w-[50px] h-[50px] rounded-full overflow-hidden flex-shrink-0 mb-[-5px] z-10`}
+  ${tw`relative w-[50px] h-[50px] rounded-full overflow-hidden flex-shrink-0 mb-[-5px] z-10`}
   border: 2px solid black;
 `;
 
