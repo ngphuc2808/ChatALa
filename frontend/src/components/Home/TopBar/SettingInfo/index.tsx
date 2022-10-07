@@ -21,7 +21,6 @@ interface ISetingInfo {
   dob: string;
   avatar: string;
   setEditInfo: (settingInfo: boolean) => void;
-  setUserInfoModal: (userInfo: boolean) => void;
 }
 
 const SettingInfo = ({
@@ -30,7 +29,6 @@ const SettingInfo = ({
   dob,
   avatar,
   setEditInfo,
-  setUserInfoModal,
 }: ISetingInfo) => {
   const [previewAvt, setPreviewAvt] = useState<any>(avatar);
   const [cropImage, setCropImage] = useState<any>();
@@ -52,7 +50,6 @@ const SettingInfo = ({
 
   const toggleEvent = () => {
     setEditInfo(false);
-    setUserInfoModal(false);
   };
 
   const handleCrop = (e: ChangeEvent) => {

@@ -5,12 +5,19 @@ import { useRef, useState } from "react";
 import ChatMsg from "./ChatMsg";
 import EmojiPicker, { EmojiStyle, EmojiClickData } from "emoji-picker-react";
 import MoreOptions from "./MoreOptions";
+import { useOutsideClick } from "../../Global/ProcessFunctions";
 
 const ChatArea = () => {
   const status = 1;
   const message = useRef<HTMLSpanElement>(null);
   const [toggleEmoji, setToggleEmoji] = useState(false);
   const [toggleOption, setToggleOption] = useState(false);
+
+  const handleOutsideClick = () => {
+    setToggleEmoji(false)
+  }
+
+  const EmojiRef = useOutsideClick(handleOutsideClick)
 
   const EmojiClicked = (emoData: EmojiClickData, e: MouseEvent) => {
     message.current!.innerText = message.current!.innerText + emoData.emoji;
@@ -44,7 +51,7 @@ const ChatArea = () => {
         </S.ChatAreaMainMsg>
         <S.ChatAreaMainInput>
           {toggleEmoji && (
-            <S.ChatAreaMainInputEmojiPicker>
+            <S.ChatAreaMainInputEmojiPicker ref={EmojiRef}>
               <EmojiPicker
                 skinTonesDisabled={true}
                 emojiStyle={EmojiStyle.TWITTER}
@@ -57,7 +64,7 @@ const ChatArea = () => {
           <S.ChatAreaMainInputFile>+</S.ChatAreaMainInputFile>
           <S.ChatAreaMainInputMsg>
             <S.ChatAreaMainInputEmoji
-              onClick={() => setToggleEmoji(!toggleEmoji)}
+              onClick={() => setToggleEmoji(true)}
             />
             <S.ChatAreaMainInputText
               username={UserName}

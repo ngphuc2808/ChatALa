@@ -5,7 +5,6 @@ import { useState } from 'react';
 
 const SideBar = () => {
   const [selected, setSelected] = useState(-1);
-  
 
   return (
     <S.SideBarContainer>

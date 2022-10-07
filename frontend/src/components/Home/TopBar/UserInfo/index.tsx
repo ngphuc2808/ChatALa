@@ -76,7 +76,6 @@ const UserInfo = ({phoneNumber, avatar, banner, name, gender, dob, setUserInfoMo
                             dob='01/01/2001'
                             avatar=''
                             setEditInfo={setEditInfo}
-                            setUserInfoModal={setUserInfoModal}
                         />
                     }
                 </S.ModalBody>
