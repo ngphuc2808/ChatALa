@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { COLLECTION_ROOMS } = require("../config/db");
 
-const roomModel = mongoose.Schema(
+const roomSchema = mongoose.Schema(
   {
     roomName: { type: String, trim: true },
     isGroup: { type: Boolean, default: false },
@@ -16,6 +16,6 @@ const roomModel = mongoose.Schema(
   { timestamps: true }
 );
 
-const Rooms = mongoose.model("Rooms", roomModel, COLLECTION_ROOMS);
+const Rooms = mongoose.model("Rooms", roomSchema, COLLECTION_ROOMS);
 
 module.exports = Rooms;

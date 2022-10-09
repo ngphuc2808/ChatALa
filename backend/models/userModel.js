@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { COLLECTION_USERS } = require("../config/db");
 const bcrypt = require("bcryptjs");
 
-const userModel = mongoose.Schema(
+const userSchema = mongoose.Schema(
   {
     avatar: {
       type: String,
@@ -24,16 +24,16 @@ const userModel = mongoose.Schema(
   { collection: "Users" }
 );
 
-userModel.methods.matchPassword = function (password) {
+userSchema.methods.matchPassword = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-userModel.pre("save", async function (next) {
+userSchema.pre("save", async function (next) {
   if (!this.isModified) next();
 
   this.password = await bcrypt.hashSync(this.password);
 });
 
-const Users = mongoose.model("Users", userModel, COLLECTION_USERS);
+const Users = mongoose.model("Users", userSchema, COLLECTION_USERS);
 
 module.exports = Users;
