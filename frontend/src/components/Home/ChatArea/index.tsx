@@ -1,11 +1,11 @@
-import Image from "next/image";
-import * as S from "./ChatArea.styled";
-import { ChatMsgArray, UserAvatar, UserName } from "../../../utils/dataConfig";
-import { useRef, useState } from "react";
-import ChatMsg from "./ChatMsg";
-import EmojiPicker, { EmojiStyle, EmojiClickData } from "emoji-picker-react";
-import MoreOptions from "./MoreOptions";
-import { useOutsideClick } from "../../Global/ProcessFunctions";
+import Image from 'next/image';
+import * as S from './ChatArea.styled';
+import { ChatMsgArray, UserAvatar, UserName } from '../../../utils/dataConfig';
+import { useRef, useState } from 'react';
+import ChatMsg from './ChatMsg';
+import EmojiPicker, { EmojiStyle, EmojiClickData } from 'emoji-picker-react';
+import MoreOptions from './MoreOptions';
+import { useOutsideClick } from '../../Global/ProcessFunctions';
 
 const ChatArea = () => {
   const status = 1;
@@ -14,10 +14,10 @@ const ChatArea = () => {
   const [toggleOption, setToggleOption] = useState(false);
 
   const handleOutsideClick = () => {
-    setToggleEmoji(false)
-  }
+    setToggleEmoji(false);
+  };
 
-  const EmojiRef = useOutsideClick(handleOutsideClick)
+  const EmojiRef = useOutsideClick(handleOutsideClick);
 
   const EmojiClicked = (emoData: EmojiClickData, e: MouseEvent) => {
     message.current!.innerText = message.current!.innerText + emoData.emoji;
@@ -28,13 +28,18 @@ const ChatArea = () => {
       <S.ChatAreaHead>
         <S.ChatAreaHeadInfo>
           <S.ChatAreaHeadAvatar>
-            <Image src={UserAvatar} alt="avatar" layout="fill" objectFit="contain" />
+            <Image
+              src={UserAvatar}
+              alt='avatar'
+              layout='fill'
+              objectFit='contain'
+            />
           </S.ChatAreaHeadAvatar>
           <S.ChatAreaHeadNameWrapper>
             <S.ChatAreaHeadName>{UserName}</S.ChatAreaHeadName>
             <S.ChatAreaHeadStatus>
               <S.ChatAreaHeadStatusIcon status={status} />
-              {status ? "Online" : "Offline"}
+              {status ? 'Online' : 'Offline'}
             </S.ChatAreaHeadStatus>
           </S.ChatAreaHeadNameWrapper>
         </S.ChatAreaHeadInfo>
@@ -63,9 +68,7 @@ const ChatArea = () => {
           )}
           <S.ChatAreaMainInputFile>+</S.ChatAreaMainInputFile>
           <S.ChatAreaMainInputMsg>
-            <S.ChatAreaMainInputEmoji
-              onClick={() => setToggleEmoji(true)}
-            />
+            <S.ChatAreaMainInputEmoji onClick={() => setToggleEmoji(true)} />
             <S.ChatAreaMainInputText
               username={UserName}
               contentEditable

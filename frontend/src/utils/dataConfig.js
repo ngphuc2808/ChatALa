@@ -1,76 +1,77 @@
-import Avatar from "../assets/imgs/avatar.png";
+import Avatar from '../assets/imgs/avatar.png';
 
-export const UserAvatar = "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg";
-export const UserName = "Nguyễn Văn XYZ";
-export const DoB = "01/01/2001";
+export const UserAvatar =
+  'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg';
+export const UserName = 'Nguyễn Văn XYZ';
+export const DoB = '01/01/2001';
 
 export const ChatListArray = [
   {
     avatar: UserAvatar,
-    name: "Tăng Duy Tân",
-    msg: "Em ơi đừng khóc, bóng tối trước mắt sẽ bắt em đi",
+    name: 'Tăng Duy Tân',
+    msg: 'Em ơi đừng khóc, bóng tối trước mắt sẽ bắt em đi',
   },
   {
     avatar: UserAvatar,
-    name: "Hieuthuhai",
-    msg: "-273C vẫn okee",
+    name: 'Hieuthuhai',
+    msg: '-273C vẫn okee',
   },
   {
     avatar: UserAvatar,
-    name: "Gducky",
-    msg: "Order pizza, cà phê trứng, thêm ly matchiato",
+    name: 'Gducky',
+    msg: 'Order pizza, cà phê trứng, thêm ly matchiato',
   },
   {
     avatar: UserAvatar,
-    name: "MCK",
-    msg: "Rap chậm thôi",
+    name: 'MCK',
+    msg: 'Rap chậm thôi',
   },
   {
     avatar: UserAvatar,
-    name: "Tlinh",
-    msg: "Hello anh, đã lâu không gặp",
+    name: 'Tlinh',
+    msg: 'Hello anh, đã lâu không gặp',
   },
   {
     avatar: UserAvatar,
-    name: "Binz",
-    msg: "Sao cũng được",
+    name: 'Binz',
+    msg: 'Sao cũng được',
   },
   {
     avatar: UserAvatar,
-    name: "Đen Vâu",
-    msg: "Mang tiền về cho mẹ",
+    name: 'Đen Vâu',
+    msg: 'Mang tiền về cho mẹ',
   },
   {
     avatar: UserAvatar,
-    name: "Soobin",
-    msg: "Ai đi theo em mấy chiều...phố mưa",
+    name: 'Soobin',
+    msg: 'Ai đi theo em mấy chiều...phố mưa',
   },
   {
     avatar: UserAvatar,
-    name: "Bích Phương",
-    msg: "Đi đu đưa đi",
+    name: 'Bích Phương',
+    msg: 'Đi đu đưa đi',
   },
   {
     avatar: UserAvatar,
-    name: "Phúc Du",
-    msg: "Đứa nào làm em buồn",
+    name: 'Phúc Du',
+    msg: 'Đứa nào làm em buồn',
   },
 ];
 
 export const NotiListArray = [
   {
     avatar: Avatar,
-    name: "Soobin",
+    name: 'Soobin',
     numFriends: 69,
   },
   {
     avatar: Avatar,
-    name: "Bích Phương",
+    name: 'Bích Phương',
     numFriends: 96,
   },
   {
     avatar: Avatar,
-    name: "Phúc Du",
+    name: 'Phúc Du',
     numFriends: 21,
   },
 ];
@@ -78,19 +79,19 @@ export const NotiListArray = [
 export const ChatMsgArray = [
   {
     avatar: Avatar,
-    msg: "1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.",
+    msg: '1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.',
   },
   {
     avatar: Avatar,
-    msg: "1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.",
+    msg: '1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.',
   },
   {
     avatar: Avatar,
-    msg: "1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.",
+    msg: '1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.',
   },
   {
     avatar: Avatar,
-    msg: "1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.",
+    msg: '1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.',
   },
   {
     avatar: Avatar,
@@ -98,10 +99,10 @@ export const ChatMsgArray = [
   },
   {
     avatar: Avatar,
-    msg: "3Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl",
+    msg: '3Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl',
   },
   {
     avatar: Avatar,
-    msg: "4TailwindCSS 😁",
+    msg: '4TailwindCSS 😁',
   },
 ];
