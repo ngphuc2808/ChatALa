@@ -1,25 +1,25 @@
 import React, { createContext, useContext, useState } from 'react';
 
 export type GlobalContent = {
-  test: boolean;
-  setTest: (value: boolean) => void;
+  roomMsg: any;
+  setRoomMsg: (value: any) => void;
 };
 
 export const GlobalContext = createContext<GlobalContent>({
-  test: false,
-  setTest: () => {},
+  roomMsg: [],
+  setRoomMsg: () => {},
 });
 
 export const useGlobalContext = () => useContext(GlobalContext);
 
 export const GlobalProvider = ({ children }: any) => {
-  const [test, setTest] = useState(false);
+  const [roomMsg, setRoomMsg] = useState([]);
 
   return (
     <GlobalContext.Provider
       value={{
-        test,
-        setTest,
+        roomMsg,
+        setRoomMsg,
       }}
     >
       {children}
