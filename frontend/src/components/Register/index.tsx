@@ -95,7 +95,10 @@ const Register = () => {
             </Formik>
             <S.Login>
                 <Link href="/login">
-                    Already have one? Let's Sign In!
+                    <span>
+                        <p>Already have one?</p>
+                        <p>Let's Sign In!</p>
+                    </span>
                 </Link>
             </S.Login>
         </FormTemplate>

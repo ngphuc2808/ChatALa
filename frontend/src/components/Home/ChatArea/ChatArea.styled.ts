@@ -1,10 +1,10 @@
-import styled, { keyframes } from 'styled-components';
-import tw from 'twin.macro';
-import { FaCircle } from 'react-icons/fa';
-import { IoMenu } from 'react-icons/io5';
-import { BsEmojiLaughingFill } from 'react-icons/bs';
-import { RiSendPlaneFill } from 'react-icons/ri';
-import { zoomIn } from 'react-animations';
+import styled, { keyframes } from "styled-components";
+import tw from "twin.macro";
+import { FaCircle } from "react-icons/fa";
+import { IoMenu } from "react-icons/io5";
+import { BsEmojiLaughingFill } from "react-icons/bs";
+import { RiSendPlaneFill } from "react-icons/ri";
+import { zoomIn } from "react-animations";
 export const ChatArea = styled.div`
   ${tw`relative bg-[#C9D9E5] shadow-md rounded-[50px] flex-grow flex flex-col`}
 `;
@@ -45,24 +45,22 @@ export const ChatAreaHeadOption = styled(IoMenu)`
 
 export const ChatAreaMain = styled.div`
   ${tw`flex flex-col flex-grow bg-[#75A6C2] rounded-t-[50px] px-6 pb-4 pt-0 rounded-[50px]`}
-  box-shadow: 0 0 4px gray
+  box-shadow: 0 0 4px gray;
 `;
 
 export const ChatAreaMainMsg = styled.div`
   ${tw`flex-grow overflow-y-scroll h-0 mb-5 rounded-3xl pr-1.5 flex flex-col-reverse`}
 
   &::-webkit-scrollbar-track {
-    background-color: transparent;
-    border-radius: 10px;
+    ${tw`rounded-[10px] bg-transparent`}
   }
 
   &::-webkit-scrollbar {
-    width: 5px;
+    ${tw`w-[5px]`}
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: 50px;
-    background-color: #c9d9e5;
+    ${tw`rounded-[50px] bg-[#c9d9e5]`}
   }
 `;
 
@@ -98,21 +96,19 @@ export const ChatAreaMainInputText = styled.span<{ username: string }>`
   ${tw`flex-grow outline-none bg-transparent text-xl ml-2.5 w-1 overflow-auto max-h-24 whitespace-normal hover:cursor-text`}
 
   &:empty::before {
-    content: 'Write something to ${({ username }) => username}...';
+    content: "Write something to ${({ username }) => username}...";
     ${tw`cursor-text text-gray-400`}
   }
   &::-webkit-scrollbar-track {
-    background-color: transparent;
-    border-radius: 10px;
+    ${tw`rounded-[10px] bg-transparent`}
   }
 
   &::-webkit-scrollbar {
-    width: 2px;
+    ${tw`w-[2px]`}
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: 50px;
-    background-color: #c9d9e5;
+    ${tw`rounded-[50px] bg-[#c9d9e5]`}
   }
 `;
 

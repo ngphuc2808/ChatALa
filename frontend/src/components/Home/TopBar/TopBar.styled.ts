@@ -6,8 +6,7 @@ import { FiLogOut } from "react-icons/fi";
 import { IoNotificationsCircleSharp } from "react-icons/io5";
 
 export const Avatar = styled.figure`
-  ${tw`w-[75px] h-[75px] rounded-full overflow-hidden absolute shadow-md`}
-  border: 5px solid #77d1bc;
+  ${tw`w-[75px] h-[75px] rounded-full overflow-hidden absolute shadow-md border-[5px] border-[#77d1bc]`}
 `;
 
 export const Container = styled.div`
@@ -42,8 +41,7 @@ export const Search = styled.div`
   ${tw`relative max-w-[550px] w-full flex items-center`}
 `;
 export const SearchInput = styled.input`
-  ${tw`bg-[#F8F8F8] text-lg rounded-[50px] pr-10 pl-5 py-2 w-full`}
-  outline: none;
+  ${tw`bg-[#F8F8F8] text-lg rounded-[50px] pr-10 pl-5 py-2 w-full outline-none`}
 `;
 
 export const SearchIcon = styled(BiSearchAlt)`

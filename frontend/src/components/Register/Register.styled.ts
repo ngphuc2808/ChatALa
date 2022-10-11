@@ -1,87 +1,56 @@
 import styled from "styled-components";
-import { Form, Field } from "formik"
+import { Form, Field } from "formik";
+import tw from "twin.macro";
 
 export const Suggest = styled.span`
-    font-size: 18px;
-    margin-top: 24px;
+  ${tw`text-lg mt-6`}
 `;
 
 export const NewForm = styled(Form)`
-    width: 80%;
+  ${tw`w-4/5`}
 `;
 
-export const InputGroup = styled.div <{ error: boolean }>`
-    width: 100%;
-    height: 50px;
-    margin-top: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    ${({ error }) => error ? `margin-bottom: 24px;` : `margin-bottom: 0;`};
+export const InputGroup = styled.div<{ error: boolean }>`
+  ${tw`w-full h-[50px] mt-6 flex items-center justify-center`}
+  ${({ error }) => (error ? tw`mb-6` : tw`mb-0`)};
 `;
 
 export const ShortInputDiv = styled.div`
-    width: 85%;
-    height: 100%;
+  ${tw`w-[85%] h-full`}
 `;
 
-export const ShortInput = styled(Field) <{ error: boolean }>`
-    width: 100%;
-    height: 100%;
-    outline: none;
-    padding: 8px 16px;
-    border-bottom: 1px solid #0154b1;
-    ${({ error }) => error === 1 ? `border: 1px solid red;` : `border-bottom: 1px solid #0154b1;`};
+export const ShortInput = styled(Field)<{ error: boolean }>`
+  ${tw`w-full h-full outline-none py-2 px-4 border-b border-[#0154b1]`}
+  ${({ error }) =>
+    error === 1
+      ? tw`border border-red-500`
+      : tw`border-b border-solid border-[#0154b1]`};
 `;
 
-export const Input = styled(Field) <{ error: boolean }>`
-    width: 100%;
-    height: 50px;
-    outline: none;
-    margin-top: 24px;
-    padding: 8px 16px;
-    ${({ error }) => error === 1 ? `border: 1px solid red;` : `border-bottom: 1px solid #0154b1;`};
+export const Input = styled(Field)<{ error: boolean }>`
+  ${tw`w-full h-12 outline-none mt-6 py-2 px-4`}
+  ${({ error }) =>
+    error === 1
+      ? tw`border border-red-500`
+      : tw`border-b border-solid border-[#0154b1]`};
 `;
 
 export const Select = styled(Field)`
-    width: 10%;
-    height: 100%;
-    font-style: italic;
-    outline: none;
-    padding: 8px 0px;
-    margin-right: 12px;
-    border-bottom: 1px solid #0154b1;
-    flex: 1;
-    cursor: pointer;
+  ${tw`w-[10%] h-full italic outline-none py-2 mr-3 border-b border-[#0154b1] flex-1 cursor-pointer`}
 `;
 
 export const Button = styled.button`
-    width: 32%;
-    height: 44px;
-    background-color: #0154b1;
-    color: #fff;
-    display: block;
-    border-radius: 6px;
-    padding: 8px 16px;
-    font-weight: bold;
-    margin: 76px auto 0 auto;
-    &:hover {
-        opacity: 0.8;
-    }
-`;
-
-export const Login = styled.div`
-    font-size: 14px;
-    color: green;
-    margin: 12px 0 30px;
-    font-style: italic;
+  ${tw`w-1/3 h-11 bg-[#0154b1] text-[#fff] block rounded-md py-2 px-4 font-bold mt-11 mb-5 mx-auto hover:opacity-80`}
 `;
 
 export const ErrorMsg = styled.div`
-    color: red;
-    margin-top: 8px;
+  ${tw`text-red-500 mt-2`}
 `;
 
 export const SetWidth = styled.div`
-    width: 100%;
+  ${tw`w-full`}
+`;
+
+export const Login = styled.div`
+  ${tw`mb-11 text-green-600 italic text-center cursor-pointer`}
 `;

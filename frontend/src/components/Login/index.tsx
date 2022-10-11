@@ -55,7 +55,7 @@ const Login = () => {
                             <ErrorMessage name='password' component={S.ErrorMsg}/>
 
                             <S.Forgot>
-                                <Link href="/">
+                                <Link href="/forgotPassword">
                                     Forgot Password?
                                 </Link>
                             </S.Forgot>

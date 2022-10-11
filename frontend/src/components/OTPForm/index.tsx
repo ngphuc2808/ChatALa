@@ -9,7 +9,9 @@ const OTPCode = () => {
     }
     return (
         <FormTemplate>
-            <Link href='/register'><S.BackIcon/></Link>
+            <Link href='/register'>
+                <span><S.BackIcon/></span>
+            </Link>
             <S.Suggest>
                 Make sure your phone number is real!
             </S.Suggest>
