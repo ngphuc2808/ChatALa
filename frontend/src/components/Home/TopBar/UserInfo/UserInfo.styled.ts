@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import tw from "twin.macro";
 
 const fadeIn = keyframes`
     from {
@@ -19,162 +20,76 @@ const growth = keyframes`
 `;
 
 export const ModalAvatar = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${tw`fixed top-0 left-0 bottom-0 right-0 flex justify-center items-center z-[9999]`}
   animation: ${fadeIn} linear 0.15s;
-  z-index: 9999;
 `;
 
 export const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${tw`fixed top-0 left-0 bottom-0 right-0 flex justify-center items-center z-[999]`}
   animation: ${fadeIn} linear 0.15s;
-  z-index: 999;
 `;
 
 export const ModalOverlay = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.25);
-  z-index: 0;
+  ${tw`w-full h-full absolute bg-[rgba(0, 0, 0, 0.25)] z-0`}
 `;
 
 export const ModalBody = styled.div`
-  width: 400px;
-  border-radius: 50px;
-  background-color: #ecf2f7;
+  ${tw`w-[400px] rounded-[50px] bg-[#ecf2f7] z-[1]`}
   box-shadow: 2px 2px 16px rgb(0 0 0 / 15%);
-  z-index: 1;
   animation: ${growth} linear 0.15s;
 `;
 
 export const ModalAvatarBody = styled.div`
-  position: relative;
-  border-radius: 50px;
-  background-color: #ecf2f7;
+  ${tw`relative rounded-[50px] bg-[#ecf2f7] z-[10] overflow-hidden`}
   box-shadow: 2px 2px 16px rgb(0 0 0 / 15%);
-  z-index: 1;
   animation: ${growth} linear 0.15s;
-  overflow: hidden;
 `;
 
 export const Header = styled.div`
-  position: relative;
+  ${tw`relative`}
 `;
 
 export const Title = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-radius-top: 50px;
-  border-top-left-radius: 50px;
-  border-top-right-radius: 50px;
-  padding: 16px 32px;
-  font-size: 20px;
-  font-weight: bold;
-  background-color: #7199ba;
+  ${tw`w-full flex justify-between items-center rounded-t-[50px] py-4 px-8 text-xl font-bold bg-[#7199ba]`}
   &:nth-child(1) svg {
-    padding: 4px;
-    font-size: 30px;
-    border-radius: 50%;
-    cursor: pointer;
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.2);
-    }
+    ${tw`p-1 text-3xl rounded-[50%] cursor-pointer hover:bg-[rgba(0, 0, 0, 0.2)]`}
   }
 `;
 
 export const Figure = styled.figure`
-  position: relative;
-  width: 600px;
-  height: 600px;
-  display: grid;
-  padding: 40px;
-  background-color: #ecf2f7;
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
+  ${tw`relative w-[600px] h-[600px] grid p-10 bg-[#ecf2f7] rounded-t-[50px]`}
 `;
 
 export const Banner = styled.figure`
-  position: relative;
-  width: 100%;
-  height: 150px;
-  cursor: pointer;
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
-  overflow: hidden;
+  ${tw`relative w-full h-[150px] cursor-pointer rounded-b-[50px] overflow-hidden`}
 `;
 
 export const Avatar = styled.figure`
-  width: 100px;
-  height: 100px;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
+  ${tw`absolute w-[100px] h-[100px] bottom-[0] left-[50%] bg-[#000] border-[5px] border-[#ecf2f7] cursor-pointer rounded-[50%] overflow-hidden`}
   transform: translate(-50%, 50%);
-  border-radius: 50%;
-  border: 5px solid #ecf2f7;
-  background-color: #000;
-  cursor: pointer;
-  overflow: hidden;
 `;
 
 export const Content = styled.div`
-  width: 88%;
-  display: flex;
-  background-color: #7199ba;
-  margin: 72px auto 32px;
-  border-radius: 50px;
+  ${tw`w-[88%] flex bg-[#7199ba] rounded-[50px] mt-[72px] mb-[32px] mx-auto`}
 `;
 
 export const Description = styled.div`
-  color: #00317b;
-  flex: 1;
-  width: 30%;
-  padding: 32px 0 32px 32px;
+  ${tw`text-[#00317b] flex-1 w-[30%] py-8 pl-8 pr-0`}
   & span {
-    display: block;
-    font-size: 18px;
+    ${tw`block text-lg`}
   }
 `;
 
 export const Info = styled.div`
-  padding: 32px 32px 32px 0;
-  width: 60%;
+  ${tw`py-8 pl-0 pr-8 w-[60%]`}
   & span {
-    display: block;
-    font-size: 18px;
+    ${tw`block text-lg`}
   }
 `;
 
 export const Button = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 60%;
-  font-size: 18px;
-  background-color: #7199ba;
-  border-radius: 50px;
-  padding: 4px 8px;
-  margin: 12px auto 32px;
+  ${tw`flex justify-center items-center w-[60%] text-lg bg-[#7199ba] rounded-[50px] py-1 px-2 mt-3 mx-auto mb-8 hover:opacity-80`}
   & svg {
-    margin-right: 4px;
-  }
-  &:hover {
-    opacity: 0.8;
+    ${tw`mr-1`}
   }
 `;

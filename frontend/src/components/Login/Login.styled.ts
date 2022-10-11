@@ -1,59 +1,39 @@
 import styled from "styled-components";
-import { Form, Field } from "formik"
+import { Form, Field } from "formik";
+import tw from "twin.macro";
 
 export const Suggest = styled.span`
-    font-size: 18px;
-    margin-top: 24px;
+  ${tw`text-lg mt-6`}
 `;
 
 export const NewForm = styled(Form)`
-    width: 80%;
+  ${tw`w-4/5`}
 `;
 
-export const Input = styled(Field)<{error: boolean}>`
-    width: 100%;
-    height: 50px;
-    outline: none;
-    margin-top: 24px;
-    padding: 8px 16px;
-    ${({error}) => error === 1 ? `border: 1px solid red;` : `border-bottom: 1px solid #0154b1;`};
+export const Input = styled(Field)<{ error: boolean }>`
+  ${tw`w-full h-12 outline-none mt-6 py-2 px-4`}
+  ${({ error }) =>
+    error === 1
+      ? tw`border border-red-500`
+      : tw`border-b border-solid border-[#0154b1]`};
 `;
 
 export const Forgot = styled.div`
-    width: 100%;
-    color: #d92f2f;
-    font-style: italic;
-    font-size: 14px;
-    margin-top: 24px;
+  ${tw`w-full text-[#d92f2f] italic text-sm mt-6`}
 `;
 
 export const Button = styled.button`
-    width: 32%;
-    height: 44px;
-    background-color: #0154b1;
-    color: #fff;
-    display: block;
-    border-radius: 6px;
-    padding: 8px 16px;
-    font-weight: bold;
-    margin: 36px auto 0 auto;
-    &:hover {
-        opacity: 0.8;
-    }
+  ${tw`w-1/3 h-11 bg-[#0154b1] text-[#fff] block rounded-md py-2 px-4 font-bold mt-11 mb-5 mx-auto hover:opacity-80`}
 `;
 
 export const Register = styled.div`
-    font-size: 14px;
-    color: green;
-    margin: 12px 0 30px;
-    font-style: italic;
+  ${tw`mb-11 text-green-600 italic text-center cursor-pointer`}
 `;
 
 export const ErrorMsg = styled.div`
-    color: red;
-    margin-top: 8px;
+  ${tw`text-red-500 mt-2`}
 `;
 
 export const SetWidth = styled.div`
-    width: 100%;
+  ${tw`w-full`}
 `;
