@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { COLLECTION_USERS } = require("../config/db");
 const bcrypt = require("bcryptjs");
+const validator = require("validator");
 
 const userSchema = mongoose.Schema(
   {
@@ -14,18 +15,27 @@ const userSchema = mongoose.Schema(
       default:
         "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },
-    name: { type: String, require: true, trim: true },
-    password: { type: String, require: true },
-    phone: { type: String, require: true, trim: true, unique: true },
+    name: { type: String, required: [true, "Name is missing"], trim: true },
+    password: {
+      type: String,
+      required: [true, "Password is missing"],
+      select: false,
+    },
+    phone: {
+      type: String,
+      required: [true, "Password is missing"],
+      trim: true,
+      unique: [true, "Phone number existed"],
+    },
     gender: { type: String, default: "male" },
     dob: { type: Date, default: new Date() },
   },
-  { timestamps: true },
-  { collection: "Users" }
+  { timestamps: true }
 );
 
-userSchema.methods.matchPassword = function (password) {
-  return bcrypt.compareSync(password, this.password);
+userSchema.methods.matchPassword = async function (password) {
+  const user = await Users.findOne({phone: this.phone}).select("password")
+  return bcrypt.compareSync(password, user.password);
 };
 
 userSchema.pre("save", async function (next) {

@@ -6,6 +6,8 @@ const messageSchema = mongoose.Schema(
     roomId: { type: mongoose.Schema.Types.ObjectId, ref: "Rooms" },
     senderId: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
     msg: { type: String, trim: true },
+    imgs: [{ type: String}],
+    files: [{type: mongoose.Schema.Types.Buffer, contentType: String}],
     unSend: { type: Boolean, default: false },
   },
   { timestamps: true }
