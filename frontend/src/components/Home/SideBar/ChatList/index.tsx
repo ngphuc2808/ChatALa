@@ -1,9 +1,8 @@
-import { ChatListArray } from '../../../../utils/dataConfig';
 import ChatPreviewItem from '../ChatPreviewItem';
 import * as S from './ChatList.styled';
 import React from 'react';
 import { useGlobalContext } from '../../../../contexts/globalContext';
-import { ChatMsgArray } from '../../../../utils/dataConfig';
+import { ChatListArray, ChatMsgArray } from '../../../../utils/dataConfig';
 
 interface IChatList {
   selected: number;
