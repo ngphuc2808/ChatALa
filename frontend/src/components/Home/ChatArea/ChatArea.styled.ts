@@ -88,6 +88,7 @@ const ZoomInAnimation = keyframes`${zoomIn}`;
 
 export const ChatAreaMainInputEmojiPicker = styled.div`
   ${tw`absolute rounded-[30px] overflow-hidden`}
+  border: 2px solid gray;
   transform: translate(55px, -230px);
   animation: 0.1s ${ZoomInAnimation};
 `;
