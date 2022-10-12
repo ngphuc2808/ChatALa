@@ -6,20 +6,25 @@ import ChatMsg from './ChatMsg';
 import EmojiPicker, { EmojiStyle, EmojiClickData } from 'emoji-picker-react';
 import MoreOptions from './MoreOptions';
 import { useOutsideClick } from '../../Global/ProcessFunctions';
+import { useGlobalContext } from '../../../contexts/globalContext';
 
 const ChatArea = () => {
   const status = 1;
+
+  const context = useGlobalContext();
+
   const message = useRef<HTMLSpanElement>(null);
+
   const [toggleEmoji, setToggleEmoji] = useState(false);
   const [toggleOption, setToggleOption] = useState(false);
 
-  const handleOutsideClick = () => {
+  const handleEmojiOutsideClick = () => {
     setToggleEmoji(false);
   };
 
-  const EmojiRef = useOutsideClick(handleOutsideClick);
+  const emojiRef = useOutsideClick(handleEmojiOutsideClick);
 
-  const EmojiClicked = (emoData: EmojiClickData, e: MouseEvent) => {
+  const emojiClicked = (emoData: EmojiClickData, e: MouseEvent) => {
     message.current!.innerText = message.current!.innerText + emoData.emoji;
   };
 
@@ -49,20 +54,20 @@ const ChatArea = () => {
       <S.ChatAreaMain>
         <S.ChatAreaMainMsg>
           <S.ChatAreaMainMsgInner>
-            {ChatMsgArray.map((data, index) => (
+            {context.roomMsg?.map((data: any, index: any) => (
               <ChatMsg msg={data.msg} index={index} key={index} />
             ))}
           </S.ChatAreaMainMsgInner>
         </S.ChatAreaMainMsg>
         <S.ChatAreaMainInput>
           {toggleEmoji && (
-            <S.ChatAreaMainInputEmojiPicker ref={EmojiRef}>
+            <S.ChatAreaMainInputEmojiPicker ref={emojiRef}>
               <EmojiPicker
                 skinTonesDisabled={true}
                 emojiStyle={EmojiStyle.TWITTER}
                 height={400}
                 width={400}
-                onEmojiClick={EmojiClicked}
+                onEmojiClick={emojiClicked}
               />
             </S.ChatAreaMainInputEmojiPicker>
           )}
