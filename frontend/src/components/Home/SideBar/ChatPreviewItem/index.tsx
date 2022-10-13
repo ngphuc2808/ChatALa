@@ -3,12 +3,12 @@ import * as S from './ChatPreviewItem.styled';
 import { VscHubot } from 'react-icons/vsc';
 
 interface IChatPreviewItem {
-  avatar: string;
+  avatar?: string;
   bgColor?: string;
   msg: string;
   name?: string;
   id: number;
-  setSelected?: (id: number) => void;
+  setSelected: (id: number) => void;
   onClick: () => void;
 }
 
@@ -19,11 +19,11 @@ const ChatPreviewItem = ({
   bgColor,
   id,
   setSelected,
-  onClick
+  onClick,
 }: IChatPreviewItem) => {
   return (
-    <S.ChatPreviewItem bgColor={bgColor} onClick={onClick}>
-      <S.Wrapper onClick={() => setSelected && setSelected(id)}>
+    <S.ChatPreviewItem bgColor={bgColor} Id={id} onClick={onClick}>
+      <S.Wrapper onClick={() => setSelected(id)}>
         {avatar ? (
           <S.ChatAvatar>
             <Image

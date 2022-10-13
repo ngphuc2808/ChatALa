@@ -2,7 +2,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 
 export const Wrapper = styled.div`
-  ${tw`flex-grow overflow-y-scroll mt-2.5`}
+  ${tw`flex-grow overflow-y-scroll mt-2.5 pr-1`}
 
   &::-webkit-scrollbar-track {
     background-color: #ECF2F7;

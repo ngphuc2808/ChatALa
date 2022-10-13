@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import * as S from './ChatArea.styled';
-import { ChatMsgArray, UserAvatar, UserName } from '../../../utils/dataConfig';
+import { UserAvatar, UserName } from '../../../utils/dataConfig';
 import { useRef, useState } from 'react';
 import ChatMsg from './ChatMsg';
 import EmojiPicker, { EmojiStyle, EmojiClickData } from 'emoji-picker-react';
@@ -13,19 +13,27 @@ const ChatArea = () => {
 
   const context = useGlobalContext();
 
-  const message = useRef<HTMLSpanElement>(null);
-
   const [toggleEmoji, setToggleEmoji] = useState(false);
   const [toggleOption, setToggleOption] = useState(false);
 
+  //chatInput
+  const chatInput = useRef<HTMLSpanElement>(null);
+  const sendMsg = () => {
+    setToggleEmoji(false);
+    const msg = chatInput.current?.innerText;
+    if (msg !== '') {
+      context.setRoomMsg([{ avatar: UserAvatar, msg }, ...context.roomMsg]);
+      chatInput.current!.innerText = '';
+    }
+  };
+
+  //Emoji
   const handleEmojiOutsideClick = () => {
     setToggleEmoji(false);
   };
-
   const emojiRef = useOutsideClick(handleEmojiOutsideClick);
-
   const emojiClicked = (emoData: EmojiClickData, e: MouseEvent) => {
-    message.current!.innerText = message.current!.innerText + emoData.emoji;
+    chatInput.current!.innerText = chatInput.current!.innerText + emoData.emoji;
   };
 
   return (
@@ -54,14 +62,14 @@ const ChatArea = () => {
       <S.ChatAreaMain>
         <S.ChatAreaMainMsg>
           <S.ChatAreaMainMsgInner>
-            {context.roomMsg?.map((data: any, index: any) => (
+            {context.roomMsg?.map((data, index) => (
               <ChatMsg msg={data.msg} index={index} key={index} />
             ))}
           </S.ChatAreaMainMsgInner>
         </S.ChatAreaMainMsg>
         <S.ChatAreaMainInput>
           {toggleEmoji && (
-            <S.ChatAreaMainInputEmojiPicker ref={emojiRef}>
+            <S.ChatAreaMainInputEmojiPicker>
               <EmojiPicker
                 skinTonesDisabled={true}
                 emojiStyle={EmojiStyle.TWITTER}
@@ -73,13 +81,15 @@ const ChatArea = () => {
           )}
           <S.ChatAreaMainInputFile>+</S.ChatAreaMainInputFile>
           <S.ChatAreaMainInputMsg>
-            <S.ChatAreaMainInputEmoji onClick={() => setToggleEmoji(true)} />
+            <S.ChatAreaMainInputEmoji
+              onClick={() => setToggleEmoji(!toggleEmoji)}
+            />
             <S.ChatAreaMainInputText
               username={UserName}
               contentEditable
-              ref={message}
+              ref={chatInput}
             />
-            <S.ChatAreaMainInputSend />
+            <S.ChatAreaMainInputSend onClick={() => sendMsg()} />
           </S.ChatAreaMainInputMsg>
         </S.ChatAreaMainInput>
       </S.ChatAreaMain>
