@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
 `
 
 export const Options = styled.div`
-  ${tw`flex justify-center text-[#00529D] text-[35px] py-1`}
+  ${tw`flex justify-center text-lighter text-[35px] py-1`}
 `
 
 export const AddOption = styled(TiUserAddOutline)`

@@ -27,11 +27,11 @@ export const ChatAreaHeadNameWrapper = styled.div`
 `;
 
 export const ChatAreaHeadName = styled.div`
-  ${tw`font-semibold text-[18px]`}
+  ${tw`font-semibold text-black text-[18px]`}
 `;
 
 export const ChatAreaHeadStatus = styled.div`
-  ${tw`text-[#434343] text-[16px] flex items-center gap-1.5`}
+  ${tw`text-lighter text-[16px] flex items-center gap-1.5`}
 `;
 
 export const ChatAreaHeadStatusIcon = styled(FaCircle)<{ status: number }>`
@@ -40,15 +40,15 @@ export const ChatAreaHeadStatusIcon = styled(FaCircle)<{ status: number }>`
 `;
 
 export const ChatAreaHeadOption = styled(IoMenu)`
-  ${tw`text-[40px] text-[#00529D] hover:cursor-pointer`}
+  ${tw`text-[40px] text-lighter hover:cursor-pointer`}
 `;
 
 export const ChatAreaMain = styled.div`
-  ${tw`flex flex-col flex-grow bg-blue-light px-6 pb-4 pt-0 rounded-[30px]`}
+  ${tw`flex flex-col flex-grow bg-light px-6 pb-4 pt-0 rounded-[30px]`}
 `;
 
 export const ChatAreaMainMsg = styled.div`
-  ${tw`flex-grow overflow-y-scroll h-0 mb-3 rounded-3xl pr-1.5 flex flex-col-reverse`}
+  ${tw`flex-grow overflow-y-scroll overflow-x-hidden h-0 mb-3 rounded-3xl pr-1.5 flex flex-col-reverse`}
 
   &::-webkit-scrollbar-track {
     ${tw`rounded-[10px] bg-transparent`}
@@ -59,7 +59,7 @@ export const ChatAreaMainMsg = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    ${tw`rounded-[50px] bg-[#c9d9e5]`}
+    ${tw`rounded-[50px] bg-lighter`}
   }
 `;
 
@@ -83,10 +83,10 @@ export const ChatChatAreaFilePreviewInner = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    ${tw`rounded-[50px] bg-gray-400`}
+    ${tw`rounded-[50px] bg-light`}
   }
   &::-webkit-scrollbar-thumb:hover {
-    ${tw`bg-gray-500`}
+    ${tw`bg-lighter`}
   }
 `;
 
@@ -95,7 +95,7 @@ export const ChatAreaMainInput = styled.div`
 `;
 
 export const ChatAreaMainInputFile = styled.label`
-  ${tw`flex flex-shrink-0 shadow text-[#002B98] bg-[#A6BBF1] rounded-full w-12 h-12 items-center justify-center text-4xl hover:cursor-pointer hover:opacity-80`}
+  ${tw`flex flex-shrink-0 shadow text-lighter bg-primary rounded-full w-12 h-12 items-center justify-center text-4xl hover:cursor-pointer hover:opacity-80`}
 `;
 
 export const ChatAreaMainInputMsg = styled.div`
@@ -103,7 +103,7 @@ export const ChatAreaMainInputMsg = styled.div`
 `;
 
 export const ChatAreaMainInputEmoji = styled(BsEmojiLaughingFill)`
-  ${tw`text-[#5A7FA0] text-4xl hover:cursor-pointer hover:text-[#003BD2] transition-colors`}
+  ${tw`text-lighter text-4xl hover:cursor-pointer hover:text-[#003BD2] transition-colors`}
 `;
 
 const ZoomInAnimation = keyframes`${zoomIn}`;
@@ -131,14 +131,14 @@ export const ChatAreaMainInputText = styled.span<{ username: string }>`
   }
 
   &::-webkit-scrollbar-thumb {
-    ${tw`rounded-[50px] bg-[#c9d9e5]`}
+    ${tw`rounded-[50px] bg-lighter`}
   }
 `;
 
 export const ChatAreaMainInputButtonSend = styled.button`
-  ${tw`bg-[#A6BBF1] p-2 rounded-full text-[20px] ml-2.5 outline-none`}
+  ${tw`bg-lighter text-primary hover:text-secondary p-2 rounded-full ml-2.5 outline-none`}
 `;
 
 export const ChatAreaMainInputSendIcon = styled(RiSendPlaneFill)`
-  ${tw`text-[#002B98] hover:text-[#003BD2]`}
+  ${tw`text-[20px]`}
 `;

@@ -2,19 +2,17 @@ import styled from "styled-components";
 import tw from "twin.macro";
 
 export const Wrapper = styled.div`
-  ${tw`flex-grow overflow-y-scroll mt-2.5 pr-1`}
+  ${tw`overflow-y-scroll mt-2.5 pr-1`}
 
   &::-webkit-scrollbar-track {
-    background-color: #ECF2F7;
-    border-radius: 10px;
+    ${tw`bg-transparent rounded-[10px]`}
   }
 
   &::-webkit-scrollbar {
-    width: 5px;
+    ${tw`w-[5px]`}
   }
 
   &::-webkit-scrollbar-thumb {
-    border-radius: 50px;
-    background-color: #C9D9E5
+    ${tw`bg-light rounded-[50px]`}
   }
 `

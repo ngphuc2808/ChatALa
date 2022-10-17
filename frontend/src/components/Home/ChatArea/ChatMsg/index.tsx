@@ -27,14 +27,6 @@ const ChatMsg = ({ msg, index }: IChatMsg) => {
     </S.ChatMsgLeft>
   ) : (
     <S.ChatMsgRight>
-      <S.ChatMsgAvatar>
-        <Image
-          src={UserAvatar}
-          alt='avatar'
-          layout='fill'
-          objectFit='contain'
-        />
-      </S.ChatMsgAvatar>
       <S.ChatMsgTextTail />
       <S.ChatMsgTextWrapper>
         <S.ChatMsgText>{msg}</S.ChatMsgText>
