@@ -1,12 +1,20 @@
 import Image from 'next/image';
 import * as S from './ChatArea.styled';
 import { UserAvatar, UserName } from '../../../utils/dataConfig';
-import { useRef, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import ChatMsg from './ChatMsg';
 import EmojiPicker, { EmojiStyle, EmojiClickData } from 'emoji-picker-react';
 import MoreOptions from './MoreOptions';
 import { useOutsideClick } from '../../Global/ProcessFunctions';
 import { useGlobalContext } from '../../../contexts/globalContext';
+import * as Yup from 'yup';
+import { Form, Formik } from 'formik';
+import FilePreview from './FilePreview';
+
+type FormValues = {
+  msg: string;
+  files: Array<File>;
+};
 
 const ChatArea = () => {
   const status = 1;
@@ -18,22 +26,60 @@ const ChatArea = () => {
 
   //chatInput
   const chatInput = useRef<HTMLSpanElement>(null);
-  const sendMsg = () => {
-    setToggleEmoji(false);
-    const msg = chatInput.current?.innerText;
-    if (msg !== '') {
-      context.setRoomMsg([{ avatar: UserAvatar, msg }, ...context.roomMsg]);
-      chatInput.current!.innerText = '';
-    }
-  };
 
   //Emoji
   const handleEmojiOutsideClick = () => {
     setToggleEmoji(false);
   };
   const emojiRef = useOutsideClick(handleEmojiOutsideClick);
-  const emojiClicked = (emoData: EmojiClickData, e: MouseEvent) => {
+  const emojiClicked = (emoData: EmojiClickData, setFieldValue: any) => {
     chatInput.current!.innerText = chatInput.current!.innerText + emoData.emoji;
+    setFieldValue('msg', chatInput.current?.innerText);
+  };
+
+  //Form
+  const initialValues = {
+    msg: '',
+    files: [],
+  };
+
+  const validationSchema = Yup.object().shape({
+    msg: Yup.string(),
+    files: Yup.mixed(),
+  });
+
+  const fileChoosen = (
+    e: FormEvent<HTMLInputElement>,
+    values: FormValues,
+    setFieldValue: any
+  ) => {
+    if (e.currentTarget.files) {
+      const newFiles = e.currentTarget.files;
+
+      const files = values.files;
+      for (let i = 0; i < newFiles.length; i++) {
+        files.push(newFiles[i]);
+      }
+
+      setFieldValue('files', files);
+    }
+  };
+
+  const onSubmit = (values: FormValues, { setFieldValue }: any) => {
+    if (values.msg !== '' || values.files.length > 0) {
+      setToggleEmoji(false);
+      if (values.msg !== '') {
+        context.setRoomMsg([
+          { avatar: UserAvatar, msg: values.msg },
+          ...context.roomMsg,
+        ]);
+        chatInput.current!.innerText = '';
+      }
+
+      console.log(values);
+      setFieldValue('msg', '');
+      setFieldValue('files', []);
+    }
   };
 
   return (
@@ -67,31 +113,72 @@ const ChatArea = () => {
             ))}
           </S.ChatAreaMainMsgInner>
         </S.ChatAreaMainMsg>
-        <S.ChatAreaMainInput>
-          {toggleEmoji && (
-            <S.ChatAreaMainInputEmojiPicker>
-              <EmojiPicker
-                skinTonesDisabled={true}
-                emojiStyle={EmojiStyle.TWITTER}
-                height={400}
-                width={400}
-                onEmojiClick={emojiClicked}
-              />
-            </S.ChatAreaMainInputEmojiPicker>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          validationSchema={validationSchema}
+        >
+          {({ values, setFieldValue }) => (
+            <Form>
+              {values.files.length > 0 && (
+                <S.ChatChatAreaFilePreview>
+                  <S.ChatChatAreaFilePreviewInner>
+                    {values.files.map((data, index) => (
+                      <FilePreview
+                        files={values.files}
+                        setFieldValue={setFieldValue}
+                        index={index}
+                        key={index}
+                      />
+                    ))}
+                  </S.ChatChatAreaFilePreviewInner>
+                </S.ChatChatAreaFilePreview>
+              )}
+              <S.ChatAreaMainInput>
+                {toggleEmoji && (
+                  <S.ChatAreaMainInputEmojiPicker ref={emojiRef}>
+                    <EmojiPicker
+                      skinTonesDisabled={true}
+                      emojiStyle={EmojiStyle.TWITTER}
+                      height={400}
+                      width={400}
+                      onEmojiClick={(emoData) =>
+                        emojiClicked(emoData, setFieldValue)
+                      }
+                    />
+                  </S.ChatAreaMainInputEmojiPicker>
+                )}
+                <S.ChatAreaMainInputFile htmlFor='fileInput'>
+                  +
+                </S.ChatAreaMainInputFile>
+                <input
+                  type='file'
+                  id='fileInput'
+                  hidden
+                  multiple
+                  onChange={(e) => fileChoosen(e, values, setFieldValue)}
+                  // onClick={(e) => e.target. = null}
+                />
+                <S.ChatAreaMainInputMsg>
+                  <S.ChatAreaMainInputEmoji
+                    onClick={() => setToggleEmoji(true)}
+                  />
+                  <S.ChatAreaMainInputText
+                    username={UserName}
+                    contentEditable
+                    ref={chatInput}
+                    onInput={(e) =>
+                      setFieldValue('msg', e.currentTarget.innerText)
+                    }
+                  />
+                  <S.ChatAreaMainInputButtonSend type='submit'>
+                    <S.ChatAreaMainInputSendIcon />
+                  </S.ChatAreaMainInputButtonSend>
+                </S.ChatAreaMainInputMsg>
+              </S.ChatAreaMainInput>
+            </Form>
           )}
-          <S.ChatAreaMainInputFile>+</S.ChatAreaMainInputFile>
-          <S.ChatAreaMainInputMsg>
-            <S.ChatAreaMainInputEmoji
-              onClick={() => setToggleEmoji(!toggleEmoji)}
-            />
-            <S.ChatAreaMainInputText
-              username={UserName}
-              contentEditable
-              ref={chatInput}
-            />
-            <S.ChatAreaMainInputSend onClick={() => sendMsg()} />
-          </S.ChatAreaMainInputMsg>
-        </S.ChatAreaMainInput>
+        </Formik>
       </S.ChatAreaMain>
     </S.ChatArea>
   );
