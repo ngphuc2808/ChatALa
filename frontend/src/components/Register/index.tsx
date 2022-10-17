@@ -1,25 +1,44 @@
 import FormTemplate from "../Global/FormTemplate"
+import { authentication } from "../Global/Firebase";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { NumberPhoneArea } from "../../utils/dataConfig";
+
 import { Formik, ErrorMessage } from "formik"
 import Link from "next/link";
+import { useRouter } from "next/router";
 import * as S from "./Register.styled";
 import * as Yup from "yup";
+import { ChangeEvent } from "react";
+import { useGlobalContext } from "../../contexts/globalContext";
+
+declare global {
+    interface Window {
+        recaptchaVerifier: any
+        confirmationResult: any
+    }
+}
+
+type FormValue = {
+    name: string,
+    phoneNumber: string,
+    password: string,
+    confirmPassword: string,
+    phomeNumberCode: string,
+} 
 
 const Register = () => {
-    const initialValues = {
-        name: '',
-        phoneNumber: '',
-        password: '',
-        confirmPassword: ''
-    }
-    const validationSchema = Yup.object().shape({
-        name: Yup.string()
-                .required('This field is required.')
-                .min(3, 'Name must be at least 3 characters.')
-                .matches( 
-                    /^[a-z ,.'-]+$/i, 
-                    'Please enter the correct name format.'
-                ),
+    const context = useGlobalContext();
+    const router = useRouter();
 
+    const initialValues = {
+        name: context.registerInfo.name,
+        phoneNumber: context.registerInfo.phoneNumber,
+        password: context.registerInfo.password ,
+        confirmPassword: '',
+        phomeNumberCode: '+84',
+    }
+
+    const validationSchema = Yup.object().shape({
         phoneNumber: Yup.string()
                 .required('This field is required.')
                 .matches(
@@ -38,6 +57,38 @@ const Register = () => {
                 .required('This field is required.')
                 .oneOf([Yup.ref('password'), null], 'Passwords must match.'),
     })
+
+    const requestOTP = async (newPhoneNumber: string) => {
+        window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+            'size': 'invisible',
+            'callback': (response: string) => {}
+        }, authentication);
+
+        let appVerifier = window.recaptchaVerifier
+        await signInWithPhoneNumber(authentication, newPhoneNumber, appVerifier).then((confirmationResult) => {
+            window.confirmationResult = confirmationResult;
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
+    const handleSubmit = async (values: FormValue, { resetForm }: any) => {
+        console.log(values)
+        const newPhoneNumber = values.phomeNumberCode + values.phoneNumber.substring(1);
+        await requestOTP(newPhoneNumber);
+
+        context.setRegisterInfo(values);
+
+        resetForm();
+
+        router.push({
+            pathname: '/otp',
+            query: { 
+                phoneVerify: 'otp'
+            }
+        }, '/otp');
+    }
+
     return (
         <FormTemplate>
             <S.Suggest>
@@ -46,22 +97,29 @@ const Register = () => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={(data) => {
-                    console.log("submits: ", data)
-                }}
+                onSubmit={handleSubmit}
             >
-                {({ errors, touched }) => (
+                {({ errors, touched, setFieldValue }) => (
                     <S.NewForm>
                         <S.SetWidth>
                             <S.InputGroup
                                 error={errors.phoneNumber && touched.phoneNumber ? true : false}
                             >
-                                <S.Select as="select" name="color">
-                                    <option value="vietnam">+ 84</option>
+                                <S.Select name="phomeNumberCode" onChange={(e: ChangeEvent) => {
+                                    const input = e.target as HTMLInputElement
+                                    setFieldValue('phomeNumberCode', input.value);
+                                    }}
+                                >
+                                    {
+                                        NumberPhoneArea.map((data, index) => (
+                                            <option key={index} value={data.dial_code}>{data.dial_code}</option>
+                                        ))
+                                    }
                                 </S.Select>
                                 <S.ShortInputDiv>
+                                    <div id="recaptcha-container"></div>
                                     <S.ShortInput
-                                        placeholder='Phone number'
+                                        placeholder="Phone number"
                                         name="phoneNumber"
                                         error={errors.phoneNumber && touched.phoneNumber ? 1 : 0}
                                     />

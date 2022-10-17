@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Form, Field } from "formik";
 import tw from "twin.macro";
+import React from "react";
 
 export const Suggest = styled.span`
   ${tw`text-lg mt-6`}
@@ -16,7 +17,7 @@ export const InputGroup = styled.div<{ error: boolean }>`
 `;
 
 export const ShortInputDiv = styled.div`
-  ${tw`w-[85%] h-full`}
+  ${tw`w-[80%] h-full`}
 `;
 
 export const ShortInput = styled(Field)<{ error: boolean }>`
@@ -35,8 +36,8 @@ export const Input = styled(Field)<{ error: boolean }>`
       : tw`border-b border-solid border-[#0154b1]`};
 `;
 
-export const Select = styled(Field)`
-  ${tw`w-[10%] h-full italic outline-none py-2 mr-3 border-b border-[#0154b1] flex-1 cursor-pointer`}
+export const Select = styled.select`
+  ${tw`w-[10%] h-full italic outline-none py-2 mr-3 border-b border-[#0154b1] flex-1 cursor-pointer max-h-32`}
 `;
 
 export const Button = styled.button`
