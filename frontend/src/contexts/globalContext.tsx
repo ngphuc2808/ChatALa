@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState } from 'react';
+import { messageType } from '../utils/types';
 
 export type GlobalContent = {
-  roomMsg: any;
+  roomMsg: Array<messageType>;
   registerInfo: any;
   setRoomMsg: (value: any) => void;
   setRegisterInfo: (value: any) => void;

@@ -58,6 +58,17 @@ const SettingInfo = ({
     }
   };
 
+  const onSubmit = (values: {
+    name: string;
+    gender: string;
+    dob: string | Date;
+    avatar: string;
+  }) => {
+    const newData = values;
+    newData.name = values.name.trim().replace(/ +/g, " ");
+    console.log("submits: ", newData);
+  };
+
   return (
     <S.Modal>
       <S.ModalOverlay onClick={() => toggleEvent()} />
@@ -67,6 +78,7 @@ const SettingInfo = ({
           onSubmit={(data) => {
             console.log("submits: ", data);
           }}
+          onSubmit={onSubmit}
         >
           {({ setFieldValue, values, errors, touched }) => (
             <>

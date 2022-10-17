@@ -1,10 +1,10 @@
-import Image from "next/image";
-import { useState } from "react";
-import { HiOutlineX, HiPencil } from "react-icons/hi";
-import { UserAvatar, UserName } from "../../../../utils/dataConfig";
+import Image from 'next/image';
+import { useState } from 'react';
+import { HiOutlineX, HiPencil } from 'react-icons/hi';
+import { UserAvatar, UserName } from '../../../../utils/dataConfig';
 
-import * as S from "./UserInfo.styled";
-import SettingInfo from "../SettingInfo";
+import * as S from './UserInfo.styled';
+import SettingInfo from '../SettingInfo';
 
 interface IUserInfo {
   phoneNumber: string;
@@ -38,7 +38,7 @@ const UserInfo = ({
               <HiOutlineX onClick={() => setSeeAvatar(false)} />
             </S.Title>
             <S.Figure>
-              <Image src={UserAvatar} layout="fill" objectFit="contain" />
+              <Image src={UserAvatar} layout='fill' objectFit='contain' />
             </S.Figure>
           </S.ModalAvatarBody>
         </S.ModalAvatar>
@@ -52,10 +52,10 @@ const UserInfo = ({
               <HiOutlineX onClick={() => setUserInfoModal(false)} />
             </S.Title>
             <S.Banner>
-              <Image src={UserAvatar} layout="fill" objectFit="cover" />
+              <Image src={UserAvatar} layout='fill' objectFit='cover' />
             </S.Banner>
             <S.Avatar onClick={() => setSeeAvatar(true)}>
-              <Image src={UserAvatar} layout="fill" objectFit="contain" />
+              <Image src={UserAvatar} layout='fill' objectFit='contain' />
             </S.Avatar>
           </S.Header>
           <S.Content>
@@ -79,8 +79,8 @@ const UserInfo = ({
           {editInfo && (
             <SettingInfo
               name={UserName}
-              gender="male"
-              dob="01/01/2001"
+              gender='male'
+              dob='01/01/2001'
               avatar={UserAvatar}
               setEditInfo={setEditInfo}
             />

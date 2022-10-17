@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect } from 'react';
 
 export const shorterText = (text: string, limit: number = 35) => {
   if (!text) return text;
@@ -6,7 +6,16 @@ export const shorterText = (text: string, limit: number = 35) => {
   let _string = text.trim();
   if (_string.length <= limit) return _string;
   _string = _string.substring(0, limit);
-  return _string.substring(0, _string.lastIndexOf(" ")) + "...";
+  return _string.substring(0, _string.lastIndexOf(' ')) + '...';
+};
+
+export const shorterChars = (text: string, limit: number = 35) => {
+  if (!text) return text;
+
+  let _string = text.trim();
+  if (_string.length <= limit) return _string;
+  _string = _string.substring(0, limit);
+  return _string + '...';
 };
 
 export const useOutsideClick = (callback: () => void) => {
@@ -18,9 +27,9 @@ export const useOutsideClick = (callback: () => void) => {
         callback();
       }
     };
-    document.addEventListener("mousedown", handleClick);
+    document.addEventListener('mousedown', handleClick);
     return () => {
-      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener('mousedown', handleClick);
     };
   }, [ref]);
   return ref;
@@ -30,9 +39,9 @@ export const useOutsideClick = (callback: () => void) => {
 export const createImage = (url: any) => {
   return new Promise((resolve, reject) => {
     const image = new Image();
-    image.addEventListener("load", () => resolve(image));
-    image.addEventListener("error", (error) => reject(error));
-    image.setAttribute("crossOrigin", "anonymous");
+    image.addEventListener('load', () => resolve(image));
+    image.addEventListener('error', (error) => reject(error));
+    image.setAttribute('crossOrigin', 'anonymous');
     image.src = url;
   });
 };
@@ -59,8 +68,8 @@ export default async function getCroppedImg(
   flip = { horizontal: false, vertical: false }
 ) {
   const image: any = await createImage(imageSrc);
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
 
   if (!ctx) {
     return null;
@@ -98,8 +107,8 @@ export default async function getCroppedImg(
 
   return new Promise((resolve, reject) => {
     canvas.toBlob((file: any) => {
-      file.name = "cropped.jpeg";
+      file.name = 'cropped.jpeg';
       resolve({ file: file, url: URL.createObjectURL(file) });
-    }, "image/jpeg");
+    }, 'image/jpeg');
   });
 }

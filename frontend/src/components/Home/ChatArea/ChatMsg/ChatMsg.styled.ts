@@ -1,8 +1,14 @@
-import styled from "styled-components";
-import tw from "twin.macro";
+import styled from 'styled-components';
+import tw from 'twin.macro';
+import { FiMoreHorizontal } from 'react-icons/fi';
 
 export const ChatMsg = styled.div`
   ${tw`flex items-end my-5`}
+`;
+
+export const ChatMsgTextWrapper = styled.div`
+  ${tw`relative flex items-center`}
+  width: fit-content;
 `;
 
 export const ChatMsgText = styled.div`
@@ -13,18 +19,28 @@ export const ChatMsgTextTail = styled.div`
   ${tw`absolute w-[30px] h-[30px] rounded-full`}
 `;
 
+export const ChatMsgMoreIcon = styled(FiMoreHorizontal)`
+  ${tw`relative mr-3.5 text-[20px] text-[#82E8FF] cursor-pointer`}
+  visibility: hidden;
+`;
+
+export const ChatMsgMoreIconWrapper = styled.div`
+${tw`relative`}
+`
+
 export const ChatMsgLeft = styled(ChatMsg)`
   ${tw`relative`}
+
   ${ChatMsgText} {
     ${tw`bg-[#E6E9EA] ml-2 rounded-bl-[0]`}
   }
-  ${ChatMsgTextTail}{
+  ${ChatMsgTextTail} {
     ${tw`bg-[#E6E9EA] bottom-[-5px] left-[40px]`}
     &::before {
-      content: "";
+      content: '';
       border-radius: 100%;
       position: absolute;
-      background-color: #75A6C2;
+      background-color: #75a6c2;
       height: 50px;
       width: 50px;
       left: -30px;
@@ -35,16 +51,26 @@ export const ChatMsgLeft = styled(ChatMsg)`
 
 export const ChatMsgRight = styled(ChatMsg)`
   ${tw`relative flex-row-reverse`}
-  ${ChatMsgText} {
-    ${tw`bg-[#82E8FF] mr-2 rounded-br-[0]`}
+
+  &:hover {
+    ${ChatMsgMoreIcon} {
+      visibility: visible;
+    }
   }
-  ${ChatMsgTextTail}{
+
+  ${ChatMsgTextWrapper} {
+    ${tw`flex flex-row-reverse w-full`}
+  }
+  ${ChatMsgText} {
+    ${tw`bg-[#82E8FF] mr-2 rounded-br-[0] max-w-[75%]`}
+  }
+  ${ChatMsgTextTail} {
     ${tw`bg-[#82E8FF] bottom-[-5px] right-[40px]`}
     &::before {
-      content: "";
+      content: '';
       border-radius: 100%;
       position: absolute;
-      background-color: #75A6C2;
+      background-color: #75a6c2;
       height: 50px;
       width: 50px;
       right: -30px;

@@ -1,14 +1,20 @@
-import { ChatListArray } from "../../../../utils/dataConfig";
-import ChatPreviewItem from "../ChatPreviewItem";
-import * as S from "./ChatList.styled";
-import React, { Dispatch, SetStateAction } from "react";
+import ChatPreviewItem from '../ChatPreviewItem';
+import * as S from './ChatList.styled';
+import React from 'react';
+import { useGlobalContext } from '../../../../contexts/globalContext';
+import { ChatListArray, ChatMsgArray } from '../../../../utils/dataConfig';
 
 interface IChatList {
-  selected: number,
-  setSelected: Dispatch<SetStateAction<number>>
+  selected: number;
+  setSelected: (num: number) => void;
 }
 
-const ChatList = ({selected, setSelected} : IChatList) => {
+const ChatList = ({ selected, setSelected }: IChatList) => {
+  const context = useGlobalContext();
+
+  const roomSelect = (index: number) => {
+    context.setRoomMsg(ChatMsgArray[index]);
+  };
 
   return (
     <S.Wrapper>
@@ -19,8 +25,9 @@ const ChatList = ({selected, setSelected} : IChatList) => {
             msg={data.msg}
             name={data.name}
             id={index}
-            bgColor={selected === index ? "#AAC4FF" : undefined}
+            bgColor={selected === index ? '#AAC4FF' : undefined}
             setSelected={setSelected}
+            onClick={() => roomSelect(index)}
           />
         </React.Fragment>
       ))}
