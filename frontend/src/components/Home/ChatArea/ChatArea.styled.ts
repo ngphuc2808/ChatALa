@@ -1,10 +1,10 @@
-import styled, { keyframes } from "styled-components";
-import tw from "twin.macro";
-import { FaCircle } from "react-icons/fa";
-import { IoMenu } from "react-icons/io5";
-import { BsEmojiLaughingFill } from "react-icons/bs";
-import { RiSendPlaneFill } from "react-icons/ri";
-import { zoomIn } from "react-animations";
+import styled, { keyframes } from 'styled-components';
+import tw from 'twin.macro';
+import { FaCircle } from 'react-icons/fa';
+import { IoMenu } from 'react-icons/io5';
+import { BsEmojiLaughingFill } from 'react-icons/bs';
+import { RiSendPlaneFill } from 'react-icons/ri';
+import { zoomIn } from 'react-animations';
 export const ChatArea = styled.div`
   ${tw`relative bg-[#C9D9E5] shadow-md rounded-[30px] flex-grow flex flex-col`}
 `;
@@ -49,7 +49,7 @@ export const ChatAreaMain = styled.div`
 `;
 
 export const ChatAreaMainMsg = styled.div`
-  ${tw`flex-grow overflow-y-scroll h-0 mb-5 rounded-3xl pr-1.5 flex flex-col-reverse`}
+  ${tw`flex-grow overflow-y-scroll h-0 mb-3 rounded-3xl pr-1.5 flex flex-col-reverse`}
 
   &::-webkit-scrollbar-track {
     ${tw`rounded-[10px] bg-transparent`}
@@ -68,11 +68,34 @@ export const ChatAreaMainMsgInner = styled.div`
   ${tw`flex flex-col-reverse`}
 `;
 
+export const ChatChatAreaFilePreview = styled.div`
+  ${tw`flex rounded-[10px] pb-1 bg-[#E6E9EA] mb-1.5 overflow-hidden`}
+`;
+
+export const ChatChatAreaFilePreviewInner = styled.div`
+  ${tw`flex flex-grow p-2 pt-3.5 w-0 overflow-x-auto pb-2 z-0`}
+
+  &::-webkit-scrollbar-track {
+    ${tw`rounded-[10px] bg-transparent`}
+  }
+
+  &::-webkit-scrollbar {
+    ${tw`h-[5px]`}
+  }
+
+  &::-webkit-scrollbar-thumb {
+    ${tw`rounded-[50px] bg-gray-400`}
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    ${tw`bg-gray-500`}
+  }
+`;
+
 export const ChatAreaMainInput = styled.div`
   ${tw`relative flex items-center`}
 `;
 
-export const ChatAreaMainInputFile = styled.div`
+export const ChatAreaMainInputFile = styled.label`
   ${tw`flex flex-shrink-0 shadow text-[#002B98] bg-[#A6BBF1] rounded-full w-12 h-12 items-center justify-center text-4xl hover:cursor-pointer hover:opacity-80`}
 `;
 
@@ -97,7 +120,7 @@ export const ChatAreaMainInputText = styled.span<{ username: string }>`
   ${tw`flex-grow outline-none bg-transparent text-xl ml-2.5 w-1 overflow-auto max-h-24 whitespace-normal hover:cursor-text`}
 
   &:empty::before {
-    content: "Write something to ${({ username }) => username}...";
+    content: 'Write something to ${({ username }) => username}...';
     ${tw`cursor-text text-gray-400`}
   }
   &::-webkit-scrollbar-track {
@@ -113,6 +136,10 @@ export const ChatAreaMainInputText = styled.span<{ username: string }>`
   }
 `;
 
-export const ChatAreaMainInputSend = styled(RiSendPlaneFill)`
-  ${tw`bg-[#A6BBF1] p-2 rounded-full text-[#002B98] text-4xl hover:cursor-pointer hover:text-[#003BD2] transition-colors text-center ml-2.5`}
+export const ChatAreaMainInputButtonSend = styled.button`
+  ${tw`bg-[#A6BBF1] p-2 rounded-full text-[20px] ml-2.5 outline-none`}
+`;
+
+export const ChatAreaMainInputSendIcon = styled(RiSendPlaneFill)`
+  ${tw`text-[#002B98] hover:text-[#003BD2]`}
 `;
