@@ -42,13 +42,6 @@ const SettingInfo = ({
     avatar: avatar || "",
   };
 
-  const validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .min(3, "Name must be at least 3 characters.")
-      .matches(/^([^0-9]*)$/, "Please enter the correct name format.")
-      .required("This field is required."),
-  });
-
   const toggleEvent = () => {
     setEditInfo(false);
   };
@@ -71,11 +64,8 @@ const SettingInfo = ({
       <S.ModalBody>
         <Formik
           initialValues={initialValues}
-          validationSchema={validationSchema}
           onSubmit={(data) => {
-            const newData = data;
-            newData.name = data.name.trim().replace(/ +/g, " ");
-            console.log("submits: ", newData);
+            console.log("submits: ", data);
           }}
         >
           {({ setFieldValue, values, errors, touched }) => (

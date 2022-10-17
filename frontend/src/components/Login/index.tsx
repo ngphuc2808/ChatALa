@@ -61,7 +61,6 @@ const Login = () => {
         )}
       </Formik>
       <S.Register>
-        {/* eslint-disable-next-line react/no-unescaped-entities */}
         <Link href='/register'>New here? Let's Sign Up!</Link>
       </S.Register>
     </FormTemplate>
