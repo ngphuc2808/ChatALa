@@ -37,15 +37,8 @@ export const ChatMsgLeft = styled(ChatMsg)`
   ${ChatMsgTextTail} {
     ${tw`bg-[#E6E9EA] bottom-[-5px] left-[40px]`}
     &::before {
+      ${tw`rounded-full absolute bg-blue-light h-[50px] w-[50px] left-[-30px] bottom-[-3px]`}
       content: '';
-      border-radius: 100%;
-      position: absolute;
-      background-color: #75a6c2;
-      height: 50px;
-      width: 50px;
-      left: -30px;
-      bottom: -3px;
-    }
   }
 `;
 
@@ -67,14 +60,8 @@ export const ChatMsgRight = styled(ChatMsg)`
   ${ChatMsgTextTail} {
     ${tw`bg-[#82E8FF] bottom-[-5px] right-[40px]`}
     &::before {
+      ${tw`rounded-full absolute bg-blue-light h-[50px] w-[50px] right-[-30px] bottom-[-3px]`}
       content: '';
-      border-radius: 100%;
-      position: absolute;
-      background-color: #75a6c2;
-      height: 50px;
-      width: 50px;
-      right: -30px;
-      bottom: -3px;
     }
   }
 `;

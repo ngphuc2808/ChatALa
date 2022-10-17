@@ -5,7 +5,7 @@ import AddFriend from './AddFriend';
 import { useGlobalContext } from '../../../../contexts/globalContext';
 
 interface ITopNav {
-  setSelected: () => void;
+  setSelected: (number: number) => void;
 }
 
 const TopNav = ({ setSelected }: ITopNav) => {
@@ -19,7 +19,7 @@ const TopNav = ({ setSelected }: ITopNav) => {
       </S.Options>
       <ChatPreviewItem
         id={-2}
-        bgColor='#B1B2FF'
+        active={false}
         msg='Halo halo niece and nephew, today uncle Roger'
         setSelected={setSelected}
         onClick={() => context.setRoomMsg([])}

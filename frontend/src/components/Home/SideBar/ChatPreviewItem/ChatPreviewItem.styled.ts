@@ -22,8 +22,8 @@ export const Wrapper = styled.div`
   ${tw`flex px-3 py-2.5 items-center relative w-full`}
 `;
 
-export const ChatPreviewItem = styled.div<{ bgColor?: string; Id?: number }>`
+export const ChatPreviewItem = styled.div<{ active?: boolean; Id?: number }>`
   ${tw`flex items-center relative hover:cursor-pointer hover:bg-[#d2daff] rounded-[20px]`}
-  ${({ bgColor }) => bgColor && `background-color: ${bgColor}`}
-  ${({ Id }) => Id !== -2 && `${tw`my-1`}`}
+  ${({ active }) => active && tw`bg-[#AAC4FF]`}
+  ${({ Id }) => (Id !== -2 ? tw`my-1` : tw`bg-[#B1B2FF]`)}
 `;

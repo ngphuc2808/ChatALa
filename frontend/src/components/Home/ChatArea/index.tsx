@@ -97,8 +97,8 @@ const ChatArea = () => {
           <S.ChatAreaHeadNameWrapper>
             <S.ChatAreaHeadName>{UserName}</S.ChatAreaHeadName>
             <S.ChatAreaHeadStatus>
-              <S.ChatAreaHeadStatusIcon status={status} />
               {status ? 'Online' : 'Offline'}
+              <S.ChatAreaHeadStatusIcon status={status} />
             </S.ChatAreaHeadStatus>
           </S.ChatAreaHeadNameWrapper>
         </S.ChatAreaHeadInfo>

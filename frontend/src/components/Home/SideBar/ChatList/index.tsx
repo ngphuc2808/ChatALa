@@ -25,7 +25,7 @@ const ChatList = ({ selected, setSelected }: IChatList) => {
             msg={data.msg}
             name={data.name}
             id={index}
-            bgColor={selected === index ? '#AAC4FF' : undefined}
+            active={selected === index}
             setSelected={setSelected}
             onClick={() => roomSelect(index)}
           />

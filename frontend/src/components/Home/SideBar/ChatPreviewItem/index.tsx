@@ -4,7 +4,7 @@ import { VscHubot } from 'react-icons/vsc';
 
 interface IChatPreviewItem {
   avatar?: string;
-  bgColor?: string;
+  active: boolean;
   msg: string;
   name?: string;
   id: number;
@@ -16,13 +16,13 @@ const ChatPreviewItem = ({
   avatar,
   msg,
   name = 'Chat Bot',
-  bgColor,
+  active,
   id,
   setSelected,
   onClick,
 }: IChatPreviewItem) => {
   return (
-    <S.ChatPreviewItem bgColor={bgColor} Id={id} onClick={onClick}>
+    <S.ChatPreviewItem active={active} Id={id} onClick={onClick}>
       <S.Wrapper onClick={() => setSelected(id)}>
         {avatar ? (
           <S.ChatAvatar>

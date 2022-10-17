@@ -6,7 +6,7 @@ import { BsEmojiLaughingFill } from 'react-icons/bs';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import { zoomIn } from 'react-animations';
 export const ChatArea = styled.div`
-  ${tw`relative bg-[#C9D9E5] shadow-md rounded-[30px] flex-grow flex flex-col`}
+  ${tw`relative bg-secondary shadow-md rounded-[30px] flex-grow flex flex-col`}
 `;
 
 export const ChatAreaHead = styled.div`
@@ -18,7 +18,7 @@ export const ChatAreaHeadInfo = styled.div`
 `;
 
 export const ChatAreaHeadAvatar = styled.figure`
-  ${tw`relative w-[60px] h-[60px] rounded-full overflow-hidden flex-shrink-0`}
+  ${tw`relative w-[50px] h-[50px] rounded-full overflow-hidden flex-shrink-0`}
   border: 2px solid black;
 `;
 
@@ -27,15 +27,15 @@ export const ChatAreaHeadNameWrapper = styled.div`
 `;
 
 export const ChatAreaHeadName = styled.div`
-  ${tw`font-semibold text-[22px]`}
+  ${tw`font-semibold text-[18px]`}
 `;
 
 export const ChatAreaHeadStatus = styled.div`
-  ${tw`text-[#434343] text-[20px] flex items-center gap-1.5`}
+  ${tw`text-[#434343] text-[16px] flex items-center gap-1.5`}
 `;
 
 export const ChatAreaHeadStatusIcon = styled(FaCircle)<{ status: number }>`
-  ${tw`mt-[-2px] text-[15px]`}
+  ${tw`mt-[-2px] text-[12px]`}
   ${({ status }) => (status === 1 ? `color: #04BF00` : `color: #BF0000`)}
 `;
 
@@ -44,8 +44,7 @@ export const ChatAreaHeadOption = styled(IoMenu)`
 `;
 
 export const ChatAreaMain = styled.div`
-  ${tw`flex flex-col flex-grow bg-[#75A6C2] px-6 pb-4 pt-0 rounded-[30px]`}
-  box-shadow: 0 0 4px gray;
+  ${tw`flex flex-col flex-grow bg-blue-light px-6 pb-4 pt-0 rounded-[30px]`}
 `;
 
 export const ChatAreaMainMsg = styled.div`

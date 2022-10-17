@@ -6,7 +6,7 @@ import { FiLogOut } from "react-icons/fi";
 import { IoNotificationsCircleSharp } from "react-icons/io5";
 
 export const Avatar = styled.figure`
-  ${tw`w-[75px] h-[75px] rounded-full overflow-hidden absolute shadow-md border-[5px] border-[#77d1bc]`}
+  ${tw`w-[60px] h-[60px] rounded-full overflow-hidden absolute shadow-md border-[5px] border-[#77d1bc]`}
 `;
 
 export const Container = styled.div`
@@ -14,7 +14,7 @@ export const Container = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  ${tw`bg-[#C9D9E5] w-full rounded-[50px] flex shadow-md`}
+  ${tw`bg-secondary w-full rounded-[50px] flex shadow-sm`}
 `;
 
 export const LeftWrapper = styled.div`
@@ -26,7 +26,7 @@ export const RightWrapper = styled.div`
 `;
 
 export const UserName = styled.div`
-  ${tw`self-stretch flex items-center max-w-6xl w-[400px] flex-shrink-0 pl-24 pr-8 text-2xl font-semibold py-2 rounded-[50px] bg-gradient-to-r from-[#5998F2] to-[#5998F238]`}
+  ${tw`self-stretch flex items-center max-w-6xl w-[400px] flex-shrink-0 pl-24 pr-8 text-xl font-semibold py-2 rounded-[50px] bg-gradient-to-r from-secondary to-blue-lighter`}
 `;
 
 export const LogoContainer = styled.div`
@@ -34,14 +34,14 @@ export const LogoContainer = styled.div`
 `;
 
 export const Logo = styled.figure`
-  ${tw`w-[150px] my-1 flex items-center`}
+  ${tw`w-[100px] my-1 flex items-center`}
 `;
 
 export const Search = styled.div`
-  ${tw`relative max-w-[550px] w-full flex items-center`}
+  ${tw`relative max-w-[550px] w-full flex items-center py-1`}
 `;
 export const SearchInput = styled.input`
-  ${tw`bg-[#F8F8F8] text-lg rounded-[50px] pr-10 pl-5 py-2 w-full outline-none`}
+  ${tw`bg-[#F8F8F8] text-lg rounded-[50px] pr-10 pl-5 py-1 w-full outline-none`}
 `;
 
 export const SearchIcon = styled(BiSearchAlt)`

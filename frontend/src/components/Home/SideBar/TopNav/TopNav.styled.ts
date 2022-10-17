@@ -3,7 +3,7 @@ import tw from "twin.macro";
 import { TiUserAddOutline } from "react-icons/ti";
 
 export const Wrapper = styled.div`
-  ${tw`bg-[#C9D9E5] rounded-[30px] shadow-md`}
+  ${tw`bg-secondary rounded-[30px] shadow-md`}
 `
 
 export const Options = styled.div`
