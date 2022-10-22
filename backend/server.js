@@ -1,6 +1,7 @@
 require("colors");
 const express = require("express");
 const dotenv = require("dotenv");
+const cookieParser = require('cookie-parser');
 const { connectDB } = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const errorMiddleware = require("./middlewares/errors");
@@ -14,9 +15,10 @@ process.on("uncaughtException", (err) => {
 });
 
 dotenv.config();
-const app = express();
 
+const app = express();
 app.use(express.json()); //allow accept json data
+app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.get("/", (req, res) => {
   res.send("server is ready!");
