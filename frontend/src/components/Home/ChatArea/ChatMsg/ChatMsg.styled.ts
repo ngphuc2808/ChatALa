@@ -17,27 +17,30 @@ export const ChatMsgText = styled.div`
 
 export const ChatMsgTextTail = styled.div`
   ${tw`absolute w-[30px] h-[30px] rounded-full`}
+  &:before {
+    ${tw`bg-dark`}
+  }
 `;
 
 export const ChatMsgMoreIcon = styled(FiMoreHorizontal)`
-  ${tw`relative mr-3.5 text-[20px] text-[#82E8FF] cursor-pointer`}
+  ${tw`relative mr-3.5 text-[20px] text-secondary cursor-pointer`}
   visibility: hidden;
 `;
 
 export const ChatMsgMoreIconWrapper = styled.div`
-${tw`relative`}
-`
+  ${tw`relative`}
+`;
 
 export const ChatMsgLeft = styled(ChatMsg)`
   ${tw`relative`}
 
   ${ChatMsgText} {
-    ${tw`bg-[#E6E9EA] ml-2 rounded-bl-[0]`}
+    ${tw`bg-secondary ml-2 rounded-bl-[0]`}
   }
   ${ChatMsgTextTail} {
-    ${tw`bg-[#E6E9EA] bottom-[-5px] left-[40px]`}
+    ${tw`bg-secondary bottom-[-5px] left-[30px]`}
     &::before {
-      ${tw`rounded-full absolute bg-blue-light h-[50px] w-[50px] left-[-30px] bottom-[-3px]`}
+      ${tw`rounded-full absolute h-[50px] w-[50px] left-[-28px] bottom-[-3px]`}
       content: '';
   }
 `;
@@ -52,22 +55,22 @@ export const ChatMsgRight = styled(ChatMsg)`
   }
 
   ${ChatMsgTextWrapper} {
-    ${tw`flex flex-row-reverse w-full`}
+    ${tw`flex flex-row-reverse`}
   }
   ${ChatMsgText} {
-    ${tw`bg-[#82E8FF] mr-2 rounded-br-[0] max-w-[75%]`}
+    ${tw`bg-darker mr-2 rounded-br-[0] max-w-[75%]`}
   }
   ${ChatMsgTextTail} {
-    ${tw`bg-[#82E8FF] bottom-[-5px] right-[40px]`}
+    ${tw`bg-darker bottom-[-5px] right-[-8px]`}
     &::before {
-      ${tw`rounded-full absolute bg-blue-light h-[50px] w-[50px] right-[-30px] bottom-[-3px]`}
+      ${tw`rounded-full absolute h-[50px] w-[50px] right-[-28px] bottom-[-3px]`}
       content: '';
     }
   }
 `;
 
 export const ChatMsgAvatar = styled.figure`
-  ${tw`relative w-[50px] h-[50px] rounded-full overflow-hidden flex-shrink-0 mb-[-5px] z-10`}
+  ${tw`relative w-[40px] h-[40px] rounded-full overflow-hidden flex-shrink-0 mb-[-5px] z-10`}
   border: 2px solid black;
 `;
 

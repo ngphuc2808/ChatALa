@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import * as S from './ChatPreviewItem.styled';
-import { VscHubot } from 'react-icons/vsc';
 
 interface IChatPreviewItem {
   avatar?: string;
@@ -34,7 +33,7 @@ const ChatPreviewItem = ({
             />
           </S.ChatAvatar>
         ) : (
-          <VscHubot size={55} />
+          <S.ChatBotAvatar />
         )}
         <S.Content>
           <S.Name>{name}</S.Name>

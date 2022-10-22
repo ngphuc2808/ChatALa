@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import tw from "twin.macro";
-import { BiSearchAlt } from "react-icons/bi";
-import { RiSettings3Fill } from "react-icons/ri";
-import { FiLogOut } from "react-icons/fi";
-import { IoNotificationsCircleSharp } from "react-icons/io5";
+import styled from 'styled-components';
+import tw from 'twin.macro';
+import { BiSearchAlt } from 'react-icons/bi';
+import { RiSettings3Fill } from 'react-icons/ri';
+import { FiLogOut } from 'react-icons/fi';
+import { IoNotificationsCircleSharp } from 'react-icons/io5';
 
 export const Avatar = styled.figure`
-  ${tw`w-[60px] h-[60px] rounded-full overflow-hidden absolute shadow-md border-[5px] border-[#77d1bc]`}
+  ${tw`w-[60px] h-[60px] rounded-full overflow-hidden absolute shadow-md border-[4px] border-darker`}
 `;
 
 export const Container = styled.div`
@@ -26,7 +26,7 @@ export const RightWrapper = styled.div`
 `;
 
 export const UserName = styled.div`
-  ${tw`self-stretch flex items-center max-w-6xl w-[400px] flex-shrink-0 pl-24 pr-8 text-xl font-semibold py-2 rounded-[50px] bg-gradient-to-r from-secondary to-blue-lighter`}
+  ${tw`self-stretch flex items-center max-w-6xl w-[350px] text-black flex-shrink-0 pl-24 pr-8 text-xl font-semibold py-2 rounded-[50px] bg-gradient-to-r from-secondary to-darker`}
 `;
 
 export const LogoContainer = styled.div`
@@ -41,15 +41,15 @@ export const Search = styled.div`
   ${tw`relative max-w-[550px] w-full flex items-center py-1`}
 `;
 export const SearchInput = styled.input`
-  ${tw`bg-[#F8F8F8] text-lg rounded-[50px] pr-10 pl-5 py-1 w-full outline-none`}
+  ${tw`text-lg rounded-[50px] pr-10 pl-5 py-1 w-full outline-none`}
 `;
 
 export const SearchIcon = styled(BiSearchAlt)`
-  ${tw`absolute hover:cursor-pointer text-[28px] text-[#002B98] mr-1.5 right-0`}
+  ${tw`absolute hover:cursor-pointer text-[28px] text-secondary mr-1.5 right-0`}
 `;
 
 export const Option = styled.div`
-  ${tw`text-[25px] text-[#002B98] flex justify-between mr-5 items-center`}
+  ${tw`text-[25px] text-darker flex justify-between mr-5 items-center`}
 `;
 
 export const OptionSetting = styled(RiSettings3Fill)`
@@ -62,4 +62,4 @@ export const OptionLogOut = styled(FiLogOut)`
 
 export const OptionNotify = styled(IoNotificationsCircleSharp)`
   ${tw`hover:cursor-pointer mx-2 text-[30px]`}
-`
+`;
