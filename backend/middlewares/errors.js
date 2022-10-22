@@ -13,15 +13,18 @@ module.exports = (error, req, res, next) => {
   if (process.env.NODE_ENV === "PRODUCTION") {
 
     if(error.name === "CastError"){ //error from mongodb
+      error.statusCode = 404
       error.message = `Resource not found. Invalid: ${error.path}`
     }
 
     if(error.name === "ValidationError"){ //error from mongodb
+      error.statusCode = 400
       error.message = Object.values(error.errors).map(value => value.message)
     }
 
     if(error.code === 11000) {
-      error.message = `Resource is duplicate. Value: ${error.keyValue.phone}`
+      error.statusCode = 400
+      error.message = `Infomation is duplicate. Info Value: ${error.keyValue.phone}`
     }
 
     res

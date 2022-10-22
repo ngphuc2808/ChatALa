@@ -5,7 +5,7 @@ const notificationSchema = mongoose.Schema(
   {
     receiveId: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
     requestId: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
-    status: { type: String, default: "Pending" },
+    status: { type: String, default: "Pending" }, //Pending, Accepted, Denied
   },
   { timestamps: true }
 );

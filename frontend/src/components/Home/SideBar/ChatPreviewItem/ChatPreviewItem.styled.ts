@@ -29,7 +29,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ChatPreviewItem = styled.div<{ active?: boolean; Id?: number }>`
-  ${tw`flex items-center relative hover:cursor-pointer hover:bg-light rounded-[20px]`}
-  ${({ active }) => active && tw`bg-lighter`}
-  ${({ Id }) => (Id !== -2 ? tw`my-1` : tw`bg-light`)}
+  ${tw`flex items-center relative hover:cursor-pointer hover:bg-dark rounded-[20px]`}
+  ${({ active }) => active && tw`bg-darker`}
+  ${({ Id }) => (Id !== -2 ? tw`my-1` : tw`bg-dark`)}
 `;

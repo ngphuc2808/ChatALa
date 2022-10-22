@@ -31,7 +31,7 @@ export const ChatAreaHeadName = styled.div`
 `;
 
 export const ChatAreaHeadStatus = styled.div`
-  ${tw`text-lighter text-[16px] flex items-center gap-1.5`}
+  ${tw`text-darker text-[16px] flex items-center gap-1.5`}
 `;
 
 export const ChatAreaHeadStatusIcon = styled(FaCircle)<{ status: number }>`
@@ -40,11 +40,11 @@ export const ChatAreaHeadStatusIcon = styled(FaCircle)<{ status: number }>`
 `;
 
 export const ChatAreaHeadOption = styled(IoMenu)`
-  ${tw`text-[40px] text-lighter hover:cursor-pointer`}
+  ${tw`text-[40px] text-darker hover:cursor-pointer`}
 `;
 
 export const ChatAreaMain = styled.div`
-  ${tw`flex flex-col flex-grow bg-light px-6 pb-4 pt-0 rounded-[30px]`}
+  ${tw`flex flex-col flex-grow bg-dark px-6 pb-4 pt-0 rounded-[30px]`}
 `;
 
 export const ChatAreaMainMsg = styled.div`
@@ -59,7 +59,7 @@ export const ChatAreaMainMsg = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    ${tw`rounded-[50px] bg-lighter`}
+    ${tw`rounded-[50px] bg-darker`}
   }
 `;
 
@@ -83,10 +83,10 @@ export const ChatChatAreaFilePreviewInner = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    ${tw`rounded-[50px] bg-light`}
+    ${tw`rounded-[50px] bg-dark`}
   }
   &::-webkit-scrollbar-thumb:hover {
-    ${tw`bg-lighter`}
+    ${tw`bg-darker`}
   }
 `;
 
@@ -95,7 +95,7 @@ export const ChatAreaMainInput = styled.div`
 `;
 
 export const ChatAreaMainInputFile = styled.label`
-  ${tw`flex flex-shrink-0 shadow text-lighter bg-primary rounded-full w-12 h-12 items-center justify-center text-4xl hover:cursor-pointer hover:opacity-80`}
+  ${tw`flex flex-shrink-0 shadow text-darker bg-primary rounded-full w-12 h-12 items-center justify-center text-4xl hover:cursor-pointer hover:opacity-80`}
 `;
 
 export const ChatAreaMainInputMsg = styled.div`
@@ -103,7 +103,7 @@ export const ChatAreaMainInputMsg = styled.div`
 `;
 
 export const ChatAreaMainInputEmoji = styled(BsEmojiLaughingFill)`
-  ${tw`text-lighter text-4xl hover:cursor-pointer hover:text-[#003BD2] transition-colors`}
+  ${tw`text-darker text-4xl hover:cursor-pointer hover:text-[#003BD2] transition-colors`}
 `;
 
 const ZoomInAnimation = keyframes`${zoomIn}`;
@@ -131,12 +131,12 @@ export const ChatAreaMainInputText = styled.span<{ username: string }>`
   }
 
   &::-webkit-scrollbar-thumb {
-    ${tw`rounded-[50px] bg-lighter`}
+    ${tw`rounded-[50px] bg-darker`}
   }
 `;
 
 export const ChatAreaMainInputButtonSend = styled.button`
-  ${tw`bg-lighter text-primary hover:text-secondary p-2 rounded-full ml-2.5 outline-none`}
+  ${tw`bg-darker text-primary hover:text-secondary p-2 rounded-full ml-2.5 outline-none`}
 `;
 
 export const ChatAreaMainInputSendIcon = styled(RiSendPlaneFill)`

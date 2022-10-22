@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import tw from "twin.macro";
+import styled from 'styled-components';
+import tw from 'twin.macro';
 
 export const Wrapper = styled.div`
   ${tw`overflow-y-scroll mt-2.5 pr-1`}
@@ -13,6 +13,6 @@ export const Wrapper = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    ${tw`bg-light rounded-[50px]`}
+    ${tw`bg-dark rounded-[50px]`}
   }
-`
+`;
