@@ -31,15 +31,10 @@ const ChangePassword = () => {
   });
 
   const focusChange = (e: any) => {
-    setFocus(e.target.name);
+    console.log(e);
   };
 
-  const inputChange = (e: any) => {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const inputChange = (e: any) => {};
 
   useEffect(() => {
     console.log(input);
@@ -59,8 +54,14 @@ const ChangePassword = () => {
           <S.InputWrap>
             <S.Input
               name='phoneNumber'
-              onFocus={(e) => focusChange(e)}
-              onInput={(e) => inputChange(e)}
+              onFocus={(e) => setFocus(e.target.name)}
+              onInput={(e) =>
+                setInput({
+                  ...input,
+                  [e.currentTarget.name]: e.currentTarget.value,
+                })
+              }
+              onBlur={(e) => setFocus('')}
             />
             <ErrorMessage name='phoneNumber' component={S.ErrorMsg} />
             <S.Label
@@ -74,8 +75,14 @@ const ChangePassword = () => {
             <S.Input
               type='password'
               name='password'
-              onFocus={(e) => focusChange(e)}
-              onInput={(e) => inputChange(e)}
+              onFocus={(e) => setFocus(e.target.name)}
+              onInput={(e) =>
+                setInput({
+                  ...input,
+                  [e.currentTarget.name]: e.currentTarget.value,
+                })
+              }
+              onBlur={() => setFocus('')}
             />
             <ErrorMessage name='password' component={S.ErrorMsg} />
             <S.Label
