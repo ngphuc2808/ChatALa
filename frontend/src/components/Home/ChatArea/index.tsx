@@ -126,7 +126,7 @@ const ChatArea = () => {
           onSubmit={onSubmit}
           validationSchema={validationSchema}
         >
-          {({ values, setFieldValue }) => (
+          {({ values, setFieldValue, submitForm }) => (
             <Form>
               {values.files.length > 0 && (
                 <S.ChatChatAreaFilePreview>
@@ -178,6 +178,12 @@ const ChatArea = () => {
                     onInput={(e) =>
                       setFieldValue('msg', e.currentTarget.innerText)
                     }
+                    onKeyDown={(e) => {
+                      if (e.code === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        submitForm()
+                      }
+                    }}
                   />
                   <S.ChatAreaMainInputButtonSend type='submit'>
                     <S.ChatAreaMainInputSendIcon />
