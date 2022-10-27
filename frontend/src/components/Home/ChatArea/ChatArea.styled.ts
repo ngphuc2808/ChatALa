@@ -1,10 +1,10 @@
-import styled, { keyframes } from 'styled-components';
-import tw from 'twin.macro';
-import { FaCircle } from 'react-icons/fa';
-import { IoMenu } from 'react-icons/io5';
-import { BsEmojiLaughingFill } from 'react-icons/bs';
-import { RiSendPlaneFill } from 'react-icons/ri';
-import { zoomIn } from 'react-animations';
+import styled, { keyframes } from "styled-components";
+import tw from "twin.macro";
+import { FaCircle } from "react-icons/fa";
+import { IoMenu } from "react-icons/io5";
+import { BsEmojiLaughingFill } from "react-icons/bs";
+import { RiSendPlaneFill } from "react-icons/ri";
+import { zoomIn } from "react-animations";
 export const ChatArea = styled.div`
   ${tw`relative bg-secondary shadow-md rounded-[30px] flex-grow flex flex-col overflow-hidden`}
 `;
@@ -119,7 +119,7 @@ export const ChatAreaMainInputText = styled.span<{ username: string }>`
   ${tw`flex-grow outline-none bg-transparent text-xl ml-2.5 w-1 overflow-auto max-h-24 whitespace-normal hover:cursor-text`}
 
   &:empty::before {
-    content: 'Write something to ${({ username }) => username}...';
+    content: "Write something to ${({ username }) => username}...";
     ${tw`cursor-text text-gray-400`}
   }
   &::-webkit-scrollbar-track {
@@ -141,4 +141,8 @@ export const ChatAreaMainInputButtonSend = styled.button`
 
 export const ChatAreaMainInputSendIcon = styled(RiSendPlaneFill)`
   ${tw`text-[20px]`}
+`;
+
+export const ChatAreaMainDropZone = styled.div`
+  ${tw`absolute flex items-center justify-center text-gray-200 text-2xl tracking-wide font-medium h-full w-full bg-[#00000099] left-0 top-0 z-10`}
 `;
