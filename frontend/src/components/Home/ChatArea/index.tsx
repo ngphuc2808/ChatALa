@@ -1,16 +1,16 @@
-import Image from "next/image";
-import * as S from "./ChatArea.styled";
-import { UserAvatar, UserName } from "../../../utils/dataConfig";
-import { FormEvent, useRef, useState } from "react";
-import ChatMsg from "./ChatMsg";
-import EmojiPicker, { EmojiStyle, EmojiClickData } from "emoji-picker-react";
-import MoreOptions from "./MoreOptions";
-import { useOutsideClick } from "../../Global/ProcessFunctions";
-import { useGlobalContext } from "../../../contexts/globalContext";
-import * as Yup from "yup";
-import { Form, Formik } from "formik";
-import FilePreview from "./FilePreview";
-import DropZone from "react-dropzone";
+import Image from 'next/image';
+import * as S from './ChatArea.styled';
+import { UserAvatar, UserName } from '../../../utils/dataConfig';
+import { FormEvent, useRef, useState } from 'react';
+import ChatMsg from './ChatMsg';
+import EmojiPicker, { EmojiStyle, EmojiClickData } from 'emoji-picker-react';
+import MoreOptions from './MoreOptions';
+import { useOutsideClick } from '../../Global/ProcessFunctions';
+import { useGlobalContext } from '../../../contexts/globalContext';
+import * as Yup from 'yup';
+import { Form, Formik } from 'formik';
+import FilePreview from './FilePreview';
+import DropZone from 'react-dropzone';
 
 type FormValues = {
   msg: string;
@@ -35,12 +35,12 @@ const ChatArea = () => {
   const emojiRef = useOutsideClick(handleEmojiOutsideClick);
   const emojiClicked = (emoData: EmojiClickData, setFieldValue: any) => {
     chatInput.current!.innerText = chatInput.current!.innerText + emoData.emoji;
-    setFieldValue("msg", chatInput.current?.innerText);
+    setFieldValue('msg', chatInput.current?.innerText);
   };
 
   //Form
   const initialValues = {
-    msg: "",
+    msg: '',
     files: [],
   };
 
@@ -54,7 +54,7 @@ const ChatArea = () => {
     values: FormValues,
     setFieldValue: any
   ) => {
-    if (e.currentTarget.files) {      
+    if (e.currentTarget.files) {
       const newFiles = e.currentTarget.files;
 
       const files = values.files;
@@ -62,8 +62,8 @@ const ChatArea = () => {
         files.push(newFiles[i]);
       }
 
-      setFieldValue("files", files);
-      e.currentTarget.value = "";
+      setFieldValue('files', files);
+      e.currentTarget.value = '';
     }
   };
 
@@ -77,29 +77,28 @@ const ChatArea = () => {
       files.push(newFiles[i]);
     }
 
-    setFieldValue("files", files);
+    setFieldValue('files', files);
   };
 
   const onSubmit = (values: FormValues, { setFieldValue }: any) => {
-    if (values.msg !== "" || values.files.length > 0) {
+    if (values.msg !== '' || values.files.length > 0) {
       console.log(values);
       setToggleEmoji(false);
-      if (values.msg !== "") {
+      if (values.msg !== '') {
         context.setRoomMsg([
           {
             ...context.roomMsg[0],
-            senderId: "",
+            senderId: '',
             msg: values.msg,
-            files: values.files,
             unSend: false,
           },
           ...context.roomMsg,
         ]);
       }
-      chatInput.current!.innerText = "";
+      chatInput.current!.innerText = '';
 
-      setFieldValue("msg", "");
-      setFieldValue("files", []);
+      setFieldValue('msg', '');
+      setFieldValue('files', []);
     }
   };
 
@@ -110,15 +109,15 @@ const ChatArea = () => {
           <S.ChatAreaHeadAvatar>
             <Image
               src={UserAvatar}
-              alt="avatar"
-              layout="fill"
-              objectFit="contain"
+              alt='avatar'
+              layout='fill'
+              objectFit='contain'
             />
           </S.ChatAreaHeadAvatar>
           <S.ChatAreaHeadNameWrapper>
             <S.ChatAreaHeadName>{UserName}</S.ChatAreaHeadName>
             <S.ChatAreaHeadStatus>
-              {status ? "Online" : "Offline"}
+              {status ? 'Online' : 'Offline'}
               <S.ChatAreaHeadStatusIcon status={status} />
             </S.ChatAreaHeadStatus>
           </S.ChatAreaHeadNameWrapper>
@@ -148,9 +147,28 @@ const ChatArea = () => {
               <S.ChatAreaMain {...getRootProps()}>
                 <S.ChatAreaMainMsg>
                   <S.ChatAreaMainMsgInner>
-                    {context.roomMsg?.map((data, index) => (
-                      <ChatMsg msg={data.msg} index={index} key={index} />
-                    ))}
+                    {context.roomMsg?.map((data, index) => {
+                      let position = 'bottom';
+                      const roomMsg = context.roomMsg;
+                      if (
+                        data.senderId !== roomMsg[index + 1]?.senderId &&
+                        data.senderId === roomMsg[index - 1]?.senderId
+                      )
+                        position = 'top';
+                      else if (
+                        data.senderId === roomMsg[index - 1]?.senderId &&
+                        data.senderId === roomMsg[index + 1]?.senderId
+                      )
+                        position = 'middle';
+                      else if (
+                        data.senderId !== roomMsg[index - 1]?.senderId &&
+                        data.senderId !== roomMsg[index + 1]?.senderId
+                      )
+                        position = 'alone';
+                      return (
+                        <ChatMsg data={data} position={position} key={index} />
+                      );
+                    })}
                   </S.ChatAreaMainMsgInner>
                 </S.ChatAreaMainMsg>
                 {values.files.length > 0 && (
@@ -182,7 +200,7 @@ const ChatArea = () => {
                         />
                       </S.ChatAreaMainInputEmojiPicker>
                     )}
-                    <S.ChatAreaMainInputFile htmlFor="fileInput">
+                    <S.ChatAreaMainInputFile htmlFor='fileInput'>
                       +
                     </S.ChatAreaMainInputFile>
                     <S.ChatAreaMainInputMsg>
@@ -194,24 +212,24 @@ const ChatArea = () => {
                         contentEditable
                         ref={chatInput}
                         onInput={(e) =>
-                          setFieldValue("msg", e.currentTarget.innerText)
+                          setFieldValue('msg', e.currentTarget.innerText)
                         }
                         onKeyDown={(e) => {
-                          if (e.code === "Enter" && !e.shiftKey) {
+                          if (e.code === 'Enter' && !e.shiftKey) {
                             e.preventDefault();
                             submitForm();
                           }
                         }}
                       />
-                      <S.ChatAreaMainInputButtonSend type="submit">
+                      <S.ChatAreaMainInputButtonSend type='submit'>
                         <S.ChatAreaMainInputSendIcon />
                       </S.ChatAreaMainInputButtonSend>
                     </S.ChatAreaMainInputMsg>
                   </S.ChatAreaMainInput>
                   <input
                     {...getInputProps({
-                      type: "file",
-                      id: "fileInput",
+                      type: 'file',
+                      id: 'fileInput',
                       hidden: true,
                       multiple: true,
                       onChange: (e) => fileChoosen(e, values, setFieldValue),

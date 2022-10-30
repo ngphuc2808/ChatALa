@@ -78,7 +78,7 @@ export const ChatMsgArray = [
   [
     {
       roomId: '1',
-      senderId: '',
+      senderId: '1',
       unSend: false,
       msg: '1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.',
       files: [],
@@ -99,7 +99,7 @@ export const ChatMsgArray = [
     },
     {
       roomId: '1',
-      senderId: '',
+      senderId: '1',
       unSend: false,
       msg: '1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.',
       files: [],
@@ -113,7 +113,7 @@ export const ChatMsgArray = [
     },
     {
       roomId: '1',
-      senderId: '',
+      senderId: '1',
       unSend: false,
       msg: '3Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl',
       files: [],
@@ -145,12 +145,12 @@ export const ChatMsgArray = [
       roomId: '2',
       senderId: '',
       unSend: false,
-      msg: '3Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl',
+      msg: '3Tailwind lets you conditionally apply utility classes in hover:drop-shadow-xl',
       files: [],
     },
     {
       roomId: '2',
-      senderId: '',
+      senderId: '1',
       unSend: false,
       msg: '4TailwindCSS 😁',
       files: [],
