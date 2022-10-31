@@ -1,6 +1,7 @@
-require('colors');
-const express = require('express');
-const dotenv = require('dotenv');
+require("colors");
+const express = require("express");
+const cors = require('cors');
+const dotenv = require("dotenv");
 const cookieParser = require('cookie-parser');
 const { connectDB } = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
@@ -10,13 +11,14 @@ const cors = require('cors');
 const PORT = process.env.PORT || 5000;
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
-  credentials: true, //access-control-allow-credentials:true
-  optionSuccessStatus: 200,
-};
-process.on('uncaughtException', (err) => {
-  console.log('ERROR: ' + err.stack);
-  console.log('Shutting down the server due to Uncaught Exception');
+  origin:'http://localhost:3000', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200
+}
+
+process.on("uncaughtException", (err) => {
+  console.log("ERROR: " + err.stack);
+  console.log("Shutting down the server due to Uncaught Exception");
   process.exit(1);
 });
 
