@@ -9,8 +9,6 @@ const friendSchema = mongoose.Schema(
       type: {type: String, default: "available"}, // available, oneWayBlock, twoWayBlock
       blockId: { type: mongoose.Schema.Types.ObjectId, ref: "Users" }
     },
-    uid1NickName: { type: String, default: ""},
-    uid2NickName: { type: String, default: ""},
   },
   { timestamps: true }
 );
