@@ -13,7 +13,7 @@ interface IChatMsg {
 const ChatMsg = ({ data, position }: IChatMsg) => {
   const [toggleOption, setToggleOption] = useState(false);
 
-  return data.senderId !== '1' ? (
+  return data.senderId === '1' ? (
     <S.ChatMsgRight position={position}>
       <S.ChatMsgTextTail />
       <S.ChatMsgTextWrapper>

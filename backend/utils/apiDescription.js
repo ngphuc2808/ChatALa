@@ -47,6 +47,7 @@ const findUser = {
       phone: String,
       gender: String,
       dob: String,
+      isFriend: Boolean,
       createdAt: String,
       updatedAt: String,
     },

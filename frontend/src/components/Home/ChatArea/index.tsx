@@ -11,6 +11,7 @@ import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import FilePreview from './FilePreview';
 import DropZone from 'react-dropzone';
+import { messageType } from '../../../utils/types';
 
 type FormValues = {
   msg: string;
@@ -36,6 +37,28 @@ const ChatArea = () => {
   const emojiClicked = (emoData: EmojiClickData, setFieldValue: any) => {
     chatInput.current!.innerText = chatInput.current!.innerText + emoData.emoji;
     setFieldValue('msg', chatInput.current?.innerText);
+  };
+
+  //Message
+  const setMessagePosition = (data: messageType, index: number) => {
+    const roomMsg = context.roomMsg;
+
+    if (
+      data.senderId !== roomMsg[index + 1]?.senderId &&
+      data.senderId === roomMsg[index - 1]?.senderId
+    )
+      return 'top';
+    else if (
+      data.senderId === roomMsg[index - 1]?.senderId &&
+      data.senderId === roomMsg[index + 1]?.senderId
+    )
+      return 'middle';
+    else if (
+      data.senderId !== roomMsg[index - 1]?.senderId &&
+      data.senderId !== roomMsg[index + 1]?.senderId
+    )
+      return 'alone';
+    else return 'bottom';
   };
 
   //Form
@@ -147,28 +170,13 @@ const ChatArea = () => {
               <S.ChatAreaMain {...getRootProps()}>
                 <S.ChatAreaMainMsg>
                   <S.ChatAreaMainMsgInner>
-                    {context.roomMsg?.map((data, index) => {
-                      let position = 'bottom';
-                      const roomMsg = context.roomMsg;
-                      if (
-                        data.senderId !== roomMsg[index + 1]?.senderId &&
-                        data.senderId === roomMsg[index - 1]?.senderId
-                      )
-                        position = 'top';
-                      else if (
-                        data.senderId === roomMsg[index - 1]?.senderId &&
-                        data.senderId === roomMsg[index + 1]?.senderId
-                      )
-                        position = 'middle';
-                      else if (
-                        data.senderId !== roomMsg[index - 1]?.senderId &&
-                        data.senderId !== roomMsg[index + 1]?.senderId
-                      )
-                        position = 'alone';
-                      return (
-                        <ChatMsg data={data} position={position} key={index} />
-                      );
-                    })}
+                    {context.roomMsg?.map((data, index) => (
+                      <ChatMsg
+                        data={data}
+                        position={setMessagePosition(data, index)}
+                        key={index}
+                      />
+                    ))}
                   </S.ChatAreaMainMsgInner>
                 </S.ChatAreaMainMsg>
                 {values.files.length > 0 && (
