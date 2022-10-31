@@ -18,6 +18,5 @@
   "editor.formatOnSave": true,
   "prettier.jsxSingleQuote": true,
   "prettier.singleQuote": true,
-  "cSpell.words": ["Swiper"],
   "prettier.bracketSpacing": true
 }
