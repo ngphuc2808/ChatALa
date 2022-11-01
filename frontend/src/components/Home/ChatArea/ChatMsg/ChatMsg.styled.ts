@@ -6,10 +6,7 @@ export const ChatMsg = styled.div`
   ${tw`flex items-end mb-1`}
 `;
 
-export const ChatMsgTextWrapper = styled.div`
-  ${tw`relative flex items-center`}
-  width: fit-content;
-`;
+
 
 export const ChatMsgText = styled.div`
   ${tw`relative px-3 py-2 max-w-[70%]`}
@@ -36,6 +33,16 @@ export const ChatMsgMoreIcon = styled(FiMoreHorizontal)`
 
 export const ChatMsgMoreIconWrapper = styled.div`
   ${tw`relative`}
+`;
+
+export const ChatMsgTextWrapper = styled.div`
+  ${tw`relative flex items-center w-full`}
+
+  &:hover {
+    ${ChatMsgMoreIcon} {
+      visibility: visible;
+    }
+  }
 `;
 
 export const ChatMsgLeft = styled(ChatMsg)<{ position: string }>`
@@ -66,12 +73,6 @@ export const ChatMsgRight = styled(ChatMsg)<{ position: string }>`
   ${tw`relative flex-row-reverse`}
   ${({ position }) =>
     (position === 'bottom' || position === 'alone') && tw`mb-5`}
-
-  &:hover {
-    ${ChatMsgMoreIcon} {
-      visibility: visible;
-    }
-  }
 
   ${ChatMsgTextWrapper} {
     ${tw`flex flex-row-reverse`}

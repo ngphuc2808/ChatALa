@@ -31,7 +31,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
   });
 
   res.status(200).json({
-    message: "Register Successfully!"
+    message: "Register Successfully!",
   });
 });
 
@@ -65,18 +65,22 @@ const loginUser = asyncHandler(async (req, res, next) => {
 });
 
 const findUser = asyncHandler(async (req, res, next) => {
-  const { phone, name } = req.body;
+  const { search } = req.body;
 
   const users = await Users.find({
-    phone: {
-      $regex: new RegExp(phone),
-    },
-    name: {
-      $regex: new RegExp(name),
-    },
-  })
-    .limit(10)
-    .sort({ phone: -1 });
+    $or: [
+      {
+        phone: {
+          $regex: search,
+        },
+      },
+      {
+        name: {
+          $regex: search,
+        },
+      },
+    ],
+  }).limit(10);
 
   res.status(200).json({
     users,
