@@ -3,8 +3,12 @@ import { Formik, ErrorMessage } from 'formik';
 import Link from 'next/link';
 import * as S from './Login.styled';
 import * as Yup from 'yup';
+import { UserLogin, FormValueLogin } from "../../utils/types";
+import { useRouter } from "next/router";
+import { UsersApi } from "../../services/api/users";
 
 const Login = () => {
+  const router = useRouter();
   const initialValues = {
     phoneNumber: '',
     password: '',
@@ -24,15 +28,36 @@ const Login = () => {
         'Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number.'
       ),
   });
+  const handleSubmit = async (values: FormValueLogin, { setSubmitting }: any) => {
+    try {
+      const userLogin: UserLogin = {
+        phone: values.phoneNumber,
+        password: values.password
+      }
+      await UsersApi.login(userLogin);
+
+      router.push(
+        {
+          pathname: "/",
+          query: {
+            loginVerify: "login",
+          },
+        },
+        "/"
+      );
+
+    } catch {
+      setSubmitting(false);
+      alert("Login failed, wrong password!");
+    }
+  }; 
   return (
     <FormTemplate>
       <S.Suggest>Signin to this fancy webchat!</S.Suggest>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(data) => {
-          console.log('submits: ', data);
-        }}
+        onSubmit={handleSubmit}
       >
         {({ errors, touched }) => (
           <S.NewForm>

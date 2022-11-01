@@ -7,12 +7,8 @@ import { useEffect, useState } from "react";
 import { useGlobalContext } from "../../contexts/globalContext";
 import { UsersApi } from "../../services/api/users";
 import { API_URL } from "../../services/api/urls";
+import { UserRegister } from "../../utils/types";
 
-type User = {
-  name: string;
-  phone: string;
-  password: string;
-};
 
 const OTPCode = (props: any) => {
   const router = useRouter();
@@ -26,24 +22,22 @@ const OTPCode = (props: any) => {
 
   const context = useGlobalContext();
 
-  const handleSubmit = (values: any, { setSubmitting }: any) => {
-    window.confirmationResult
-      .confirm(values.otpCode)
-      .then(() => {
-        setCheckError("false");
-
-        const data: User  = {
-          name: context.registerInfo.name,
-          phone: context.registerInfo.phoneNumber,
-          password: context.registerInfo.password
-        }
-                
-        UsersApi.create(data);
-      })
-      .catch(() => {
-        setCheckError("true");
-        setSubmitting(false);
-      });
+  const handleSubmit = async (values: any, { setSubmitting }: any) => {
+    try {
+      await window.confirmationResult.confirm(values.otpCode);
+      setCheckError("false");
+      const data: UserRegister  = {
+        name: context.registerInfo.name,
+        phone: context.registerInfo.phoneNumber,
+        password: context.registerInfo.password
+      }
+      await UsersApi.register(data);
+      alert('Registration succeed!');
+      router.push('/login');
+    } catch {
+      setCheckError("true");
+      setSubmitting(false);
+    }
   };
 
   useEffect(() => {

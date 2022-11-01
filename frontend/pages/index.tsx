@@ -4,10 +4,19 @@ import SideBar from '../src/components/Home/SideBar';
 import TopBar from '../src/components/Home/TopBar';
 import Welcome from '../src/components/Home/Welcome';
 import { useGlobalContext } from '../src/contexts/globalContext';
+import { useRouter, withRouter } from "next/router";
+import { useEffect } from "react";
 
-const Home = () => {
+const Home = (props: any) => {
   const context = useGlobalContext();
+  const router = useRouter();
 
+  useEffect(() => {
+    if (!props.router.query.loginVerify) {
+      router.replace("/login");
+    }
+  }, []);
+  
   return (
     <>
       <S.HomeContainer>
@@ -21,4 +30,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withRouter(Home);

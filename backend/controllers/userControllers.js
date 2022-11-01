@@ -3,6 +3,24 @@ const Users = require("../models/userModel");
 const { generateJWT } = require("../utils/utilFunctions");
 const ErrorHandler = require("../utils/errorHandler");
 
+const checkUser = asyncHandler(async (req, res, next) => {
+  const phone = req.query.phone;
+
+  console.log(phone);
+
+  const user = await Users.findOne({ phone: phone });
+
+  if(!user) {
+    res.status(200).json({
+      message: "Valid phone number!"
+    });
+  } else {
+    return next(
+      new ErrorHandler("Phone number already exists!", 404)
+    );
+  }
+});
+
 const registerUser = asyncHandler(async (req, res, next) => {
   const { name, password, phone } = req.body;
 
@@ -65,4 +83,4 @@ const findUser = asyncHandler(async (req, res, next) => {
   });
 });
 
-module.exports = { registerUser, loginUser, findUser };
+module.exports = { checkUser, registerUser, loginUser, findUser };

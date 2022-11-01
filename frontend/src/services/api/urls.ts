@@ -4,6 +4,7 @@ const BASEURL =
 const API_BASE = `${BASEURL}/api`;
 
 export const API_URL = {
+  checkUser: `${API_BASE}/user/checkUser`,
   register: `${API_BASE}/user/register`,
   login: `${API_BASE}/user/login`,
   logout: `${API_BASE}/user/logout`,

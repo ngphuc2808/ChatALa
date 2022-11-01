@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const { connectDB } = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
 const errorMiddleware = require('./middlewares/errors');
-const cors = require('cors');
 
 const PORT = process.env.PORT || 5000;
 
@@ -27,6 +26,7 @@ dotenv.config();
 const app = express();
 app.use(cors(corsOptions));
 app.use(express.json()); //allow accept json data
+app.use(express.urlencoded());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 app.get('/', (req, res) => {

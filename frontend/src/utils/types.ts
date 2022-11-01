@@ -25,3 +25,28 @@ export type registerType = {
   phoneNumber: string;
   password: string;
 };
+
+export type FormValue = {
+  name: string;
+  phoneNumber: string;
+  password: string;
+  confirmPassword: string;
+  phomeNumberCode: string;
+};
+
+export type FormValueLogin = {
+  phoneNumber: string;
+  password: string;
+};
+
+
+export type UserRegister = {
+  name: string;
+  phone: string;
+  password: string;
+};
+
+export type UserLogin = {
+  phone: string;
+  password: string;
+};
