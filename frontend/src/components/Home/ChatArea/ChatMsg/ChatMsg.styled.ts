@@ -6,8 +6,6 @@ export const ChatMsg = styled.div`
   ${tw`flex items-end mb-1`}
 `;
 
-
-
 export const ChatMsgText = styled.div`
   ${tw`relative px-3 py-2 max-w-[70%]`}
 `;
@@ -45,11 +43,44 @@ export const ChatMsgTextWrapper = styled.div`
   }
 `;
 
+export const ChatMsgFiles = styled.div`
+  ${tw``}
+`;
+
+export const ChatMsgFileImages = styled.div`
+  ${tw`flex ml-[48px] w-[500px] min-h-[400px] mb-1 `}
+`;
+
+export const ChatMsgFileImage = styled.figure`
+  ${tw`relative bg-primary w-full rounded-2xl hover:cursor-pointer overflow-hidden`}
+`;
+
+export const ChatMsgFile = styled.div`
+  ${tw``}
+`;
+
+export const ChatMsgUnSend = styled.div`
+  ${tw`border-2 py-2 px-2.5`}
+`;
+
+export const ChatMsgLeftWrapper = styled.div`
+  ${tw`flex flex-col`}
+`;
+
 export const ChatMsgLeft = styled(ChatMsg)<{ position: string }>`
   ${tw`relative`}
   ${({ position }) =>
     (position === 'bottom' || position === 'alone') && tw`mb-5`}
 
+  ${ChatMsgUnSend} {
+    ${tw`ml-2`}
+    ${({ position }) =>
+      position === 'alone'
+        ? tw`rounded-2xl rounded-bl-none`
+        : position === 'top'
+        ? tw`rounded-2xl rounded-bl-none`
+        : tw`rounded-r-2xl`}
+  }
   ${ChatMsgText} {
     ${tw`bg-primary ml-2`}
     ${({ position }) =>
@@ -74,6 +105,15 @@ export const ChatMsgRight = styled(ChatMsg)<{ position: string }>`
   ${({ position }) =>
     (position === 'bottom' || position === 'alone') && tw`mb-5`}
 
+  ${ChatMsgUnSend} {
+    ${tw`mr-2`}
+    ${({ position }) =>
+      position === 'alone'
+        ? tw`rounded-2xl rounded-br-none`
+        : position === 'top'
+        ? tw`rounded-2xl rounded-br-none`
+        : tw`rounded-l-2xl`}
+  }
   ${ChatMsgTextWrapper} {
     ${tw`flex flex-row-reverse`}
   }

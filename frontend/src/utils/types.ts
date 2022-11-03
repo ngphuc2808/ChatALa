@@ -10,8 +10,9 @@ export type messageType = {
   roomId: string;
   senderId: string;
   msg: string;
-  files: { url: string; type: string }[];
+  files: { name: string, url: string; type: string }[];
   unSend: boolean;
+  deleted: boolean;
 };
 
 export type roomType = {
