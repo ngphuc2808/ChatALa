@@ -11,6 +11,7 @@ const messageSchema = mongoose.Schema(
     files: [
       {
         url: String,
+        name: String,
         type: { type: String, default: FILE },
       },
     ],

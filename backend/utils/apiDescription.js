@@ -81,7 +81,7 @@ const friendRequest = {
 };
 
 const friendAccept = {
-  url: "api/user/friend-request/:id/accept",
+  url: "api/user/notification/:id/accept",
   auth: true,
   method: "POST",
   req: {},
@@ -91,7 +91,7 @@ const friendAccept = {
 };
 
 const friendDecline = {
-  url: "api/user/friend-request/:id/decline",
+  url: "api/user/notification/:id/decline",
   auth: true,
   method: "POST",
   req: {},
