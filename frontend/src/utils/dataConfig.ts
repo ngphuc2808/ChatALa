@@ -106,6 +106,11 @@ export const ChatMsgArray = [
           url: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
           type: 'image',
         },
+        {
+          name: 'nameasda sdaas daqwe',
+          url: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+          type: 'image',
+        },
       ],
     },
     {

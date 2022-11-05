@@ -218,48 +218,53 @@ const addMember = {
 
 // MESSAGE
 
-const sendMessage = {
-  url: "api/message",
-  auth: true,
-  method: "POST",
-  contentType: "multipart",
-  req: {
-    roomId: String,
-    msg: String,
-    files: [
-      {
-        file: File,
-        type: String, //file or image
-      },
-    ],
-  },
-  res: {
-    msg: String,
-    files: [
-      {
-        url: String,
-        type: String, //file or image
-      },
-    ],
-  },
-};
+// const sendMessage = {
+//   url: "api/message/",
+//   auth: true,
+//   method: "POST",
+//   req: {
+//     roomId: String,
+//     msg: String,
+//     files: [{
+//       url: String,
+//       name: String,
+//       type: String, //file or image
+//     }],
+//   },
+//   res: {
+//     message: String,
+//   },
+// };
 
-const unSendMessage = {
-  url: "api/message/:id/unsend",
-  auth: true,
-  method: "POST",
-  req: {},
-  res: {
-    message: String,
-  },
-};
+// const unSendMessage = {
+//   url: "api/message/:msgId/unsend",
+//   auth: true,
+//   method: "PUT",
+//   req: {},
+//   res: {
+//     message: String,
+//   },
+// };
 
-const deletedMessage = {
-  url: "api/message/:id/delete",
-  auth: true,
-  method: "POST",
-  req: {},
-  res: {
-    message: String,
-  },
-};
+// const deletedMessage = {
+//   url: "api/message/:msgId/delete",
+//   auth: true,
+//   method: "DELETE",
+//   req: {},
+//   res: {
+//     message: String,
+//   },
+// };
+
+// // UTILS
+
+// const signedFileUrl = {
+//   url: "api/util/signedFileUrl",
+//   auth: true,
+//   method: "GET",
+//   req: {},
+//   res: {
+//     signature: String,
+//     timestamps: String,
+//   },
+// }

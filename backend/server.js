@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 const { connectDB } = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const friendRoutes = require("./routes/friendRoutes");
+const messageRoutes = require("./routes/messageRoutes");
+const utilRoutes = require("./routes/utilRoutes")
 const errorMiddleware = require("./middlewares/errors");
 
 const PORT = process.env.PORT || 5000;
@@ -36,6 +38,8 @@ app.get("/", (req, res) => {
 //route
 app.use("/api/user", userRoutes);
 app.use("/api/friend", friendRoutes);
+app.use("/api/message", messageRoutes)
+app.use("/api/util", utilRoutes)
 
 //middleware
 app.use(errorMiddleware); //handle error

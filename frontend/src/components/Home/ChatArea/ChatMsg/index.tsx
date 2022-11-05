@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UserAvatar } from '../../../../utils/dataConfig';
 import { messageType } from '../../../../utils/types';
 import * as S from './ChatMsg.styled';
@@ -12,6 +12,21 @@ interface IChatMsg {
 
 const ChatMsg = ({ data, position }: IChatMsg) => {
   const [toggleOption, setToggleOption] = useState(false);
+  const [images, setImages] = useState<
+    Array<{ name: string; url: string; type: string }>
+  >([]);
+
+  const getImageList = () => {
+    const _images: Array<{ name: string; url: string; type: string }> = [];
+    data.files.forEach((file) => {
+      if (file.type === 'image') _images.push(file);
+    });
+    setImages(_images);
+  };
+
+  useEffect(() => {
+    getImageList();
+  }, []);
 
   return data.senderId === '1' ? (
     <>
@@ -46,7 +61,7 @@ const ChatMsg = ({ data, position }: IChatMsg) => {
       </S.ChatMsgRight>
     </>
   ) : (
-    <S.ChatMsgLeftWrapper>
+    <S.ChatMsgWrapper>
       <S.ChatMsgLeft position={position}>
         <S.ChatMsgAvatar position={position}>
           <Image
@@ -63,27 +78,26 @@ const ChatMsg = ({ data, position }: IChatMsg) => {
           <S.ChatMsgText>{data.msg}</S.ChatMsgText>
         )}
       </S.ChatMsgLeft>
-      {data.files.length > 0 && (
-        <>
-          <S.ChatMsgFileImages>
-            {data.files.map(
-              (file, index) =>
-                file.type === 'image' && (
-                  <S.ChatMsgFileImage key={index} onClick={() => console.log(1)}>
-                    <Image src={file.url} alt='file' layout='fill' draggable={false}/>
-                  </S.ChatMsgFileImage>
-                )
-            )}
-          </S.ChatMsgFileImages>
-          {data.files.map(
-            (file, index) =>
-              file.type === 'file' && (
-                <S.ChatMsgFile key={index}></S.ChatMsgFile>
-              )
-          )}
-        </>
+      {images?.length > 0 && (
+        <S.ChatMsgFileImages imgNum={images?.length}>
+          {images?.map((image, index) => (
+            <S.ChatMsgFileImage key={index}>
+              <Image
+                src={image.url}
+                alt='image'
+                layout='fill'
+                objectFit='cover'
+                draggable={false}
+              />
+            </S.ChatMsgFileImage>
+          ))}
+        </S.ChatMsgFileImages>
       )}
-    </S.ChatMsgLeftWrapper>
+      {data.files.map(
+        (file, index) =>
+          file.type === 'file' && <S.ChatMsgFile key={index}></S.ChatMsgFile>
+      )}
+    </S.ChatMsgWrapper>
   );
 };
 
