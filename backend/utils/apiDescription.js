@@ -159,6 +159,13 @@ const getRoomInfo = {
     roomName: String,
     roomAvatar: String,
     isGroup: Boolean,
+    users: [
+      {
+        avatar: String,
+        role: Boolean,
+        name: String,
+      },
+    ],
     messages: [
       {
         _id: String,
