@@ -1,4 +1,82 @@
 import { useRef, useEffect } from 'react';
+import {
+  BsFillFileExcelFill,
+  BsFillFilePdfFill,
+  BsFillFilePlayFill,
+  BsFillFilePptFill,
+  BsFileText,
+  BsFillFileWordFill,
+  BsFileCodeFill,
+  BsFillFileZipFill,
+  BsFileMedicalFill,
+} from 'react-icons/bs';
+
+export const validImageTypes = [
+  'image/gif',
+  'image/jpeg',
+  'image/png',
+  'image/jfif',
+  'image/jpg',
+  'image/x-icon',
+];
+
+export const fileTypes = [
+  {
+    type: <BsFillFileExcelFill size={23} color='#217346' />,
+    extension: ['xlsx', 'xls', 'xlsm', 'xml', 'xlam', 'xla', 'csv'],
+  },
+  {
+    type: <BsFillFilePdfFill size={23} color='#B90F12' />,
+    extension: ['pdf', 'ps', 'eps', 'html', 'html'],
+  },
+  {
+    type: <BsFillFilePlayFill size={23} color='#326dba' />,
+    extension: ['webm', 'mkv', 'flv', 'gif', 'mp4', 'wmv', 'avi', 'swf'],
+  },
+  {
+    type: <BsFillFilePptFill size={23} color='#BD3311' />,
+    extension: ['pptx', 'pptm', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppsx'],
+  },
+  {
+    type: <BsFileText size={23} color='#4d4d4d' />,
+    extension: ['txt', 'tex', 'rtf', 'odt', 'wpd'],
+  },
+  {
+    type: <BsFillFileWordFill size={23} color='#2B579A' />,
+    extension: ['doc', 'docm', 'docx', 'dot', 'dotx'],
+  },
+  {
+    type: <BsFileCodeFill size={23} color='#4E4E4E' />,
+    extension: ['exe', 'ini', 'bat', 'msi', 'mui'],
+  },
+  {
+    type: <BsFillFileZipFill size={23} color='#C56B36' />,
+    extension: ['zip', 'zipx', 'jar', 'iso', 'rar', '7z'],
+  },
+];
+
+export const getExtension = (filename: string) => {
+  const parts = filename.split('.');
+  return parts[parts.length - 1];
+};
+
+export const getFileIcon = (
+  file:
+    | File
+    | {
+        name: string;
+        url: string;
+        type: string;
+      }
+) => {
+  const extension = getExtension(file.name);
+  for (let i = 0; i < fileTypes.length; i++) {
+    if (fileTypes[i].extension.includes(extension)) {
+      return fileTypes[i].type;
+    }
+  }
+  return <BsFileMedicalFill size={23} />;
+};
 
 export const shorterText = (text: string, limit: number = 35) => {
   if (!text) return text;

@@ -24,13 +24,14 @@ export const ChatMsgAvatar = styled.figure<{ position: string }>`
   border: 2px solid black;
 `;
 
-export const ChatMsgMoreIcon = styled(FiMoreHorizontal)`
+export const ChatMsgMoreIcon = styled(FiMoreHorizontal)<{ nomsg?: boolean }>`
   ${tw`relative mr-3.5 text-[20px] text-gray-600 cursor-pointer`}
-  visibility: hidden;
+  ${({ nomsg }) => (nomsg ? tw`visible` : tw`invisible`)}
 `;
 
-export const ChatMsgMoreIconWrapper = styled.div`
+export const ChatMsgMoreIconWrapper = styled.div<{ nomsg?: boolean }>`
   ${tw`relative`}
+  ${({ nomsg }) => nomsg && tw`absolute right-[410px]`}
 `;
 
 export const ChatMsgTextWrapper = styled.div`
@@ -43,30 +44,40 @@ export const ChatMsgTextWrapper = styled.div`
   }
 `;
 
-export const ChatMsgFiles = styled.div`
-  ${tw``}
-`;
-
 export const ChatMsgFileImages = styled.div<{ imgNum: number }>`
-  ${tw`relative grid ml-[46px] w-[400px] h-auto mb-1 `}
+  ${tw`relative grid w-[400px] gap-1 mt-1`}
   ${({ imgNum }) =>
     imgNum === 1
       ? tw`grid-cols-1`
       : imgNum === 2
       ? tw`grid-cols-2`
       : imgNum >= 3 && tw`grid-cols-3`}
+
+  &:hover {
+    ${ChatMsgMoreIcon} {
+      visibility: visible;
+    }
+  }
 `;
 
-export const ChatMsgFileImage = styled.figure`
-  ${tw`relative rounded-[5px] h-auto mx-0.5 hover:cursor-pointer overflow-hidden`}
+export const ChatMsgFileImage = styled.figure<{ imgNum: number }>`
+  ${tw`relative rounded-[5px] w-full mx-0.5 hover:cursor-pointer overflow-hidden`}
 `;
 
-export const ChatMsgFileImageOne = styled.figure`
-  ${tw`relative ml-[48px] w-[400px] h-[400px] mb-1 rounded-[5px] overflow-hidden hover:cursor-pointer`}
+export const ChatMsgFiles = styled.div`
+  ${tw`flex flex-col w-[220px]`}
+`;
+
+export const ChatMsgFileIcon = styled.div`
+  ${tw`flex items-center justify-center p-1.5 bg-secondary rounded-full`}
+`;
+
+export const ChatMsgFileName = styled.div`
+  ${tw`ml-1.5 text-[16px] font-semibold text-darker`}
 `;
 
 export const ChatMsgFile = styled.div`
-  ${tw``}
+  ${tw`relative flex items-center mt-1 mx-2 h-[50px] pl-1.5 pr-3.5 py-1 bg-primary rounded-[10px] shadow-md`}
 `;
 
 export const ChatMsgUnSend = styled.div`
@@ -74,13 +85,13 @@ export const ChatMsgUnSend = styled.div`
 `;
 
 export const ChatMsgWrapper = styled.div`
-  ${tw``}
+  ${tw`flex flex-col`}
 `;
 
 export const ChatMsgLeft = styled(ChatMsg)<{ position: string }>`
   ${tw`relative`}
   ${({ position }) =>
-    (position === 'bottom' || position === 'alone') && tw`mb-5`}
+    (position === 'bottom' || position === 'alone') && tw`mb-7`}
 
   ${ChatMsgUnSend} {
     ${tw`ml-2`}
@@ -100,6 +111,9 @@ export const ChatMsgLeft = styled(ChatMsg)<{ position: string }>`
         ? tw`rounded-2xl rounded-bl-none`
         : tw`rounded-r-2xl`}
   }
+  ${ChatMsgFileImages} {
+    ${tw`ml-1.5`}
+  }
   ${ChatMsgTextTail} {
     ${({ position }) =>
       position !== 'bottom' && position !== 'alone' && tw`invisible`}
@@ -113,7 +127,7 @@ export const ChatMsgLeft = styled(ChatMsg)<{ position: string }>`
 export const ChatMsgRight = styled(ChatMsg)<{ position: string }>`
   ${tw`relative flex-row-reverse`}
   ${({ position }) =>
-    (position === 'bottom' || position === 'alone') && tw`mb-5`}
+    (position === 'bottom' || position === 'alone') && tw`mb-7`}
 
   ${ChatMsgUnSend} {
     ${tw`mr-2`}
@@ -144,6 +158,12 @@ export const ChatMsgRight = styled(ChatMsg)<{ position: string }>`
       ${tw`rounded-full absolute h-[50px] w-[50px] right-[-28px] bottom-[-3px]`}
       content: '';
     }
+  }
+  ${ChatMsgWrapper} {
+    ${tw`items-end`}
+  }
+  ${ChatMsgFileImages} {
+    ${tw`mr-2.5`}
   }
 `;
 

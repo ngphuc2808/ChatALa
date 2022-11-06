@@ -82,7 +82,13 @@ export const ChatMsgArray = [
       unSend: false,
       deleted: false,
       msg: 'use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.',
-      files: [],
+      files: [
+        {
+          name: 'name',
+          url: 'https://res.cloudinary.com/dzikgumce/image/upload/v1665681423/cld-sample-5.jpg',
+          type: 'image',
+        },
+      ],
     },
     {
       roomId: '1',
@@ -93,21 +99,6 @@ export const ChatMsgArray = [
       files: [
         {
           name: 'name',
-          url: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-          type: 'image',
-        },
-        {
-          name: 'file name',
-          url: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-          type: 'image',
-        },
-        {
-          name: 'nameasda sdaas daqwe',
-          url: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
-          type: 'image',
-        },
-        {
-          name: 'nameasda sdaas daqwe',
           url: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
           type: 'image',
         },
@@ -126,8 +117,24 @@ export const ChatMsgArray = [
       senderId: '1',
       unSend: false,
       deleted: false,
-      msg: '1Tailwind lets you conditionally apply utility classes in different states using variant modifiers. For example, use hover:drop-shadow-xl to only apply the drop-shadow-xl utility on hover.',
-      files: [],
+      msg: '',
+      files: [
+        {
+          name: 'name',
+          url: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+          type: 'image',
+        },
+        {
+          name: 'name',
+          url: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+          type: 'file',
+        },
+        {
+          name: 'name',
+          url: 'https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg',
+          type: 'file',
+        },
+      ],
     },
     {
       roomId: '1',
