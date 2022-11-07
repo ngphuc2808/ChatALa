@@ -1,5 +1,5 @@
 import { ErrorMessage, Formik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import * as Yup from 'yup';
 import * as S from './ChangePassword.styled';
 
@@ -28,16 +28,6 @@ const ChangePassword = () => {
   const [input, setInput] = useState({
     phoneNumber: '',
     password: '',
-  });
-
-  const focusChange = (e: any) => {
-    console.log(e);
-  };
-
-  const inputChange = (e: any) => {};
-
-  useEffect(() => {
-    console.log(input);
   });
 
   return (
@@ -92,6 +82,9 @@ const ChangePassword = () => {
               Password
             </S.Label>
           </S.InputWrap>
+          <S.ButtonWrap>
+            <S.Button>Update</S.Button>
+          </S.ButtonWrap>
         </S.Form>
       </Formik>
     </S.ChangePassword>

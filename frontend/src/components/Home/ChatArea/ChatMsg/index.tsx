@@ -39,7 +39,7 @@ const ChatMsg = ({ data, position }: IChatMsg) => {
               {data.msg !== '' && (
                 <S.ChatMsgTextWrapper>
                   <S.ChatMsgText>{data.msg}</S.ChatMsgText>
-                  <S.ChatMsgMoreIconWrapper >
+                  <S.ChatMsgMoreIconWrapper>
                     <S.ChatMsgMoreIcon onClick={() => setToggleOption(true)} />
                     {toggleOption && (
                       <ChatMsgOption setToggleOption={setToggleOption} />
@@ -48,8 +48,11 @@ const ChatMsg = ({ data, position }: IChatMsg) => {
                 </S.ChatMsgTextWrapper>
               )}
               {data.msg === '' && (
-                <S.ChatMsgMoreIconWrapper nomsg={true}>
-                  <S.ChatMsgMoreIcon nomsg={true} onClick={() => setToggleOption(true)} />
+                <S.ChatMsgMoreIconWrapper nomsg={1}>
+                  <S.ChatMsgMoreIcon
+                    nomsg={1}
+                    onClick={() => setToggleOption(true)}
+                  />
                   {toggleOption && (
                     <ChatMsgOption setToggleOption={setToggleOption} />
                   )}
@@ -58,7 +61,8 @@ const ChatMsg = ({ data, position }: IChatMsg) => {
               {images?.length > 0 && (
                 <S.ChatMsgFileImages imgNum={images?.length}>
                   {images?.map((image, index) => (
-                    <S.ChatMsgFileImage key={index} imgNum={images?.length} >
+                    <S.ChatMsgFileImage key={index} imgNum={images?.length}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={image.url}
                         alt='image'

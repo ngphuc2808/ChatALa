@@ -11,17 +11,17 @@ export const CreateGroupOverlay = styled.div`
   ${tw`absolute bg-[#00000080] h-full w-full`}
 `;
 
-const fadeInAnimate = keyframes`${zoomIn}`;
+const zoomInAnimate = keyframes`${zoomIn}`;
 
 export const CreateGroupBody = styled.div`
   ${tw`m-auto bg-darker py-2.5 px-3.5 rounded-[25px] z-10 min-w-[400px]`}
   border: 2px solid #ECF2F7;
-  animation: 0.25s ${fadeInAnimate};
+  animation: 0.25s ${zoomInAnimate};
 `;
 
 export const CreateGroupTitle = styled.div`
-${tw`text-2xl font-semibold mb-3 ml-1`}
-`
+  ${tw`text-2xl font-semibold mb-3 ml-1`}
+`;
 
 export const CreateGroupSearch = styled.div`
   ${tw`relative max-w-[550px] w-full flex items-center mb-6`}

@@ -25,24 +25,17 @@ export const ChatMsgAvatar = styled.figure<{ position: string }>`
   border: 2px solid black;
 `;
 
-export const ChatMsgMoreIcon = styled(FiMoreHorizontal)<{ nomsg?: boolean }>`
-  ${tw`relative mr-3.5 text-[20px] text-gray-600 cursor-pointer`}
-  ${({ nomsg }) => (nomsg ? tw`visible` : tw`invisible`)}
+export const ChatMsgMoreIcon = styled(FiMoreHorizontal)<{ nomsg?: number }>`
+  ${tw`relative mr-3.5 text-[20px] text-gray-600 cursor-pointer invisible`}
 `;
 
-export const ChatMsgMoreIconWrapper = styled.div<{ nomsg?: boolean }>`
+export const ChatMsgMoreIconWrapper = styled.div<{ nomsg?: number }>`
   ${tw`relative`}
   ${({ nomsg }) => nomsg && tw`absolute right-[410px]`}
 `;
 
 export const ChatMsgTextWrapper = styled.div`
   ${tw`relative flex items-center w-full`}
-
-  &:hover {
-    ${ChatMsgMoreIcon} {
-      visibility: visible;
-    }
-  }
 `;
 
 export const ChatMsgFileImages = styled.div<{ imgNum: number }>`
@@ -53,12 +46,6 @@ export const ChatMsgFileImages = styled.div<{ imgNum: number }>`
       : imgNum === 2
       ? tw`grid-cols-2`
       : imgNum >= 3 && tw`grid-cols-3`}
-
-  &:hover {
-    ${ChatMsgMoreIcon} {
-      visibility: visible;
-    }
-  }
 `;
 
 export const ChatMsgFileImage = styled.figure<{ imgNum: number }>`
@@ -88,6 +75,13 @@ export const ChatMsgUnSend = styled.div`
 
 export const ChatMsgWrapper = styled.div`
   ${tw`flex flex-col flex-grow`}
+  width: fit-content;
+
+  &:hover {
+    ${ChatMsgMoreIcon} {
+      visibility: visible;
+    }
+  }
 `;
 
 export const ChatMsgLeft = styled(ChatMsg)<{ position: string }>`

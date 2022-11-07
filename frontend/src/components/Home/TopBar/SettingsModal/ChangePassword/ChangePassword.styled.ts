@@ -6,7 +6,7 @@ export const ChangePassword = styled.div`
 `;
 
 export const Form = styled.div`
-  ${tw``}
+  ${tw`flex flex-col`}
 `;
 
 export const Title = styled.p`
@@ -28,4 +28,12 @@ export const Label = styled.label<{ active: boolean }>`
 
 export const ErrorMsg = styled.div`
   ${tw``}
+`;
+
+export const Button = styled.button`
+  ${tw`shadow text-center text-white bg-dark rounded-xl text-base font-semibold cursor-pointer hover:bg-darker hover:text-white px-5 py-[10px] mb-[10px] duration-100`}
+`;
+
+export const ButtonWrap = styled.div`
+  ${tw`flex justify-end w-[100%]`}
 `;
