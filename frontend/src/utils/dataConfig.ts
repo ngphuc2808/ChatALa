@@ -117,7 +117,7 @@ export const ChatMsgArray = [
       senderId: '1',
       unSend: false,
       deleted: false,
-      msg: '',
+      msg: 'askjdhkjqhwekjhqkwehkqhwe kqwe khqwkhe kqhw ekqhwk ehqkewhasd as d as da sd a sd as da sd qw e qwe q we qweqweqweq we q weq we q we qwe',
       files: [
         {
           name: 'name',

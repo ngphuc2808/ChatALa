@@ -33,31 +33,10 @@ const ChatMsg = ({ data, position }: IChatMsg) => {
     <>
       <S.ChatMsgRight position={position}>
         <S.ChatMsgWrapper>
-          {!data.unSend && data.files.length === 0 && <S.ChatMsgTextTail />}
           {!data.unSend ? (
             <>
-              {data.msg !== '' && (
-                <S.ChatMsgTextWrapper>
-                  <S.ChatMsgText>{data.msg}</S.ChatMsgText>
-                  <S.ChatMsgMoreIconWrapper>
-                    <S.ChatMsgMoreIcon onClick={() => setToggleOption(true)} />
-                    {toggleOption && (
-                      <ChatMsgOption setToggleOption={setToggleOption} />
-                    )}
-                  </S.ChatMsgMoreIconWrapper>
-                </S.ChatMsgTextWrapper>
-              )}
-              {data.msg === '' && (
-                <S.ChatMsgMoreIconWrapper nomsg={1}>
-                  <S.ChatMsgMoreIcon
-                    nomsg={1}
-                    onClick={() => setToggleOption(true)}
-                  />
-                  {toggleOption && (
-                    <ChatMsgOption setToggleOption={setToggleOption} />
-                  )}
-                </S.ChatMsgMoreIconWrapper>
-              )}
+              {data.files.length === 0 && <S.ChatMsgTextTail />}
+              {data.msg !== '' && <S.ChatMsgText>{data.msg}</S.ChatMsgText>}
               {images?.length > 0 && (
                 <S.ChatMsgFileImages imgNum={images?.length}>
                   {images?.map((image, index) => (
@@ -96,6 +75,14 @@ const ChatMsg = ({ data, position }: IChatMsg) => {
             <S.ChatMsgUnSend>Message has been recovered</S.ChatMsgUnSend>
           )}
         </S.ChatMsgWrapper>
+        {!data.unSend && (
+          <S.ChatMsgMoreIconWrapper>
+            <S.ChatMsgMoreIcon onClick={() => setToggleOption(true)} />
+            {toggleOption && (
+              <ChatMsgOption setToggleOption={setToggleOption} />
+            )}
+          </S.ChatMsgMoreIconWrapper>
+        )}
       </S.ChatMsgRight>
     </>
   ) : (

@@ -7,8 +7,7 @@ export const ChatMsg = styled.div`
 `;
 
 export const ChatMsgText = styled.div`
-  ${tw`relative px-3 py-2 max-w-[70%]`}
-  width: fit-content;
+  ${tw`relative px-3 py-2 shadow-md`}
 `;
 
 export const ChatMsgTextTail = styled.div`
@@ -22,7 +21,7 @@ export const ChatMsgAvatar = styled.figure<{ position: string }>`
   ${tw`relative w-[40px] h-[40px] rounded-full overflow-hidden flex-shrink-0 mb-[-5px] z-10 invisible`}
   ${({ position }) =>
     (position === 'bottom' || position === 'alone') && tw`visible`}
-  border: 2px solid black;
+  border: 1px solid gray;
 `;
 
 export const ChatMsgMoreIcon = styled(FiMoreHorizontal)<{ nomsg?: number }>`
@@ -49,7 +48,7 @@ export const ChatMsgFileImages = styled.div<{ imgNum: number }>`
 `;
 
 export const ChatMsgFileImage = styled.figure<{ imgNum: number }>`
-  ${tw`relative rounded-[5px] w-full mx-0.5 hover:cursor-pointer overflow-hidden`}
+  ${tw`relative rounded-[5px] w-full mx-0.5 hover:cursor-pointer overflow-hidden shadow-md`}
 `;
 
 export const ChatMsgFiles = styled.div`
@@ -74,14 +73,8 @@ export const ChatMsgUnSend = styled.div`
 `;
 
 export const ChatMsgWrapper = styled.div`
-  ${tw`flex flex-col flex-grow`}
+  ${tw`flex flex-col max-w-[70%]`}
   width: fit-content;
-
-  &:hover {
-    ${ChatMsgMoreIcon} {
-      visibility: visible;
-    }
-  }
 `;
 
 export const ChatMsgLeft = styled(ChatMsg)<{ position: string }>`
@@ -113,7 +106,7 @@ export const ChatMsgLeft = styled(ChatMsg)<{ position: string }>`
   ${ChatMsgTextTail} {
     ${({ position }) =>
       position !== 'bottom' && position !== 'alone' && tw`invisible`}
-    ${tw`bg-primary bottom-[-5px] left-[30px]`}
+    ${tw`bg-primary bottom-[-5px] left-[31px]`}
     &::before {
       ${tw`rounded-full absolute h-[50px] w-[50px] left-[-28px] bottom-[-3px]`}
       content: '';
@@ -121,7 +114,7 @@ export const ChatMsgLeft = styled(ChatMsg)<{ position: string }>`
 `;
 
 export const ChatMsgRight = styled(ChatMsg)<{ position: string }>`
-  ${tw`relative flex-row-reverse`}
+  ${tw`relative flex-row-reverse items-center`}
   ${({ position }) =>
     (position === 'bottom' || position === 'alone') && tw`mb-7`}
 
@@ -138,7 +131,7 @@ export const ChatMsgRight = styled(ChatMsg)<{ position: string }>`
     ${tw`flex flex-row-reverse`}
   }
   ${ChatMsgText} {
-    ${tw`bg-darker mr-2 rounded-br-[0] max-w-[75%]`}
+    ${tw`bg-darker mr-2 rounded-br-[0]`}
     ${({ position }) =>
       position === 'alone'
         ? tw`rounded-2xl rounded-br-none`
@@ -160,6 +153,12 @@ export const ChatMsgRight = styled(ChatMsg)<{ position: string }>`
   }
   ${ChatMsgFileImages} {
     ${tw`mr-2.5`}
+  }
+
+  &:hover {
+    ${ChatMsgMoreIcon} {
+      visibility: visible;
+    }
   }
 `;
 
