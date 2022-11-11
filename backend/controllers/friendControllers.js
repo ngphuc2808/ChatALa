@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Notifications = require("../models/notificationModel");
 const { decodeJWT } = require("../utils/utilFunctions");
 const Friends = require("../models/friendModel");
-const ObjectId = require("mongodb").ObjectId;
+const ErrorHandler = require("../utils/errorHandler");
 
 const friendReq = asyncHandler(async (req, res, next) => {
   const { id } = decodeJWT(req.signedCookies.token);
@@ -33,46 +33,35 @@ const friendReq = asyncHandler(async (req, res, next) => {
 
 const friendAccept = asyncHandler(async (req, res, next) => {
   const notificationId = req.params.id;
-
-  const notification = await Notifications.findOneAndUpdate(
-    notificationId,
-    {
+  const notification = await Notifications.findById(notificationId);
+  const inRelationship = await Friends.findOne({
+    $or: [
+      {
+        uid1: notification.requestId,
+        uid2: notification.receiveId,
+      },
+      {
+        uid1: notification.receiveId,
+        uid2: notification.requestId,
+      },
+    ],
+  });
+  if (notification && notification.status == "Pending" && !inRelationship) {
+    await Notifications.findByIdAndUpdate(notificationId, {
       $set: {
         status: "Accepted",
       },
-    },
-    { new: true }
-  );
-
-  await Friends.findOneAndUpdate(
-    {
-      $or: [
-        {
-          uid1: notification.requestId,
-          uid2: notification.receiveId,
-        },
-        {
-          uid1: notification.receiveId,
-          uid2: notification.requestId,
-        },
-      ],
-    },
-    {
+    });
+    await Friends.create({
       uid1: notification.requestId,
       uid2: notification.receiveId,
-      $set: {
-        status: {
-          type: "available",
-          blockedId: undefined,
-        },
-      },
-    },
-    { upsert: true }
-  );
-
-  res.status(200).json({
-    message: "Accept successfully",
-  });
+    });
+    return res.status(200).json({
+      message: "Accept successfully",
+    });
+  } else {
+    return next(new ErrorHandler("Unhandled error!", 500));
+  }
 });
 
 const friendDecline = asyncHandler(async (req, res, next) => {
@@ -91,16 +80,16 @@ const friendDecline = asyncHandler(async (req, res, next) => {
 
 const block = asyncHandler(async (req, res, next) => {
   const { id } = decodeJWT(req.signedCookies.token);
-  const uid2 = req.params.id;
+  const targetId = req.params.id;
 
   const friend = await Friends.findOne({
     $or: [
       {
         uid1: id,
-        uid2: uid2,
+        uid2: targetId,
       },
       {
-        uid1: uid2,
+        uid1: targetId,
         uid2: id,
       },
     ],
@@ -109,10 +98,10 @@ const block = asyncHandler(async (req, res, next) => {
   if (!friend) {
     await Friends.create({
       uid1: id,
-      uid2: uid2,
+      uid2: targetId,
       status: {
         type: "oneWayBlock",
-        blockedId: uid2,
+        blockedId: targetId,
       },
     });
     return res.status(200).json({
@@ -124,26 +113,18 @@ const block = asyncHandler(async (req, res, next) => {
       friend.status.type === "oneWayBlock" &&
       friend.status.blockedId.toString() === id
     ) {
-      await Friends.findByIdAndUpdate(
-        friend.id,
-        {
-          $set: {
-            status: { type: "twoWayBlock", blockedId: undefined },
-          },
+      await Friends.findByIdAndUpdate(friend.id, {
+        $set: {
+          status: { type: "twoWayBlock", blockedId: undefined },
         },
-        { new: true }
-      );
+      });
     }
     if (friend.status && friend.status.type === "available") {
-      await Friends.findByIdAndUpdate(
-        friend.id,
-        {
-          $set: {
-            status: { type: "oneWayBlock", blockedId: uid2 },
-          },
+      await Friends.findByIdAndUpdate(friend.id, {
+        $set: {
+          status: { type: "oneWayBlock", blockedId: targetId },
         },
-        { new: true }
-      );
+      });
     }
   }
 
@@ -153,13 +134,39 @@ const block = asyncHandler(async (req, res, next) => {
 });
 
 const unblock = asyncHandler(async (req, res, next) => {
-  const id = req.params.id;
+  const { id } = decodeJWT(req.signedCookies.token);
+  const targetId = req.params.id;
 
-  await Notifications.findOneAndUpdate(id, {
-    $set: {
-      status: "Denied",
-    },
+  const friend = await Friends.findOne({
+    $or: [
+      {
+        uid1: id,
+        uid2: targetId,
+      },
+      {
+        uid1: targetId,
+        uid2: id,
+      },
+    ],
   });
+
+  console.log(friend);
+  if (friend) {
+    if (
+      friend.status &&
+      friend.status.type === "oneWayBlock" &&
+      friend.status.blockedId.toString() === targetId
+    ) {
+      await Friends.findByIdAndDelete(friend.id);
+    }
+    if (friend.status && friend.status.type === "twoWayBlock") {
+      await Friends.findByIdAndUpdate(friend.id, {
+        $set: {
+          status: { type: "oneWayBlock", blockedId: id },
+        },
+      });
+    }
+  }
 
   res.status(200).json({
     message: "Unblock successfully",
