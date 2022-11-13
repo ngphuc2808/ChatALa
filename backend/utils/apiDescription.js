@@ -81,7 +81,7 @@ const friendRequest = {
 };
 
 const friendAccept = {
-  url: "api/user/friend-request/:id/accept",
+  url: "api/user/notification/:id/accept",
   auth: true,
   method: "POST",
   req: {},
@@ -91,7 +91,7 @@ const friendAccept = {
 };
 
 const friendDecline = {
-  url: "api/user/friend-request/:id/decline",
+  url: "api/user/notification/:id/decline",
   auth: true,
   method: "POST",
   req: {},
@@ -159,6 +159,13 @@ const getRoomInfo = {
     roomName: String,
     roomAvatar: String,
     isGroup: Boolean,
+    users: [
+      {
+        avatar: String,
+        role: Boolean,
+        name: String,
+      },
+    ],
     messages: [
       {
         _id: String,
@@ -218,48 +225,53 @@ const addMember = {
 
 // MESSAGE
 
-const sendMessage = {
-  url: "api/message",
-  auth: true,
-  method: "POST",
-  contentType: "multipart",
-  req: {
-    roomId: String,
-    msg: String,
-    files: [
-      {
-        file: File,
-        type: String, //file or image
-      },
-    ],
-  },
-  res: {
-    msg: String,
-    files: [
-      {
-        url: String,
-        type: String, //file or image
-      },
-    ],
-  },
-};
+// const sendMessage = {
+//   url: "api/message/",
+//   auth: true,
+//   method: "POST",
+//   req: {
+//     roomId: String,
+//     msg: String,
+//     files: [{
+//       url: String,
+//       name: String,
+//       type: String, //file or image
+//     }],
+//   },
+//   res: {
+//     message: String,
+//   },
+// };
 
-const unSendMessage = {
-  url: "api/message/:id/unsend",
-  auth: true,
-  method: "POST",
-  req: {},
-  res: {
-    message: String,
-  },
-};
+// const unSendMessage = {
+//   url: "api/message/:msgId/unsend",
+//   auth: true,
+//   method: "PUT",
+//   req: {},
+//   res: {
+//     message: String,
+//   },
+// };
 
-const deletedMessage = {
-  url: "api/message/:id/delete",
-  auth: true,
-  method: "POST",
-  req: {},
-  res: {
-    message: String,
-  },
-};
+// const deletedMessage = {
+//   url: "api/message/:msgId/delete",
+//   auth: true,
+//   method: "DELETE",
+//   req: {},
+//   res: {
+//     message: String,
+//   },
+// };
+
+// // UTILS
+
+// const signedFileUrl = {
+//   url: "api/util/signedFileUrl",
+//   auth: true,
+//   method: "GET",
+//   req: {},
+//   res: {
+//     signature: String,
+//     timestamps: String,
+//   },
+// }

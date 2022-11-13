@@ -2,6 +2,8 @@ const asyncHandler = require("express-async-handler");
 const Users = require("../models/userModel");
 const { generateJWT } = require("../utils/utilFunctions");
 const ErrorHandler = require("../utils/errorHandler");
+const Friends = require("../models/friendModel");
+const { decodeJWT } = require("../utils/utilFunctions");
 
 const checkUser = asyncHandler(async (req, res, next) => {
   const phone = req.query.phone;
@@ -64,8 +66,29 @@ const loginUser = asyncHandler(async (req, res, next) => {
 
 const findUser = asyncHandler(async (req, res, next) => {
   const { search } = req.body;
+  const { id } = decodeJWT(req.signedCookies.token);
 
-  const users = await Users.find({
+  const myFriends = await Friends.find({
+    $or: [
+      {
+        uid1: id,
+      },
+      {
+        uid2: id,
+      },
+    ],
+  });
+
+  let listFriendId = [];
+  myFriends.forEach((it) => {
+    if (it.uid1.toString() === id) {
+      listFriendId.push(it.uid2.toString());
+    } else {
+      listFriendId.push(it.uid1.toString());
+    }
+  });
+
+  const searchUsers = await Users.find({
     $or: [
       {
         phone: {
@@ -80,8 +103,20 @@ const findUser = asyncHandler(async (req, res, next) => {
     ],
   }).limit(10);
 
+  let result = [];
+  searchUsers.forEach((it) => {
+    let t = false;
+    listFriendId.forEach((childIt) => {
+      if (it.id === childIt) {
+        t = true;
+      }
+    });
+    result.push({ ...it.toObject(), isFriend: t });
+  });
+  console.log(result);
+
   res.status(200).json({
-    users,
+    result,
   });
 });
 

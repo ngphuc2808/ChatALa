@@ -111,7 +111,7 @@ const ChatArea = () => {
         context.setRoomMsg([
           {
             ...context.roomMsg[0],
-            senderId: '',
+            senderId: '1',
             msg: values.msg,
             unSend: false,
           },

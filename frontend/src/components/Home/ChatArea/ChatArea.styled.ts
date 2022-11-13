@@ -19,7 +19,7 @@ export const ChatAreaHeadInfo = styled.div`
 
 export const ChatAreaHeadAvatar = styled.figure`
   ${tw`relative w-[50px] h-[50px] rounded-full overflow-hidden flex-shrink-0`}
-  border: 2px solid black;
+  border: 1px solid gray;
 `;
 
 export const ChatAreaHeadNameWrapper = styled.div`
@@ -44,7 +44,7 @@ export const ChatAreaHeadOption = styled(IoMenu)`
 `;
 
 export const ChatAreaMain = styled.div`
-  ${tw`flex flex-col flex-grow bg-dark px-6 pb-4 pt-0 rounded-[30px]`}
+  ${tw`flex flex-col flex-grow bg-dark px-6 pb-4 pt-0 rounded-[30px] shadow-inner`}
 `;
 
 export const ChatAreaMainMsg = styled.div`

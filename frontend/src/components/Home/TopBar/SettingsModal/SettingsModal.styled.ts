@@ -1,8 +1,12 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import tw from 'twin.macro';
+import { fadeIn, zoomIn } from 'react-animations';
+const fadeInAnimate = keyframes`${fadeIn}`;
+const zoomInAnimate = keyframes`${zoomIn}`;
 
 export const SettingsModal = styled.div`
   ${tw`fixed z-[999] top-0 left-0 h-screen w-screen flex justify-center items-center flex-col bg-[rgb(0, 0, 0, 0.5)]`}
+  animation: 0.25s ${fadeInAnimate};
 `;
 
 export const Overlay = styled.div`
@@ -10,6 +14,7 @@ export const Overlay = styled.div`
 `;
 
 export const SettingsModalInner = styled.div`
+  animation: 0.25s ${zoomInAnimate};
   ${tw`relative z-[9999] max-w-[1024px] w-full min-h-[768px] bg-[#C9D9E5] rounded-[20px] shadow-sm overflow-hidden flex`}
 `;
 
