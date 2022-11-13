@@ -24,15 +24,25 @@ const checkUser = asyncHandler(async (req, res, next) => {
 const registerUser = asyncHandler(async (req, res, next) => {
   const { name, password, phone } = req.body;
 
-  const newUser = await Users.create({
-    name,
-    phone,
-    password,
-  });
+  const regexPhone = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+  const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
-  res.status(200).json({
-    message: "Register Successfully!",
-  });
+
+  if(phone.match(regexPhone) && password.match(regexPassword)) {
+    await Users.create({
+      name: name.replace(/\s+/g,' ').trim(),
+      phone,
+      password,
+    });
+    
+    res.status(200).json({
+      message: "Register Successfully!",
+    });
+  } else {
+    return next(
+      new ErrorHandler("Register failed!", 404)
+    );
+  }
 });
 
 const loginUser = asyncHandler(async (req, res, next) => {

@@ -83,14 +83,25 @@ const addMember = asyncHandler(async (req, res, next) => {
 
   const getMember = await Users.findById({ _id: uid });
 
-  const newMember = await Rooms.findOneAndUpdate({ _id: roomId }, { $push: { users: { uid: uid, role: false, nickName: getMember.name, avatar: getMember.avatar }}}, {
-    new: true,
-    upsert: true
+  const getRoom = await Rooms.findById({ _id: roomId });
+
+  const findUser = getRoom.users.filter(value => {
+    return value.uid == uid;
   });
 
-  res.status(200).json({
-    newMember
-  });
+  if(findUser.length > 0) {
+    return next(
+      new ErrorHandler(`${getMember.name} was added to the group!`, 404)
+    );
+  } else {
+    const newMember = await Rooms.findOneAndUpdate({ _id: roomId }, { $push: { users: { uid: uid, role: false, nickName: getMember.name, avatar: getMember.avatar }}}, {
+      new: true,
+      upsert: true
+    });
+    res.status(200).json({
+      newMember
+    });
+  }
 });
 
 module.exports = { getRoomList, getRoomInfo, changeRoomName, setNickname, addMember };
