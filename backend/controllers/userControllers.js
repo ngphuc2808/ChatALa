@@ -6,8 +6,6 @@ const ErrorHandler = require("../utils/errorHandler");
 const checkUser = asyncHandler(async (req, res, next) => {
   const phone = req.query.phone;
 
-  console.log(phone);
-
   const user = await Users.findOne({ phone: phone });
 
   if(!user) {
@@ -50,7 +48,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
       res.status(200).json({
         avatar: user.avatar,
         banner: user.banner,
-        name: user.name,
+        name: user.name
       });
     } else {
       return next(

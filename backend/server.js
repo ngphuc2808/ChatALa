@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const cookieParser = require('cookie-parser');
 const { connectDB } = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
+const roomRoutes = require('./routes/roomRoutes');
 const errorMiddleware = require('./middlewares/errors');
 
 const PORT = process.env.PORT || 5000;
@@ -35,6 +36,7 @@ app.get('/', (req, res) => {
 
 //route
 app.use('/api/user', userRoutes);
+app.use('/api/room', roomRoutes);
 
 //middleware
 app.use(errorMiddleware); //handle error

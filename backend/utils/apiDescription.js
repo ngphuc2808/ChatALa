@@ -182,7 +182,7 @@ const getRoomInfo = {
 const changeRoomName = {
   url: "api/room/:id/change-name",
   auth: true,
-  method: "POST",
+  method: "PUT",
   req: {
     roomName: String,
   },
@@ -194,7 +194,7 @@ const changeRoomName = {
 const setNickname = {
   url: "api/room/:id/nickname",
   auth: true,
-  method: "POST",
+  method: "PUT",
   req: {
     uid: String,
     nickname: String,

@@ -36,19 +36,16 @@ const Login = () => {
       }
       await UsersApi.login(userLogin);
 
-      router.push(
-        {
-          pathname: "/",
-          query: {
-            loginVerify: "login",
-          },
-        },
-        "/"
-      );
+      router.push("/");
 
-    } catch {
-      setSubmitting(false);
-      alert("Login failed, wrong password!");
+    } catch(error: any) {
+      if(error.statusCode === 404) {
+        setSubmitting(false);
+        alert("Login failed, wrong password!");
+      } else {
+        alert("Call API failed!");
+        console.log(error);
+      }
     }
   }; 
   return (

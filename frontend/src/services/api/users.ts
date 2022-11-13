@@ -12,7 +12,7 @@ export const UsersApi = {
     },
     login: async function (user: UserLogin): Promise<any> {
         return await http.post(API_URL.login, user);
-    },
+    }
 //   list: async function (params?: any): Promise<any> {
 //     return await http.get(API_URL.login, { params: params })
 //   },

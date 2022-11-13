@@ -10,12 +10,6 @@ import { useEffect } from "react";
 const Home = (props: any) => {
   const context = useGlobalContext();
   const router = useRouter();
-
-  useEffect(() => {
-    if (!props.router.query.loginVerify) {
-      router.replace("/login");
-    }
-  }, []);
   
   return (
     <>
