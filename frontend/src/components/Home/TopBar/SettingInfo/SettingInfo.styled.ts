@@ -30,7 +30,7 @@ export const ModalOverlay = styled.div`
 `;
 
 export const ModalBody = styled.div`
-  ${tw`w-[400px] rounded-[50px] bg-[#ecf2f7] z-[1]`}
+  ${tw`w-[400px] rounded-[20px] bg-[#ecf2f7] z-[1] overflow-hidden`}
   box-shadow: 2px 2px 16px rgb(0 0 0 / 15%);
   animation: ${growth} linear 0.15s;
 `;
@@ -40,14 +40,14 @@ export const Header = styled.div`
 `;
 
 export const Title = styled.div`
-  ${tw`w-full flex justify-between items-center rounded-t-[50px] py-4 px-8 text-xl font-bold bg-darker`}
+  ${tw`w-full flex justify-between items-center py-4 px-8 text-xl font-bold bg-darker`}
   &:nth-child(1) svg {
     ${tw`p-1 text-3xl rounded-[50%] cursor-pointer hover:bg-[rgba(0, 0, 0, 0.2)]`}
   }
 `;
 
 export const Banner = styled.figure`
-  ${tw`relative w-full h-[150px] cursor-pointer rounded-b-[50px] overflow-hidden`}
+  ${tw`relative w-full h-[150px] cursor-pointer rounded-b-[20px] overflow-hidden`}
 `;
 
 export const Button = styled.button`
@@ -78,7 +78,7 @@ export const NewForm = styled(Form)`
 `;
 
 export const Input = styled(Field)<{ error: boolean }>`
-  ${tw`w-full h-12 outline-none mt-2 py-2 px-4 rounded-[50px]`}
+  ${tw`w-full h-12 outline-none mt-2 py-2 px-4 rounded-[20px]`}
   ${({ error }) =>
     error === 1
       ? tw`border border-red-500`
@@ -117,7 +117,7 @@ export const DatePickerWrapperStyles = createGlobalStyle`
 
 export const DatePickerElement = styled.div`
   input {
-    ${tw`rounded-[50px]`}
+    ${tw`rounded-[20px]`}
   }
 `;
 

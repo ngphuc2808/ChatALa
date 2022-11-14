@@ -72,6 +72,11 @@ export const NotiListArray = [
     name: 'Phúc Du',
     numFriends: 21,
   },
+  {
+    avatar: UserAvatar,
+    name: 'Phúc Du',
+    numFriends: 21,
+  },
 ];
 
 export const ChatMsgArray = [

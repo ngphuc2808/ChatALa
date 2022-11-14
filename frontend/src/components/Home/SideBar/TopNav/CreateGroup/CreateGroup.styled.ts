@@ -14,7 +14,7 @@ export const CreateGroupOverlay = styled.div`
 const zoomInAnimate = keyframes`${zoomIn}`;
 
 export const CreateGroupBody = styled.div`
-  ${tw`m-auto bg-darker py-2.5 px-3.5 rounded-[25px] z-10 min-w-[400px]`}
+  ${tw`m-auto bg-darker py-2.5 px-3.5 rounded-[25px] z-10 min-w-[700px]`}
   border: 2px solid #ECF2F7;
   animation: 0.25s ${zoomInAnimate};
 `;
@@ -24,7 +24,7 @@ export const CreateGroupTitle = styled.div`
 `;
 
 export const CreateGroupSearch = styled.div`
-  ${tw`relative max-w-[550px] w-full flex items-center mb-6`}
+  ${tw`relative w-full flex items-center mb-4`}
 `;
 export const CreateGroupSearchInput = styled.input`
   ${tw`bg-[#F8F8F8] text-lg rounded-[50px] pr-2 pl-9 py-2 w-full`}
@@ -35,12 +35,27 @@ export const CreateGroupSearchIcon = styled(BiSearchAlt)`
   ${tw`absolute hover:cursor-pointer text-[28px] text-[#002B98] ml-1.5 left-0`}
 `;
 
+export const GreateGroupList = styled.div`
+  ${tw`max-h-[60vh] overflow-y-scroll pr-1`}
+  &::-webkit-scrollbar-track {
+    ${tw`bg-transparent rounded-[10px]`}
+  }
+
+  &::-webkit-scrollbar {
+    ${tw`w-[5px]`}
+  }
+
+  &::-webkit-scrollbar-thumb {
+    ${tw`bg-dark rounded-[50px]`}
+  }
+`;
+
 export const CreateGroupItem = styled.div`
-  ${tw`flex p-2 rounded-[50px] my-1.5 items-center relative w-full bg-secondary justify-between`}
+  ${tw`flex p-2 rounded-[20px] my-1.5 items-center relative w-full bg-secondary justify-between`}
 `;
 
 export const CreateGroupInfo = styled.div`
-  ${tw`flex items-center hover:cursor-pointer`}
+  ${tw`flex flex-grow items-center hover:cursor-pointer`}
 `;
 
 export const CreateGroupAvatar = styled.figure`
@@ -49,7 +64,7 @@ export const CreateGroupAvatar = styled.figure`
 `;
 
 export const CreateGroupName = styled.div`
-  ${tw`font-semibold text-[18px] w-[200px] overflow-ellipsis ml-3.5`}
+  ${tw`flex-grow font-semibold text-[18px] overflow-ellipsis ml-3.5`}
 `;
 
 export const CreateGroupOption = styled.div`

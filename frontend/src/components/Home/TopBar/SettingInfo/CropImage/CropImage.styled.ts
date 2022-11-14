@@ -19,7 +19,7 @@ export const ModalOverlay = styled.div`
 `;
 
 export const ModalBody = styled.div`
-  ${tw`fixed top-[50%] left-[50%] bg-[#fff] w-[500px] rounded-[50px] flex justify-start flex-col z-[999]`}
+  ${tw`fixed top-[50%] left-[50%] bg-[#fff] w-[500px] rounded-[20px] flex justify-start flex-col z-[999]`}
   transform: translate(-50%, -50%);
   box-shadow: 2px 2px 16px rgb(0 0 0 / 15%);
   animation: ${fadeIn} linear 0.15s;
@@ -44,7 +44,7 @@ export const ZoomAndRotate = styled.div`
 `;
 
 export const Button = styled.button`
-  ${tw`w-[125px] rounded-[50px] bg-[#7098b9] py-1.5 px-0 text-[#fff] mt-6 tracking-[1px] font-bold flex justify-center items-center hover:opacity-80`}
+  ${tw`w-[125px] rounded-[20px] bg-[#7098b9] py-1.5 px-0 text-[#fff] mt-6 tracking-[1px] font-bold flex justify-center items-center hover:opacity-80`}
   & p {
     ${tw`ml-1.5`}
   }

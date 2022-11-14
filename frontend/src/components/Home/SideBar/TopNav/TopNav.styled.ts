@@ -3,7 +3,7 @@ import tw from 'twin.macro';
 import { AiOutlineUsergroupAdd } from 'react-icons/ai';
 
 export const Wrapper = styled.div`
-  ${tw`bg-secondary rounded-[30px] shadow-md`}
+  ${tw`bg-secondary rounded-[20px] shadow-md`}
 `;
 
 export const Options = styled.div`

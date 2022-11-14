@@ -14,7 +14,7 @@ export const Container = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  ${tw`bg-secondary w-full rounded-[50px] flex shadow-md`}
+  ${tw`bg-secondary w-full rounded-[20px] flex shadow-md`}
 `;
 
 export const LeftWrapper = styled.div`

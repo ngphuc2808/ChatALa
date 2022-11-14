@@ -16,17 +16,19 @@ const CreateGroup = ({ setToggleCreateGroup }: ICreateGroup) => {
           <S.CreateGroupSearchIcon />
           <S.CreateGroupSearchInput placeholder='Search with name or phone number...' />
         </S.CreateGroupSearch>
-        {NotiListArray.map((data, index) => (
-          <S.CreateGroupItem key={index}>
-            <S.CreateGroupInfo>
-              <S.CreateGroupAvatar>
-                <Image src={data.avatar} alt='avatar' layout='fill' />
-              </S.CreateGroupAvatar>
-              <S.CreateGroupName>{data.name}</S.CreateGroupName>
-            </S.CreateGroupInfo>
-            <S.CreateGroupOption>Add</S.CreateGroupOption>
-          </S.CreateGroupItem>
-        ))}
+        <S.GreateGroupList>
+          {NotiListArray.map((data, index) => (
+            <S.CreateGroupItem key={index}>
+              <S.CreateGroupInfo>
+                <S.CreateGroupAvatar>
+                  <Image src={data.avatar} alt='avatar' layout='fill' objectFit='cover' />
+                </S.CreateGroupAvatar>
+                <S.CreateGroupName>{data.name}</S.CreateGroupName>
+              </S.CreateGroupInfo>
+              <S.CreateGroupOption>Add</S.CreateGroupOption>
+            </S.CreateGroupItem>
+          ))}
+        </S.GreateGroupList>
       </S.CreateGroupBody>
     </S.CreateGroupModal>
   );

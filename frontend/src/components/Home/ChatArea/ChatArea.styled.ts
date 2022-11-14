@@ -6,7 +6,7 @@ import { BsEmojiLaughingFill } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { zoomIn } from "react-animations";
 export const ChatArea = styled.div`
-  ${tw`relative bg-secondary shadow-md rounded-[30px] flex-grow flex flex-col overflow-hidden`}
+  ${tw`relative bg-secondary shadow-md rounded-[20px] flex-grow flex flex-col overflow-hidden`}
 `;
 
 export const ChatAreaHead = styled.div`
@@ -44,7 +44,7 @@ export const ChatAreaHeadOption = styled(IoMenu)`
 `;
 
 export const ChatAreaMain = styled.div`
-  ${tw`flex flex-col flex-grow bg-dark px-6 pb-4 pt-0 rounded-[30px] shadow-inner`}
+  ${tw`flex flex-col flex-grow bg-dark px-6 pb-4 pt-0 rounded-[20px] shadow-inner`}
 `;
 
 export const ChatAreaMainMsg = styled.div`

@@ -38,13 +38,13 @@ export const ChatMsgTextWrapper = styled.div`
 `;
 
 export const ChatMsgFileImages = styled.div<{ imgNum: number }>`
-  ${tw`relative grid w-[400px] gap-1 mt-1`}
+  ${tw`relative grid gap-1 mt-1`}
   ${({ imgNum }) =>
     imgNum === 1
-      ? tw`grid-cols-1`
+      ? tw`grid-cols-1 w-[500px]`
       : imgNum === 2
-      ? tw`grid-cols-2`
-      : imgNum >= 3 && tw`grid-cols-3`}
+      ? tw`grid-cols-2 w-[400px]`
+      : imgNum >= 3 && tw`grid-cols-3 w-[400px]`}
 `;
 
 export const ChatMsgFileImage = styled.figure<{ imgNum: number }>`
