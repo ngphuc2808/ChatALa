@@ -8,8 +8,8 @@ const roomSchema = mongoose.Schema(
     users: [
       {
         uid: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
-        role: { type: Boolean },
-        nickName: { type: String, trim: true, default: "" },
+        role: { type: Boolean, default: false },
+        nickname: { type: String, trim: true },
         avatar: { type: String },
       },
     ],

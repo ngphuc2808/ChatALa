@@ -18,7 +18,7 @@ export const ChatMsgTextTail = styled.div`
 `;
 
 export const ChatMsgAvatar = styled.figure<{ position: string }>`
-  ${tw`relative w-[40px] h-[40px] rounded-full overflow-hidden flex-shrink-0 mb-[-5px] z-10 invisible`}
+  ${tw`relative w-[40px] h-[40px] rounded-full overflow-hidden flex-shrink-0 mb-[-5px] z-10 invisible shadow-sm`}
   ${({ position }) =>
     (position === 'bottom' || position === 'alone') && tw`visible`}
   border: 1px solid gray;
@@ -60,7 +60,7 @@ export const ChatMsgFileIcon = styled.div`
 `;
 
 export const ChatMsgFileName = styled.div`
-  ${tw`ml-1.5 text-[16px] font-semibold text-darker`}
+  ${tw`ml-1.5 overflow-hidden text-[16px] font-semibold text-darker`}
 `;
 
 export const ChatMsgFile = styled.div`

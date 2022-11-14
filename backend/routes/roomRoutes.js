@@ -5,10 +5,10 @@ const { getRoomList, getRoomInfo, changeRoomName, setNickname, addMember } = req
 const router = express.Router();
 
 router.route("/").get(authMiddleware, getRoomList);
-router.route("/:id").get(authMiddleware, getRoomInfo);
-router.route("/:id/change-name").put(authMiddleware, changeRoomName);
-router.route("/:id/nickname").put(authMiddleware, setNickname);
-router.route("/:id/member").post(authMiddleware, addMember);
+router.route("/:roomId").get(authMiddleware, getRoomInfo);
+router.route("/:roomId/change-name").put(authMiddleware, changeRoomName);
+router.route("/:roomId/nickname").put(authMiddleware, setNickname);
+router.route("/:roomId/member").post(authMiddleware, addMember);
 
 
 module.exports = router;

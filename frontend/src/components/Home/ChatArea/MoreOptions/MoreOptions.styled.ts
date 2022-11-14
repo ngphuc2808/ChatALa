@@ -20,7 +20,7 @@ ${tw`font-semibold py-3 text-[22px] border-b-[1px] w-full text-center border-b-d
 `
 
 export const RoomInfoAvatar = styled.figure`
-${tw`relative w-[60px] h-[60px] rounded-full overflow-hidden my-4 border-2 border-darker`}
+${tw`relative w-[60px] h-[60px] rounded-full overflow-hidden mt-4 mb-2 border-2 border-darker`}
 `
 
 export const RoomInfoName = styled.div`

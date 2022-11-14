@@ -29,7 +29,7 @@ const ChatPreviewItem = ({
               src={avatar}
               alt='avatar'
               layout='fill'
-              objectFit='contain'
+              objectFit='cover'
             />
           </S.ChatAvatar>
         ) : (

@@ -5,7 +5,7 @@ const { decodeJWT } = require("../utils/utilFunctions");
 
 const sendMessage = asyncHandler(async (req, res, next) => {
   const { roomId, msg, files } = req.body;
-  const { id } = decodeJWT(req.signedCookies.token);
+  const id = req.user._id
 
   const result = await Messages.create({
     roomId,

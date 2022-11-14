@@ -5,7 +5,7 @@ const Friends = require("../models/friendModel");
 const ErrorHandler = require("../utils/errorHandler");
 
 const friendReq = asyncHandler(async (req, res, next) => {
-  const { id } = decodeJWT(req.signedCookies.token);
+  const id = req.user._id
   const receiveId = req.params.id;
 
   const notification = await Notifications.findOneAndUpdate(
@@ -79,7 +79,7 @@ const friendDecline = asyncHandler(async (req, res, next) => {
 });
 
 const block = asyncHandler(async (req, res, next) => {
-  const { id } = decodeJWT(req.signedCookies.token);
+  const id = req.user._id
   const targetId = req.params.id;
 
   const friend = await Friends.findOne({
@@ -134,7 +134,7 @@ const block = asyncHandler(async (req, res, next) => {
 });
 
 const unblock = asyncHandler(async (req, res, next) => {
-  const { id } = decodeJWT(req.signedCookies.token);
+  const id = req.user._id
   const targetId = req.params.id;
 
   const friend = await Friends.findOne({

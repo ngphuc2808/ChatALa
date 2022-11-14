@@ -6,18 +6,31 @@ import Welcome from '../src/components/Home/Welcome';
 import { useGlobalContext } from '../src/contexts/globalContext';
 import { useRouter, withRouter } from "next/router";
 import { useEffect } from "react";
+import { RoomApi } from '../src/services/api/room';
 
-const Home = (props: any) => {
+const Home = () => {
   const context = useGlobalContext();
-  const router = useRouter();
-  
+
+  const getRoomData = async () => {
+    try {
+      const rooms = await RoomApi.getRoomList();
+      context.setRoomList(rooms.result)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getRoomData();
+  }, []);
+
   return (
     <>
       <S.HomeContainer>
         <TopBar />
         <S.Wrapper>
           <SideBar />
-          {context.roomMsg?.length > 0 ? <ChatArea /> : <Welcome />}
+          {context.roomChoosen ? <ChatArea /> : <Welcome />}
         </S.Wrapper>
       </S.HomeContainer>
     </>

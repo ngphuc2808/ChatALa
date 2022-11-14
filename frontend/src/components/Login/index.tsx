@@ -41,7 +41,7 @@ const Login = () => {
     } catch(error: any) {
       if(error.statusCode === 404) {
         setSubmitting(false);
-        alert("Login failed, wrong password!");
+        alert("Wrong password or phone number!");
       } else {
         alert("Call API failed!");
         console.log(error);

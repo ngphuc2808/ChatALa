@@ -7,7 +7,7 @@ const messageSchema = mongoose.Schema(
   {
     roomId: { type: mongoose.Schema.Types.ObjectId, ref: "Rooms" },
     senderId: { type: mongoose.Schema.Types.ObjectId, ref: "Users" },
-    msg: { type: String, trim: true },
+    msg: { type: String, trim: true, default: "" },
     files: [
       {
         url: String,
