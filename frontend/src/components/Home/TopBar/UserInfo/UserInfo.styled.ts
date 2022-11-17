@@ -50,7 +50,7 @@ export const Header = styled.div`
 `;
 
 export const Title = styled.div`
-  ${tw`w-full flex justify-between items-center py-4 px-8 text-xl font-bold bg-darker`}
+  ${tw`w-full flex justify-between items-center py-4 px-8 text-xl text-white font-bold bg-darker`}
   &:nth-child(1) svg {
     ${tw`p-1 text-3xl rounded-[50%] cursor-pointer hover:bg-[rgba(0, 0, 0, 0.2)]`}
   }
@@ -88,7 +88,7 @@ export const Info = styled.div`
 `;
 
 export const Button = styled.button`
-  ${tw`flex justify-center items-center w-[60%] text-lg bg-dark rounded-[20px] py-1 px-2 mt-3 mx-auto mb-8 opacity-80 hover:opacity-100`}
+  ${tw`flex justify-center items-center w-[60%] text-white text-lg bg-darker rounded-[20px] py-1 px-2 mt-3 mx-auto mb-8 opacity-100 hover:opacity-80`}
   & svg {
     ${tw`mr-1`}
   }

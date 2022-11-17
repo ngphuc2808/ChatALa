@@ -17,5 +17,6 @@ export const ChatList = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  ${tw``}
+  ${tw`text-center`}
+  text-align: -webkit-center
 `;

@@ -3,6 +3,7 @@ import * as S from './TopNav.styled';
 import { useState } from 'react';
 import CreateGroup from './CreateGroup';
 import { useGlobalContext } from '../../../../contexts/globalContext';
+import ShowFriends from './ShowFriends';
 
 interface ITopNav {
   setSelected: (number: number) => void;
@@ -10,12 +11,14 @@ interface ITopNav {
 
 const TopNav = ({ setSelected }: ITopNav) => {
   const [toggleCreateGroup, setToggleCreateGroup] = useState(false);
+  const [toggleShowFriends, setToggleShowFriends] = useState(false);
   const context = useGlobalContext();
 
   return (
     <S.Wrapper>
       <S.Options>
-        <S.AddOption onClick={() => setToggleCreateGroup(true)} />
+        <S.FriendsOption onClick={() => setToggleShowFriends(true)} />
+        <S.AddGroupOption onClick={() => setToggleCreateGroup(true)} />
       </S.Options>
       <ChatPreviewItem
         id={-2}
@@ -24,7 +27,12 @@ const TopNav = ({ setSelected }: ITopNav) => {
         setSelected={setSelected}
         onClick={() => context.setRoomMsg([])}
       />
-      {toggleCreateGroup && <CreateGroup setToggleCreateGroup={setToggleCreateGroup} />}
+      {toggleCreateGroup && (
+        <CreateGroup setToggleCreateGroup={setToggleCreateGroup} />
+      )}
+      {toggleShowFriends && (
+        <ShowFriends setToggleShowFriends={setToggleShowFriends} />
+      )}
     </S.Wrapper>
   );
 };

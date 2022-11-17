@@ -8,6 +8,7 @@ import {
   UserAvatar,
 } from '../../../../utils/dataConfig';
 import { RoomApi } from '../../../../services/api/room';
+import { CircleLoader } from 'react-spinners';
 
 interface IChatList {
   selected: number;
@@ -28,13 +29,13 @@ const ChatList = ({ selected, setSelected }: IChatList) => {
       roomAvatar: result.roomAvatar,
     });
     context.setRoomMsg(result.messages);
-    context.setRoomChoosen(true)
+    context.setRoomChoosen(true);
   };
 
   return (
     <S.ChatList>
       <S.Wrapper>
-      {context.roomList.length > 0 &&
+        {context.roomList.length > 0 ? (
           context.roomList.map((data, index) => (
             <React.Fragment key={index}>
               <ChatPreviewItem
@@ -47,7 +48,10 @@ const ChatList = ({ selected, setSelected }: IChatList) => {
                 onClick={() => roomSelect(index)}
               />
             </React.Fragment>
-          ))}
+          ))
+        ) : (
+          <CircleLoader color='#769FCD' />
+        )}
       </S.Wrapper>
     </S.ChatList>
   );

@@ -44,11 +44,14 @@ export const ChatMsgFileImages = styled.div<{ imgNum: number }>`
       ? tw`grid-cols-1 w-[500px]`
       : imgNum === 2
       ? tw`grid-cols-2 w-[400px]`
-      : imgNum >= 3 && tw`grid-cols-3 w-[400px]`}
+      : imgNum >= 3 && tw`grid-cols-3 w-[300px]`}
 `;
 
 export const ChatMsgFileImage = styled.figure<{ imgNum: number }>`
   ${tw`relative rounded-[5px] w-full mx-0.5 hover:cursor-pointer overflow-hidden shadow-md`}
+  ${({ imgNum }) =>
+    imgNum >= 2
+      && `aspect-ratio: 1`}
 `;
 
 export const ChatMsgFiles = styled.div`

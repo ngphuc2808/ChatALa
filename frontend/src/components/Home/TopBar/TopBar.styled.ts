@@ -4,6 +4,7 @@ import { BiSearchAlt } from 'react-icons/bi';
 import { RiSettings3Fill } from 'react-icons/ri';
 import { FiLogOut } from 'react-icons/fi';
 import { IoNotificationsCircleSharp } from 'react-icons/io5';
+import { ImExit } from 'react-icons/im'
 
 export const Avatar = styled.figure`
   ${tw`w-[60px] h-[60px] rounded-full overflow-hidden absolute shadow-md border-[2px] border-darker`}
@@ -49,15 +50,15 @@ export const SearchIcon = styled(BiSearchAlt)`
 `;
 
 export const Option = styled.div`
-  ${tw`text-[25px] text-darker flex justify-between mr-5 items-center`}
+  ${tw`text-[25px] text-darker flex justify-between mr-3 items-center`}
 `;
 
 export const OptionSetting = styled(RiSettings3Fill)`
-  ${tw`hover:cursor-pointer mx-2`}
+  ${tw`hover:cursor-pointer mx-2 text-[30px]`}
 `;
 
-export const OptionLogOut = styled(FiLogOut)`
-  ${tw`hover:cursor-pointer mx-2`}
+export const OptionLogOut = styled(ImExit)`
+  ${tw`hover:cursor-pointer mx-2.5 mb-[-2px] text-[25px] rounded-[4px]`}
 `;
 
 export const OptionNotify = styled(IoNotificationsCircleSharp)`

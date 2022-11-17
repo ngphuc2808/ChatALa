@@ -20,21 +20,28 @@ const ChatPreviewItem = ({
   setSelected,
   onClick,
 }: IChatPreviewItem) => {
+  const status = 1;
+
   return (
     <S.ChatPreviewItem active={active} Id={id} onClick={onClick}>
       <S.Wrapper onClick={() => setSelected(id)}>
-        {avatar ? (
-          <S.ChatAvatar>
-            <Image
-              src={avatar}
-              alt='avatar'
-              layout='fill'
-              objectFit='cover'
-            />
-          </S.ChatAvatar>
-        ) : (
-          <S.ChatBotAvatar />
-        )}
+        <S.ChatAvatarWrapper>
+          {avatar ? (
+            <>
+              <S.ChatAvatar>
+                <Image
+                  src={avatar}
+                  alt='avatar'
+                  layout='fill'
+                  objectFit='cover'
+                />
+              </S.ChatAvatar>
+              <S.ChatStatus status={status} />
+            </>
+          ) : (
+            <S.ChatBotAvatar />
+          )}
+        </S.ChatAvatarWrapper>
         <S.Content>
           <S.Name>{name}</S.Name>
           <S.Msg>{msg}</S.Msg>

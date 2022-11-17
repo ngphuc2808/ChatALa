@@ -3,9 +3,10 @@ import { Formik, ErrorMessage } from 'formik';
 import Link from 'next/link';
 import * as S from './Login.styled';
 import * as Yup from 'yup';
-import { UserLogin, FormValueLogin } from "../../utils/types";
-import { useRouter } from "next/router";
-import { UsersApi } from "../../services/api/users";
+import { UserLogin, FormValueLogin } from '../../utils/types';
+import { useRouter } from 'next/router';
+import { UsersApi } from '../../services/api/users';
+import { ClipLoader } from 'react-spinners';
 
 const Login = () => {
   const router = useRouter();
@@ -28,26 +29,28 @@ const Login = () => {
         'Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number.'
       ),
   });
-  const handleSubmit = async (values: FormValueLogin, { setSubmitting }: any) => {
+  const handleSubmit = async (
+    values: FormValueLogin,
+    { setSubmitting }: any
+  ) => {
     try {
       const userLogin: UserLogin = {
         phone: values.phoneNumber,
-        password: values.password
-      }
+        password: values.password,
+      };
       await UsersApi.login(userLogin);
 
-      router.push("/");
-
-    } catch(error: any) {
-      if(error.statusCode === 404) {
+      router.push('/');
+    } catch (error: any) {
+      if (error.statusCode === 404) {
         setSubmitting(false);
-        alert("Wrong password or phone number!");
+        alert('Wrong password or phone number!');
       } else {
-        alert("Call API failed!");
+        alert('Call API failed!');
         console.log(error);
       }
     }
-  }; 
+  };
   return (
     <FormTemplate>
       <S.Suggest>Signin to this fancy webchat!</S.Suggest>
@@ -56,7 +59,7 @@ const Login = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, isSubmitting }) => (
           <S.NewForm>
             <S.SetWidth>
               <S.Input
@@ -77,7 +80,13 @@ const Login = () => {
               <S.Forgot>
                 <Link href='/forgot-password'>Forgot Password?</Link>
               </S.Forgot>
-              <S.Button type='submit'>Sign in</S.Button>
+              <S.Button type='submit'>
+                {isSubmitting ? (
+                  <ClipLoader color='#fff' size={25} />
+                ) : (
+                  'Sign in'
+                )}
+              </S.Button>
             </S.SetWidth>
           </S.NewForm>
         )}
