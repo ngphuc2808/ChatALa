@@ -79,6 +79,41 @@ export const NotiListArray = [
   },
 ];
 
+export const SearchListArray = [
+  {
+    _id: '',
+    avatar: UserAvatar,
+    name: 'Soobin Soobin Soobin Soobin SoobinSoobinSoobin ',
+    numFriends: 188,
+    isFriend: true,
+    isPending: false,
+  },
+  {
+    _id: '',
+    avatar: UserAvatar,
+    name: 'Đen Vâu',
+    numFriends: 78,
+    isFriend: true,
+    isPending: false,
+  },
+  {
+    _id: '',
+    avatar: UserAvatar,
+    name: 'Hieu Monday',
+    numFriends: 45,
+    isFriend: false,
+    isPending: true,
+  },
+  {
+    _id: '',
+    avatar: UserAvatar,
+    name: 'MCK',
+    numFriends: 12,
+    isFriend: false,
+    isPending: false,
+  },
+];
+
 export const ChatMsgArray = [
   [
     {

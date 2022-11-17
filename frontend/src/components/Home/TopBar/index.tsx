@@ -8,11 +8,13 @@ import NotiModal from './NotiModal';
 import { useGlobalContext } from '../../../contexts/globalContext';
 import SettingsModal from './SettingsModal';
 import { UsersApi } from '../../../services/api/users';
+import SearchModal from './SearchModal';
 
 const TopBar = () => {
   const [userInfoModal, setUserInfoModal] = useState(false);
   const [activeNotiModal, setActiveNotiModal] = useState(false);
   const [settingVisible, setSettingVisible] = useState(false);
+  const [searchModal, setSearchModal] = useState(false);
 
   return (
     <S.Container>
@@ -36,7 +38,8 @@ const TopBar = () => {
           </S.LogoContainer>
           <S.Search>
             <S.SearchIcon />
-            <S.SearchInput placeholder='Search...' />
+            <S.SearchInput placeholder='Search...' onFocus={() => setSearchModal(true)}/>
+            {searchModal && <SearchModal setSearchModal={setSearchModal} />}
           </S.Search>
           <S.Option>
             <S.OptionNotify onClick={() => setActiveNotiModal(true)} />

@@ -40,8 +40,7 @@ export const ModalBody = styled.div`
 `;
 
 export const ModalAvatarBody = styled.div`
-  ${tw`relative rounded-[20px] bg-[#ecf2f7] z-[10] overflow-hidden`}
-  box-shadow: 2px 2px 16px rgb(0 0 0 / 15%);
+  ${tw`relative rounded-[20px] z-[10] overflow-hidden`}
   animation: ${growth} linear 0.15s;
 `;
 
@@ -57,7 +56,7 @@ export const Title = styled.div`
 `;
 
 export const Figure = styled.figure`
-  ${tw`relative w-[600px] h-[600px] grid p-10 bg-[#ecf2f7] rounded-t-[50px]`}
+  ${tw`relative w-[70vw] h-[70vh] grid p-10 rounded-t-[50px]`}
 `;
 
 export const Banner = styled.figure`

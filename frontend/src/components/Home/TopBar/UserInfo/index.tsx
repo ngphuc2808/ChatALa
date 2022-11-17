@@ -33,10 +33,6 @@ const UserInfo = ({
         <S.ModalAvatar>
           <S.ModalOverlay onClick={() => setSeeAvatar(false)} />
           <S.ModalAvatarBody>
-            <S.Title>
-              Avatar
-              <HiOutlineX onClick={() => setSeeAvatar(false)} />
-            </S.Title>
             <S.Figure>
               <Image src={UserAvatar} layout='fill' objectFit='contain' />
             </S.Figure>

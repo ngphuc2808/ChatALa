@@ -30,7 +30,6 @@ const ShowFriends = ({ setToggleShowFriends }: IShowFriends) => {
                 </S.ShowFriendsAvatar>
                 <S.ShowFriendsName>{data.name}</S.ShowFriendsName>
               </S.ShowFriendsInfo>
-              <S.ShowFriendsOption>Add</S.ShowFriendsOption>
             </S.ShowFriendsItem>
           ))}
         </S.GreateGroupList>
