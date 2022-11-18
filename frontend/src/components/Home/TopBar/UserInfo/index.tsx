@@ -5,6 +5,7 @@ import { UserAvatar, UserName } from '../../../../utils/dataConfig';
 
 import * as S from './UserInfo.styled';
 import SettingInfo from '../SettingInfo';
+import { formatDate } from '../../../Global/ProcessFunctions';
 
 interface IUserInfo {
   phoneNumber: string;
@@ -48,10 +49,10 @@ const UserInfo = ({
               <HiOutlineX onClick={() => setUserInfoModal(false)} />
             </S.Title>
             <S.Banner>
-              <Image src={UserAvatar} layout='fill' objectFit='cover' />
+              <Image src={avatar} layout='fill' objectFit='cover' />
             </S.Banner>
             <S.Avatar onClick={() => setSeeAvatar(true)}>
-              <Image src={UserAvatar} layout='fill' objectFit='contain' />
+              <Image src={banner} layout='fill' objectFit='contain' />
             </S.Avatar>
           </S.Header>
           <S.Content>
@@ -65,7 +66,7 @@ const UserInfo = ({
               <span>{phoneNumber}</span>
               <span>{name}</span>
               <span>{gender}</span>
-              <span>{dob}</span>
+              <span>{formatDate(dob)}</span>
             </S.Info>
           </S.Content>
           <S.Button>
@@ -74,10 +75,10 @@ const UserInfo = ({
           </S.Button>
           {editInfo && (
             <SettingInfo
-              name={UserName}
-              gender='male'
-              dob='01/01/2001'
-              avatar={UserAvatar}
+              name={name}
+              gender={gender}
+              dob={dob}
+              avatar={avatar}
               setEditInfo={setEditInfo}
             />
           )}

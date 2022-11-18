@@ -70,7 +70,7 @@ export type FormValue = {
 };
 
 export type FormValueLogin = {
-  phoneNumber: string;
+  phone: string;
   password: string;
 };
 

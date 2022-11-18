@@ -15,4 +15,5 @@ export const API_URL = {
   linkedinLogin: `${API_BASE}/auth/linkedin/`,
   getRoomList: `${API_BASE}/room`,
   getRoomInfo: `${API_BASE}/room`,
+  getLoggedUser: `${API_BASE}/user/getLoggedUser`,
 };

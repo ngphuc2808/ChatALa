@@ -11,11 +11,11 @@ import { ClipLoader } from 'react-spinners';
 const Login = () => {
   const router = useRouter();
   const initialValues = {
-    phoneNumber: '',
+    phone: '',
     password: '',
   };
   const validationSchema = Yup.object().shape({
-    phoneNumber: Yup.string()
+    phone: Yup.string()
       .required('This field is required.')
       .matches(
         /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
@@ -34,13 +34,10 @@ const Login = () => {
     { setSubmitting }: any
   ) => {
     try {
-      const userLogin: UserLogin = {
-        phone: values.phoneNumber,
-        password: values.password,
-      };
-      await UsersApi.login(userLogin);
-
-      router.push('/');
+      const result = await UsersApi.login(values);
+      // console.log(1);
+      
+      result && router.push('/');
     } catch (error: any) {
       if (error.statusCode === 404) {
         setSubmitting(false);
@@ -64,10 +61,10 @@ const Login = () => {
             <S.SetWidth>
               <S.Input
                 placeholder='Phone number'
-                name='phoneNumber'
-                error={errors.phoneNumber && touched.phoneNumber ? 1 : 0}
+                name='phone'
+                error={errors.phone && touched.phone ? 1 : 0}
               />
-              <ErrorMessage name='phoneNumber' component={S.ErrorMsg} />
+              <ErrorMessage name='phone' component={S.ErrorMsg} />
 
               <S.Input
                 placeholder='Password'

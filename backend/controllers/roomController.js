@@ -3,7 +3,6 @@ const Rooms = require("../models/roomModel");
 const Messages = require("../models/messageModel");
 const ErrorHandler = require("../utils/errorHandler");
 const Users = require("../models/userModel");
-const mongoose = require("mongoose");
 
 const getRoomList = asyncHandler(async (req, res, next) => {
   const rooms = await Rooms.find({ "users.uid": req.user._id });

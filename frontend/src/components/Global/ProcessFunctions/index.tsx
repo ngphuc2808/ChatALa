@@ -96,6 +96,19 @@ export const shorterChars = (text: string, limit: number = 35) => {
   return _string + '...';
 };
 
+const padTo2Digits = (num: number) => {
+  return num.toString().padStart(2, '0');
+}
+
+export const formatDate = (_date: string) => {
+  const date = new Date(_date)
+  return [
+    padTo2Digits(date.getDate()),
+    padTo2Digits(date.getMonth() + 1),
+    date.getFullYear(),
+  ].join('/');
+};
+
 export const useOutsideClick = (callback: () => void) => {
   const ref = useRef<HTMLInputElement>(null);
 
