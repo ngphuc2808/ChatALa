@@ -1,3 +1,16 @@
+export type userInfo = {
+  _id: string;
+  avatar: string;
+  banner: string;
+  name: string;
+  phone: string;
+  gender: string;
+  dob: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
 export type messageSendType = {
   roomId: string;
   senderId: string;
@@ -60,7 +73,6 @@ export type FormValueLogin = {
   phoneNumber: string;
   password: string;
 };
-
 
 export type UserRegister = {
   name: string;

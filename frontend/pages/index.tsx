@@ -4,12 +4,13 @@ import SideBar from '../src/components/Home/SideBar';
 import TopBar from '../src/components/Home/TopBar';
 import Welcome from '../src/components/Home/Welcome';
 import { useGlobalContext } from '../src/contexts/globalContext';
-import { withRouter } from 'next/router';
+import { withRouter, useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { RoomApi } from '../src/services/api/room';
 
 const Home = () => {
   const context = useGlobalContext();
+  const router = useRouter();
 
   const getRoomData = async () => {
     try {
@@ -18,8 +19,9 @@ const Home = () => {
     } catch (err: any) {
       if (err.errors?.error.statusCode === 401) {
         console.log(err);
-        if(err.errors.message === "Unauthorized!") {
-          alert("Your session is over, please login again.");
+        if (err.errors.message === 'Unauthorized!') {
+          alert('Your session is over, please login again.');
+          router.push('/login');
         }
       }
     }

@@ -2,13 +2,8 @@ import ChatPreviewItem from '../ChatPreviewItem';
 import * as S from './ChatList.styled';
 import React from 'react';
 import { useGlobalContext } from '../../../../contexts/globalContext';
-import {
-  ChatListArray,
-  ChatMsgArray,
-  UserAvatar,
-} from '../../../../utils/dataConfig';
 import { RoomApi } from '../../../../services/api/room';
-import { CircleLoader } from 'react-spinners';
+import { ClipLoader } from 'react-spinners';
 
 interface IChatList {
   selected: number;
@@ -50,7 +45,7 @@ const ChatList = ({ selected, setSelected }: IChatList) => {
             </React.Fragment>
           ))
         ) : (
-          <CircleLoader color='#769FCD' />
+          <ClipLoader color='#769FCD' />
         )}
       </S.Wrapper>
     </S.ChatList>

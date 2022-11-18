@@ -10,14 +10,12 @@ const checkUser = asyncHandler(async (req, res, next) => {
 
   const user = await Users.findOne({ phone: phone });
 
-  if(!user) {
+  if (!user) {
     res.status(200).json({
-      message: "Valid phone number!"
+      message: "Valid phone number!",
     });
   } else {
-    return next(
-      new ErrorHandler("Phone number already exists!", 404)
-    );
+    return next(new ErrorHandler("Phone number already exists!", 404));
   }
 });
 
@@ -27,21 +25,18 @@ const registerUser = asyncHandler(async (req, res, next) => {
   const regexPhone = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
   const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
-
-  if(phone.match(regexPhone) && password.match(regexPassword)) {
+  if (phone.match(regexPhone) && password.match(regexPassword)) {
     await Users.create({
-      name: name.replace(/\s+/g,' ').trim(),
+      name: name.replace(/\s+/g, " ").trim(),
       phone,
       password,
     });
-    
+
     res.status(200).json({
       message: "Register Successfully!",
     });
   } else {
-    return next(
-      new ErrorHandler("Register failed!", 404)
-    );
+    return next(new ErrorHandler("Register failed!", 404));
   }
 });
 
@@ -58,9 +53,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
         // secure: true,
       });
       res.status(200).json({
-        avatar: user.avatar,
-        banner: user.banner,
-        name: user.name
+        message: "Login successfully"
       });
     } else {
       return next(
@@ -74,9 +67,13 @@ const loginUser = asyncHandler(async (req, res, next) => {
   }
 });
 
+const getLoggedUser = asyncHandler(async (req, res, next) => {
+  res.status(200).json(req.user);
+});
+
 const findUser = asyncHandler(async (req, res, next) => {
   const { search } = req.body;
-  const { id } = decodeJWT(req.signedCookies.token);
+  const id = req.user._id;
 
   const myFriends = await Friends.find({
     $or: [
@@ -130,4 +127,10 @@ const findUser = asyncHandler(async (req, res, next) => {
   });
 });
 
-module.exports = { checkUser, registerUser, loginUser, findUser };
+module.exports = {
+  checkUser,
+  registerUser,
+  loginUser,
+  findUser,
+  getLoggedUser,
+};
