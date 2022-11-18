@@ -16,6 +16,10 @@ export const UsersApi = {
   getLoggedUser: async function (): Promise<any> {
     return await http.get(API_URL.getLoggedUser);
   },
+  logout: async function (): Promise<any> {
+    return await http.get(API_URL.logout);
+  },
+  
   //   list: async function (params?: any): Promise<any> {
   //     return await http.get(API_URL.login, { params: params })
   //   },

@@ -1,17 +1,15 @@
-import FormTemplate from "../Global/FormTemplate";
-import { authentication } from "../Global/Firebase";
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import { NumberPhoneArea } from "../../utils/dataConfig";
-
-import { Formik, ErrorMessage } from "formik";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import * as S from "./Register.styled";
-import * as Yup from "yup";
-import { ChangeEvent } from "react";
-import { useGlobalContext } from "../../contexts/globalContext";
-import { UsersApi } from "../../services/api/users";
-import { FormValue } from "../../utils/types";
+import FormTemplate from '../Global/FormTemplate';
+import { authentication } from '../Global/Firebase';
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import { NumberPhoneArea } from '../../utils/dataConfig';
+import { Formik, ErrorMessage } from 'formik';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import * as S from './Register.styled';
+import * as Yup from 'yup';
+import { ChangeEvent } from 'react';
+import { UsersApi } from '../../services/api/users';
+import { FormValue } from '../../utils/types';
 
 declare global {
   interface Window {
@@ -21,42 +19,41 @@ declare global {
 }
 
 const Register = () => {
-  const context = useGlobalContext();
   const router = useRouter();
 
   const initialValues = {
-    name: context.registerInfo.name,
-    phoneNumber: context.registerInfo.phoneNumber,
-    password: context.registerInfo.password,
-    confirmPassword: "",
-    phomeNumberCode: "+84",
+    name: router.query.name as string || '',
+    phone: router.query.phone as string || '',
+    password: '',
+    confirmPassword: '',
+    phomeNumberCode: '+84',
   };
 
   const validationSchema = Yup.object().shape({
-    phoneNumber: Yup.string()
-      .required("This field is required.")
+    phone: Yup.string()
+      .required('This field is required.')
       .matches(
         /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
-        "Phone number invalid."
+        'Phone number invalid.'
       ),
 
     password: Yup.string()
-      .required("This field is required.")
+      .required('This field is required.')
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-        "Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number."
+        'Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number.'
       ),
 
     confirmPassword: Yup.string()
-      .required("This field is required.")
-      .oneOf([Yup.ref("password"), null], "Passwords must match."),
+      .required('This field is required.')
+      .oneOf([Yup.ref('password'), null], 'Passwords must match.'),
   });
 
   const requestOTP = async (newPhoneNumber: string) => {
     window.recaptchaVerifier = new RecaptchaVerifier(
-      "recaptcha-container",
+      'recaptcha-container',
       {
-        size: "invisible",
+        size: 'invisible',
         callback: (response: string) => {},
       },
       authentication
@@ -72,28 +69,22 @@ const Register = () => {
       });
   };
 
-  const handleSubmit = async (values: FormValue, { resetForm }: any) => {
+  const handleSubmit = async (values: FormValue) => {
     try {
-      await UsersApi.checkUser(values.phoneNumber);
+      await UsersApi.checkUser(values.phone);
       const newPhoneNumber =
-        values.phomeNumberCode + values.phoneNumber.substring(1);
+        values.phomeNumberCode + values.phone.substring(1);
       await requestOTP(newPhoneNumber);
 
-      context.setRegisterInfo(values);
-
-      resetForm();
-
-      router.push(
-        {
-          pathname: "/otp",
-          query: {
-            phoneVerify: "otp",
-          },
+      router.push({
+        pathname: '/otp',
+        query: {
+          name: values.name,
+          phone: values.phone,
         },
-        "/otp"
-      );
+      });
     } catch {
-      alert("Registration failed, Phone number already exists!");
+      alert('Registration failed, Phone number already exists!');
     }
   };
 
@@ -104,18 +95,19 @@ const Register = () => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
+        enableReinitialize
       >
         {({ errors, touched, setFieldValue }) => (
           <S.NewForm>
             <S.SetWidth>
               <S.InputGroup
-                error={errors.phoneNumber && touched.phoneNumber ? true : false}
+                error={errors.phone && touched.phone ? true : false}
               >
                 <S.Select
-                  name="phomeNumberCode"
+                  name='phomeNumberCode'
                   onChange={(e: ChangeEvent) => {
                     const input = e.target as HTMLInputElement;
-                    setFieldValue("phomeNumberCode", input.value);
+                    setFieldValue('phomeNumberCode', input.value);
                   }}
                 >
                   {NumberPhoneArea.map((data, index) => (
@@ -125,44 +117,44 @@ const Register = () => {
                   ))}
                 </S.Select>
                 <S.ShortInputDiv>
-                  <div id="recaptcha-container"></div>
+                  <div id='recaptcha-container'></div>
                   <S.ShortInput
-                    placeholder="Phone number"
-                    name="phoneNumber"
-                    error={errors.phoneNumber && touched.phoneNumber ? 1 : 0}
+                    placeholder='Phone number'
+                    name='phone'
+                    error={errors.phone && touched.phone ? 1 : 0}
                   />
-                  <ErrorMessage name="phoneNumber" component={S.ErrorMsg} />
+                  <ErrorMessage name='phone' component={S.ErrorMsg} />
                 </S.ShortInputDiv>
               </S.InputGroup>
               <S.Input
-                placeholder="Your name"
-                name="name"
+                placeholder='Your name'
+                name='name'
                 error={errors.name && touched.name ? 1 : 0}
               />
-              <ErrorMessage name="name" component={S.ErrorMsg} />
+              <ErrorMessage name='name' component={S.ErrorMsg} />
               <S.Input
-                placeholder="Password"
-                type="password"
-                name="password"
+                placeholder='Password'
+                type='password'
+                name='password'
                 error={errors.password && touched.password ? 1 : 0}
               />
-              <ErrorMessage name="password" component={S.ErrorMsg} />
+              <ErrorMessage name='password' component={S.ErrorMsg} />
               <S.Input
-                placeholder="Confirm password"
-                type="password"
-                name="confirmPassword"
+                placeholder='Confirm password'
+                type='password'
+                name='confirmPassword'
                 error={
                   errors.confirmPassword && touched.confirmPassword ? 1 : 0
                 }
               />
-              <ErrorMessage name="confirmPassword" component={S.ErrorMsg} />
-              <S.Button type="submit">Continue</S.Button>
+              <ErrorMessage name='confirmPassword' component={S.ErrorMsg} />
+              <S.Button type='submit'>Continue</S.Button>
             </S.SetWidth>
           </S.NewForm>
         )}
       </Formik>
       <S.Login>
-        <Link href="/login">
+        <Link href='/login'>
           <span>
             <p>Already have one?</p>
             <p>Let's Sign In!</p>

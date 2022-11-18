@@ -55,15 +55,9 @@ export type RoomUser = {
   _id: string;
 };
 
-export type registerType = {
-  name: string;
-  phoneNumber: string;
-  password: string;
-};
-
 export type FormValue = {
   name: string;
-  phoneNumber: string;
+  phone: string;
   password: string;
   confirmPassword: string;
   phomeNumberCode: string;
@@ -77,7 +71,6 @@ export type FormValueLogin = {
 export type UserRegister = {
   name: string;
   phone: string;
-  password: string;
 };
 
 export type UserLogin = {

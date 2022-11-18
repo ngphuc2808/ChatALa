@@ -71,6 +71,11 @@ const getLoggedUser = asyncHandler(async (req, res, next) => {
   res.status(200).json(req.user);
 });
 
+const logoutUser = asyncHandler(async (req, res, next) => {
+  res.clearCookie("token");
+  res.status(200).json({message: "Logout successfully"})
+})
+
 const findUser = asyncHandler(async (req, res, next) => {
   const { search } = req.body;
   const id = req.user._id;
@@ -133,4 +138,5 @@ module.exports = {
   loginUser,
   findUser,
   getLoggedUser,
+  logoutUser,
 };

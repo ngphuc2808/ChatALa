@@ -40,11 +40,6 @@ export const CheckPhoneNumber = styled.span`
   ${tw`block text-base mt-[6px] mb-0 mx-auto text-center cursor-pointer text-red-600`}
 `;
 
-export const ButtonVerify = styled.button`
-  ${tw`w-full`}
-};
-`;
-
 export const CountDown = styled.span`
   ${tw`block text-center mt-9 text-lg`}
 `;

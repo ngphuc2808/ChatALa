@@ -14,6 +14,7 @@ import {
   selectUserState,
   userActions,
 } from '../../../features/redux/slices/userSlice';
+import { useRouter } from 'next/router';
 
 const TopBar = () => {
   const [userInfoModal, setUserInfoModal] = useState(false);
@@ -23,11 +24,18 @@ const TopBar = () => {
 
   const loggedUser = useSelector(selectUserState);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const getLoggedUser = async () => {
     dispatch(userActions.requestUserInfo(null));
     const result = await UsersApi.getLoggedUser();
     dispatch(userActions.setUserInfo(result));
+  };
+
+  const logout = async () => {
+    dispatch(userActions.clearUserInfo(null));
+    await UsersApi.logout();
+    router.push('/login');
   };
 
   useEffect(() => {
@@ -75,7 +83,7 @@ const TopBar = () => {
                 setSettingVisible={() => setSettingVisible(false)}
               />
             )}
-            <S.OptionLogOut />
+            <S.OptionLogOut onClick={() => logout()} />
           </S.Option>
         </S.RightWrapper>
         {userInfoModal && (

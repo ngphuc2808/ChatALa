@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { messageType, registerType, roomInfo } from '../utils/types';
+import { messageType, UserRegister, roomInfo } from '../utils/types';
 
 export type GlobalContent = {
   roomChoosen: boolean;
@@ -10,8 +10,8 @@ export type GlobalContent = {
   setRoomMsg: (value: messageType[]) => void;
   roomInfo: roomInfo;
   setRoomInfo: (value: roomInfo) => void;
-  registerInfo: registerType;
-  setRegisterInfo: (value: registerType) => void;
+  registerInfo: UserRegister;
+  setRegisterInfo: (value: UserRegister) => void;
 };
 
 export const GlobalContext = createContext<GlobalContent>({
@@ -36,7 +36,7 @@ export const GlobalContext = createContext<GlobalContent>({
     },
   },
   setRoomInfo: () => {},
-  registerInfo: { name: '', phoneNumber: '', password: '' },
+  registerInfo: { name: '', phone: '' },
   setRegisterInfo: () => {},
 });
 
@@ -58,10 +58,9 @@ export const GlobalProvider = ({ children }: any) => {
       _id: '',
     },
   });
-  const [registerInfo, setRegisterInfo] = useState<registerType>({
+  const [registerInfo, setRegisterInfo] = useState<UserRegister>({
     name: '',
-    phoneNumber: '',
-    password: '',
+    phone: '',
   });
   const [roomList, setRoomList] = useState<roomInfo[]>([]);
   const [roomChoosen, setRoomChoosen] = useState(false);
