@@ -72,3 +72,17 @@ export type UserLogin = {
   phone: string;
   password: string;
 };
+
+export type SearchResult = {
+  _id: string;
+  avatar: string;
+  banner: string;
+  name: string;
+  phone: string;
+  gender: string;
+  dob: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  status: string;
+};

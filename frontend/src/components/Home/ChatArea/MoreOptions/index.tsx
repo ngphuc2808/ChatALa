@@ -3,24 +3,31 @@ import { useOutsideClick } from '../../../Global/ProcessFunctions';
 import { roomInfo } from '../../../../utils/types';
 import Image from 'next/image';
 import { UserAvatar } from '../../../../utils/dataConfig';
-import { AiOutlineEdit } from 'react-icons/ai';
+import { IoMdArrowDropdown } from 'react-icons/io';
+import { useState } from 'react';
 
 interface IMoreOptions {
   setToggleOption: (toggle: boolean) => void;
+  toggleOption: boolean;
   roomInfo: roomInfo;
 }
 
-const MoreOptions = ({ setToggleOption, roomInfo }: IMoreOptions) => {
+const MoreOptions = ({
+  setToggleOption,
+  roomInfo,
+  toggleOption,
+}: IMoreOptions) => {
   const handleOutsideClick = () => {
     setToggleOption(false);
   };
 
   const moreOptionsRef = useOutsideClick(handleOutsideClick);
 
+  const [mediaExtend, setMediaExtend] = useState(false);
+
   return (
-    <S.MoreOptions ref={moreOptionsRef}>
+    <S.MoreOptions ref={moreOptionsRef} toggleOption={toggleOption}>
       <S.RoomInfo>
-        <S.RoomInfoTitle>Room Chat Infomation</S.RoomInfoTitle>
         <S.RoomInfoAvatar>
           <Image
             src={roomInfo.roomInfo.users[0].avatar}
@@ -35,13 +42,65 @@ const MoreOptions = ({ setToggleOption, roomInfo }: IMoreOptions) => {
           {roomInfo.roomInfo.isGroup && <S.RoomInfoNameEditIcon />}
         </S.RoomInfoName>
       </S.RoomInfo>
-      <S.NormalItem>Friend's profile</S.NormalItem>
-      {!roomInfo.roomInfo.isGroup && (
-        <S.NormalItem>Change Nickname</S.NormalItem>
-      )}
-      {roomInfo.roomInfo.isGroup && <S.NormalItem>Group Members</S.NormalItem>}
-      {!roomInfo.roomInfo.isGroup && <S.DeteleItem>Block</S.DeteleItem>}
-      <S.DeteleItem>Delete this chat</S.DeteleItem>
+      <S.OptionWrap>
+        <S.WhiteBox>
+          <S.NormalItem>
+            {/* eslint-disable-next-line react/no-unescaped-entities */}
+            Friend's profile
+          </S.NormalItem>
+          {!roomInfo.roomInfo.isGroup && (
+            <S.NormalItem>Change Nickname</S.NormalItem>
+          )}
+          {roomInfo.roomInfo.isGroup && (
+            <S.NormalItem>Group Members</S.NormalItem>
+          )}
+          {!roomInfo.roomInfo.isGroup && <S.DeleteItem>Block</S.DeleteItem>}
+          <S.DeleteItem>Delete this chat</S.DeleteItem>
+        </S.WhiteBox>
+        <S.WhiteBox>
+          <S.Title>
+            Photos/Videos
+            <IoMdArrowDropdown
+              style={{
+                fontSize: '24px',
+                transition: '300ms',
+                cursor: 'pointer',
+                transform: !mediaExtend ? 'rotate(-90deg)' : 'none',
+              }}
+              onClick={() => setMediaExtend(!mediaExtend)}
+            />
+          </S.Title>
+          <S.ExtendContent visible={mediaExtend}>
+            <S.PhotoWrap>
+              <S.UploadedMedia>
+                <Image
+                  src={roomInfo.roomInfo.users[0].avatar}
+                  alt='avatar'
+                  layout='fill'
+                  objectFit='cover'
+                />
+              </S.UploadedMedia>
+              <S.UploadedMedia>
+                <Image
+                  src={roomInfo.roomInfo.users[0].avatar}
+                  alt='avatar'
+                  layout='fill'
+                  objectFit='cover'
+                />
+              </S.UploadedMedia>
+              <S.UploadedMedia>
+                <Image
+                  src={roomInfo.roomInfo.users[0].avatar}
+                  alt='avatar'
+                  layout='fill'
+                  objectFit='cover'
+                />
+              </S.UploadedMedia>
+            </S.PhotoWrap>
+            <S.MoreButton>View More</S.MoreButton>
+          </S.ExtendContent>
+        </S.WhiteBox>
+      </S.OptionWrap>
     </S.MoreOptions>
   );
 };

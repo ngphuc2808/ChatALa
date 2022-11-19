@@ -13,11 +13,14 @@ import {
   userActions,
 } from '../../../features/redux/slices/userSlice';
 import { useRouter } from 'next/router';
+import { SearchResult } from '../../../utils/types';
 
 const TopBar = () => {
   const [userInfoModal, setUserInfoModal] = useState(false);
   const [activeNotiModal, setActiveNotiModal] = useState(false);
   const [settingVisible, setSettingVisible] = useState(false);
+  const [searchResult, setSearchResult] = useState<SearchResult[]>([]);
+  const [searchInput, setSearchInput] = useState('');
   const [searchModal, setSearchModal] = useState(false);
 
   const loggedUser = useSelector(selectUserState);
@@ -36,9 +39,27 @@ const TopBar = () => {
     router.push('/login');
   };
 
+  const getSearchResult = async () => {
+    if (searchInput) {
+      const res = await UsersApi.findUser({ search: searchInput });
+      setSearchResult(res.result);
+      setSearchModal(true);
+    } else {
+      setSearchResult([]);
+      setSearchModal(false);
+    }
+  };
+
   useEffect(() => {
     getLoggedUser();
   }, []);
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      getSearchResult();
+    }, 1000);
+    return () => clearTimeout(t);
+  }, [searchInput]);
 
   return (
     <S.Container>
@@ -66,9 +87,15 @@ const TopBar = () => {
             <S.SearchIcon />
             <S.SearchInput
               placeholder='Search...'
-              onFocus={() => setSearchModal(true)}
+              onChange={(e) => setSearchInput(e.target.value)}
+              value={searchInput}
             />
-            {searchModal && <SearchModal setSearchModal={setSearchModal} />}
+            {searchInput && (
+              <SearchModal
+                setSearchModal={setSearchModal}
+                searchResult={searchResult}
+              />
+            )}
           </S.Search>
           <S.Option>
             <S.OptionNotify onClick={() => setActiveNotiModal(true)} />

@@ -30,7 +30,9 @@ const ChatArea = () => {
   const [toggleEmoji, setToggleEmoji] = useState(false);
   const [toggleOption, setToggleOption] = useState(false);
   const [toggleImageZoom, setToggleImageZoom] = useState(false);
-  const [imageZoomList, setImageZoomList] = useState<Array<{ name: string; url: string; type: string }>>([]);
+  const [imageZoomList, setImageZoomList] = useState<
+    Array<{ name: string; url: string; type: string }>
+  >([]);
 
   //chatInput
   const chatInput = useRef<HTMLSpanElement>(null);
@@ -170,7 +172,10 @@ const ChatArea = () => {
             {({ getRootProps, getInputProps, isDragActive }) => (
               <S.ChatAreaMain {...getRootProps()}>
                 {toggleImageZoom && (
-                  <ChatImageZoom imageZoomList={imageZoomList} setToggleImageZoom={setToggleImageZoom} />
+                  <ChatImageZoom
+                    imageZoomList={imageZoomList}
+                    setToggleImageZoom={setToggleImageZoom}
+                  />
                 )}
                 <S.ChatAreaMainMsg>
                   <S.ChatAreaMainMsgInner>

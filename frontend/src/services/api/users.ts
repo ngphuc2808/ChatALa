@@ -19,7 +19,10 @@ export const UsersApi = {
   logout: async function (): Promise<any> {
     return await http.get(API_URL.logout);
   },
-  
+  findUser: async function (search: any): Promise<any> {
+    return await http.post(API_URL.findUser, search);
+  },
+
   //   list: async function (params?: any): Promise<any> {
   //     return await http.get(API_URL.login, { params: params })
   //   },
