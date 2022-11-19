@@ -17,4 +17,6 @@ export const API_URL = {
   getLoggedUser: `${API_BASE}/user/getLoggedUser`,
   userFind: `${API_BASE}/user/find`,
   friendRequest: `${API_BASE}/friend/request`,
+  friendAccept: `${API_BASE}/friend/accept`,
+  friendDecline: `${API_BASE}/friend/decline`,
 };

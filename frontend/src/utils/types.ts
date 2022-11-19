@@ -85,4 +85,5 @@ export type SearchResult = {
   updatedAt: string;
   __v: number;
   status: string;
+  notificationId: string;
 };

@@ -63,3 +63,15 @@ export const SearchModalAddFriend = styled(SearchModalOption)`
 export const SearchModalPending = styled(SearchModalOption)`
   ${tw`bg-gray-500 opacity-50 hover:opacity-50 hover:cursor-default`}
 `;
+
+export const SearchModalAccept = styled(SearchModalOption)`
+  ${tw`bg-green-500 mr-1`}
+`;
+
+export const SearchModalDecline = styled(SearchModalOption)`
+  ${tw`bg-red-500`}
+`;
+
+export const FlexWrap = styled.div`
+  ${tw`flex`}
+`;

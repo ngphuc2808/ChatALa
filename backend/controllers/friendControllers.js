@@ -85,7 +85,7 @@ const friendAccept = asyncHandler(async (req, res, next) => {
 const friendDecline = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
 
-  await Notifications.findOneAndUpdate(id, {
+  await Notifications.findByIdAndUpdate(id, {
     $set: {
       status: 'Denied',
     },

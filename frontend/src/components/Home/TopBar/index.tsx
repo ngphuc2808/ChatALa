@@ -65,9 +65,10 @@ const TopBar = () => {
     if (!action) {
       t = setTimeout(() => {
         getSearchResult();
-      }, 1000);
+      }, 500);
     } else {
       getSearchResult();
+      setAction(false);
     }
     return () => clearTimeout(t);
   }, [searchInput, action]);

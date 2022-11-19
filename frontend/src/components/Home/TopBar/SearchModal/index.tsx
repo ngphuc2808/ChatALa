@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useOutsideClick } from '../../../Global/ProcessFunctions';
 import { SearchResult } from '../../../../utils/types';
 import { FriendApi } from '../../../../services/api/friend';
+import moment from 'moment';
 
 interface ISearchModalModal {
   setSearchModal: (isActive: boolean) => void;
@@ -27,7 +28,26 @@ const SearchModal = ({
     try {
       const res = await FriendApi.friendRequest(id);
       setAction(true);
-      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const friendAccept = async (id: string) => {
+    try {
+      const res = await FriendApi.friendAccept(id);
+      setAction(true);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const friendDecline = async (id: string) => {
+    console.log(id);
+
+    try {
+      const res = await FriendApi.friendDecline(id);
+      setAction(true);
     } catch (err) {
       console.log(err);
     }
@@ -50,13 +70,23 @@ const SearchModal = ({
                 </S.SearchModalAvatar>
                 <S.SearchModalNameWrapper>
                   <S.SearchModalName>{data.name}</S.SearchModalName>
-                  <S.SearchModalNumFriend>{`${data.createdAt} Friends`}</S.SearchModalNumFriend>
                 </S.SearchModalNameWrapper>
               </S.SearchModalInfo>
               {data.status === 'friend' ? (
                 <S.SearchModalMessage>Message</S.SearchModalMessage>
               ) : data.status === 'receive' ? (
-                <S.SearchModalPending>Accept</S.SearchModalPending>
+                <S.FlexWrap>
+                  <S.SearchModalAccept
+                    onClick={() => friendAccept(data.notificationId)}
+                  >
+                    Accept
+                  </S.SearchModalAccept>
+                  <S.SearchModalDecline
+                    onClick={() => friendDecline(data.notificationId)}
+                  >
+                    Decline
+                  </S.SearchModalDecline>
+                </S.FlexWrap>
               ) : data.status === 'request' ? (
                 <S.SearchModalPending>Pending</S.SearchModalPending>
               ) : (
