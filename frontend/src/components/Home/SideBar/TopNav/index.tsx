@@ -2,8 +2,9 @@ import ChatPreviewItem from '../ChatPreviewItem';
 import * as S from './TopNav.styled';
 import { useState } from 'react';
 import CreateGroup from './CreateGroup';
-import { useGlobalContext } from '../../../../contexts/globalContext';
 import ShowFriends from './ShowFriends';
+import { useDispatch } from 'react-redux';
+import { roomInfoActions } from '../../../../features/redux/slices/roomInfoSlice';
 
 interface ITopNav {
   setSelected: (number: number) => void;
@@ -12,7 +13,8 @@ interface ITopNav {
 const TopNav = ({ setSelected }: ITopNav) => {
   const [toggleCreateGroup, setToggleCreateGroup] = useState(false);
   const [toggleShowFriends, setToggleShowFriends] = useState(false);
-  const context = useGlobalContext();
+
+  const dispatch = useDispatch();
 
   return (
     <S.Wrapper>
@@ -25,7 +27,7 @@ const TopNav = ({ setSelected }: ITopNav) => {
         active={false}
         msg='Halo halo niece and nephew, today uncle Roger'
         setSelected={setSelected}
-        onClick={() => context.setRoomMsg([])}
+        onClick={() => dispatch(roomInfoActions.clearRoomInfo(null))}
       />
       {toggleCreateGroup && (
         <CreateGroup setToggleCreateGroup={setToggleCreateGroup} />

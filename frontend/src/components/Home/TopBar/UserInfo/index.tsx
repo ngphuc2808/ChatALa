@@ -8,7 +8,7 @@ import SettingInfo from '../SettingInfo';
 import { formatDate } from '../../../Global/ProcessFunctions';
 
 interface IUserInfo {
-  phoneNumber: string;
+  phone: string;
   avatar: string;
   banner: string;
   name: string;
@@ -18,7 +18,7 @@ interface IUserInfo {
 }
 
 const UserInfo = ({
-  phoneNumber,
+  phone,
   avatar,
   banner,
   name,
@@ -63,7 +63,7 @@ const UserInfo = ({
               <span>Date of Birth</span>
             </S.Description>
             <S.Info>
-              <span>{phoneNumber}</span>
+              <span>{phone}</span>
               <span>{name}</span>
               <span>{gender}</span>
               <span>{formatDate(dob)}</span>

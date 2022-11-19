@@ -6,13 +6,15 @@ import ChatMsg from './ChatMsg';
 import EmojiPicker, { EmojiStyle, EmojiClickData } from 'emoji-picker-react';
 import MoreOptions from './MoreOptions';
 import { useOutsideClick } from '../../Global/ProcessFunctions';
-import { useGlobalContext } from '../../../contexts/globalContext';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import FilePreview from './FilePreview';
 import DropZone from 'react-dropzone';
 import { messageType } from '../../../utils/types';
 import ChatImageZoom from './ChatMsgImageZoom';
+import { useSelector } from 'react-redux';
+import { selectMessageState } from '../../../features/redux/slices/messageSlice';
+import { selectRoomInfoState } from '../../../features/redux/slices/roomInfoSlice';
 
 type FormValues = {
   msg: string;
@@ -22,7 +24,8 @@ type FormValues = {
 const ChatArea = () => {
   const status = 1;
 
-  const context = useGlobalContext();
+  const messages = useSelector(selectMessageState)
+  const roomInfo = useSelector(selectRoomInfoState)
 
   const [toggleEmoji, setToggleEmoji] = useState(false);
   const [toggleOption, setToggleOption] = useState(false);
@@ -46,21 +49,21 @@ const ChatArea = () => {
 
   //Message
   const setMessagePosition = (data: messageType, index: number) => {
-    const roomMsg = context.roomMsg;
+    const list = messages.list;
 
     if (
-      data.fromSender !== roomMsg[index + 1]?.fromSender &&
-      data.fromSender === roomMsg[index - 1]?.fromSender
+      data.fromSender !== list[index + 1]?.fromSender &&
+      data.fromSender === list[index - 1]?.fromSender
     )
       return 'top';
     else if (
-      data.fromSender === roomMsg[index - 1]?.fromSender &&
-      data.fromSender === roomMsg[index + 1]?.fromSender
+      data.fromSender === list[index - 1]?.fromSender &&
+      data.fromSender === list[index + 1]?.fromSender
     )
       return 'middle';
     else if (
-      data.fromSender !== roomMsg[index - 1]?.fromSender &&
-      data.fromSender !== roomMsg[index + 1]?.fromSender
+      data.fromSender !== list[index - 1]?.fromSender &&
+      data.fromSender !== list[index + 1]?.fromSender
     )
       return 'alone';
     else return 'bottom';
@@ -127,16 +130,16 @@ const ChatArea = () => {
         <S.ChatAreaHeadInfo>
           <S.ChatAreaHeadAvatar>
             <Image
-              src={context.roomInfo.roomAvatar}
+              src={roomInfo.info!.roomAvatar}
               alt='avatar'
               layout='fill'
               objectFit='cover'
             />
           </S.ChatAreaHeadAvatar>
           <S.ChatAreaHeadNameWrapper>
-            {context.roomInfo.roomName !== '-1' && (
+          {roomInfo.info!.roomName !== '-1' && (
               <S.ChatAreaHeadName>
-                {context.roomInfo.roomName}
+                {roomInfo.info!.roomName}
               </S.ChatAreaHeadName>
             )}
             <S.ChatAreaHeadStatus>
@@ -147,11 +150,13 @@ const ChatArea = () => {
         </S.ChatAreaHeadInfo>
         <S.ChatAreaHeadOption onClick={() => setToggleOption(true)} />
       </S.ChatAreaHead>
-      <MoreOptions
-        roomInfo={context.roomInfo}
-        setToggleOption={setToggleOption}
-        toggleOption={toggleOption}
-      />
+      {toggleOption && (
+        <MoreOptions
+          roomInfo={roomInfo.info!}
+          setToggleOption={setToggleOption}
+          toggleOption={toggleOption}
+        />
+      )}
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
@@ -175,7 +180,7 @@ const ChatArea = () => {
                 )}
                 <S.ChatAreaMainMsg>
                   <S.ChatAreaMainMsgInner>
-                    {context.roomMsg?.map((data, index) => (
+                    {messages.list.map((data, index) => (
                       <ChatMsg
                         data={data}
                         position={setMessagePosition(data, index)}
@@ -223,7 +228,7 @@ const ChatArea = () => {
                         onClick={() => setToggleEmoji(true)}
                       />
                       <S.ChatAreaMainInputText
-                        username={UserName}
+                        username={roomInfo.info!.roomName}
                         contentEditable
                         ref={chatInput}
                         onInput={(e) =>

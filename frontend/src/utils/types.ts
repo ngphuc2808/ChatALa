@@ -41,13 +41,13 @@ export type roomInfo = {
     isGroup: boolean;
     lastMsg: string;
     updatedAt: string;
-    users: RoomUser[];
+    users: roomUser[];
     __v: number;
     _id: string;
   };
 };
 
-export type RoomUser = {
+export type roomUser = {
   avatar: string;
   nickName: string;
   role: boolean;
@@ -61,11 +61,6 @@ export type FormValue = {
   password: string;
   confirmPassword: string;
   phomeNumberCode: string;
-};
-
-export type FormValueLogin = {
-  phone: string;
-  password: string;
 };
 
 export type UserRegister = {

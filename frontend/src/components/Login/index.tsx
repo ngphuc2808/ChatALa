@@ -3,7 +3,7 @@ import { Formik, ErrorMessage } from 'formik';
 import Link from 'next/link';
 import * as S from './Login.styled';
 import * as Yup from 'yup';
-import { UserLogin, FormValueLogin } from '../../utils/types';
+import { UserLogin } from '../../utils/types';
 import { useRouter } from 'next/router';
 import { UsersApi } from '../../services/api/users';
 import { ClipLoader } from 'react-spinners';
@@ -30,7 +30,7 @@ const Login = () => {
       ),
   });
   const handleSubmit = async (
-    values: FormValueLogin,
+    values: UserLogin,
     { setSubmitting }: any
   ) => {
     try {

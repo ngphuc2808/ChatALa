@@ -3,7 +3,6 @@ import { Formik, ErrorMessage } from 'formik';
 import * as S from './OTPForm.styled';
 import { withRouter, useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useGlobalContext } from '../../contexts/globalContext';
 import { UsersApi } from '../../services/api/users';
 import { UserRegister } from '../../utils/types';
 
@@ -15,8 +14,6 @@ const OTPCode = () => {
   const initialValues = {
     otpCode: '',
   };
-
-  const context = useGlobalContext();
 
   const handleSubmit = async (values: any, { setSubmitting }: any) => {
     try {
