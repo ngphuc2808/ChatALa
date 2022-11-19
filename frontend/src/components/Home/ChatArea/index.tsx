@@ -130,16 +130,16 @@ const ChatArea = () => {
         <S.ChatAreaHeadInfo>
           <S.ChatAreaHeadAvatar>
             <Image
-              src={roomInfo.info.roomAvatar}
+              src={roomInfo.info!.roomAvatar}
               alt='avatar'
               layout='fill'
               objectFit='cover'
             />
           </S.ChatAreaHeadAvatar>
           <S.ChatAreaHeadNameWrapper>
-          {roomInfo.info.roomName !== '-1' && (
+          {roomInfo.info!.roomName !== '-1' && (
               <S.ChatAreaHeadName>
-                {roomInfo.info.roomName}
+                {roomInfo.info!.roomName}
               </S.ChatAreaHeadName>
             )}
             <S.ChatAreaHeadStatus>
@@ -152,8 +152,9 @@ const ChatArea = () => {
       </S.ChatAreaHead>
       {toggleOption && (
         <MoreOptions
-          roomInfo={roomInfo.info}
+          roomInfo={roomInfo.info!}
           setToggleOption={setToggleOption}
+          toggleOption={toggleOption}
         />
       )}
       <Formik
@@ -227,7 +228,7 @@ const ChatArea = () => {
                         onClick={() => setToggleEmoji(true)}
                       />
                       <S.ChatAreaMainInputText
-                        username={roomInfo.info.roomName}
+                        username={roomInfo.info!.roomName}
                         contentEditable
                         ref={chatInput}
                         onInput={(e) =>
