@@ -8,7 +8,7 @@ const friendReq = asyncHandler(async (req, res, next) => {
   const id = req.user._id;
   const receiveId = req.params.id;
 
-  const friend = await Notifications.findOne({
+  const friend = await Friends.findOne({
     $or: [
       {
         uid1: id,
@@ -168,7 +168,6 @@ const unblock = asyncHandler(async (req, res, next) => {
     ],
   });
 
-  console.log(friend);
   if (friend) {
     if (
       friend.status &&

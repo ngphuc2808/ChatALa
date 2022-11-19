@@ -24,6 +24,7 @@ const TopBar = () => {
   const [searchResult, setSearchResult] = useState<SearchResult[]>([]);
   const [searchInput, setSearchInput] = useState('');
   const [searchModal, setSearchModal] = useState(false);
+  const [action, setAction] = useState(false);
 
   const loggedUser = useSelector(selectUserState);
   const dispatch = useDispatch();
@@ -43,9 +44,14 @@ const TopBar = () => {
 
   const getSearchResult = async () => {
     if (searchInput) {
-      const res = await UsersApi.findUser({ search: searchInput });
-      setSearchResult(res.result);
-      setSearchModal(true);
+      try {
+        const res = await UsersApi.userFind({ search: searchInput });
+        setSearchResult(res.result);
+        setSearchModal(true);
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
     } else {
       setSearchResult([]);
       setSearchModal(false);
@@ -57,11 +63,16 @@ const TopBar = () => {
   }, []);
 
   useEffect(() => {
-    const t = setTimeout(() => {
+    let t: any;
+    if (!action) {
+      t = setTimeout(() => {
+        getSearchResult();
+      }, 1000);
+    } else {
       getSearchResult();
-    }, 1000);
+    }
     return () => clearTimeout(t);
-  }, [searchInput]);
+  }, [searchInput, action]);
 
   return (
     <S.Container>
@@ -96,6 +107,7 @@ const TopBar = () => {
               <SearchModal
                 setSearchModal={setSearchModal}
                 searchResult={searchResult}
+                setAction={setAction}
               />
             )}
           </S.Search>

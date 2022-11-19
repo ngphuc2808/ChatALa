@@ -56,7 +56,7 @@ export const SearchModalMessage = styled(SearchModalOption)`
   ${tw`bg-blue-500`}
 `;
 
-export const SearchModalAddfriend = styled(SearchModalOption)`
+export const SearchModalAddFriend = styled(SearchModalOption)`
   ${tw`bg-darker`}
 `;
 

@@ -94,8 +94,10 @@ const findUser = asyncHandler(async (req, res, next) => {
   });
   let listRelatedId = [];
   myFriends.forEach((it) => {
-    if (it.uid1.toString() === id) {
+    if (it.uid1.toString() === id.toString()) {
       listRelatedId.push({ id: it.uid2.toString(), status: 'friend' });
+      console.log(id);
+      console.log(it.uid2);
     } else {
       listRelatedId.push({ id: it.uid1.toString(), status: 'friend' });
     }
@@ -114,7 +116,7 @@ const findUser = asyncHandler(async (req, res, next) => {
   });
 
   pendingId.forEach((it) => {
-    if (it.receiveId.toString() === id) {
+    if (it.receiveId.toString() === id.toString()) {
       listRelatedId.push({ id: it.requestId.toString(), status: 'receive' });
     } else {
       listRelatedId.push({ id: it.receiveId.toString(), status: 'request' });
@@ -136,7 +138,7 @@ const findUser = asyncHandler(async (req, res, next) => {
     ],
   }).limit(10);
 
-  console.log(myFriends);
+  console.log(listRelatedId);
 
   let result = [];
   searchUsers.forEach((it) => {
@@ -146,7 +148,9 @@ const findUser = asyncHandler(async (req, res, next) => {
         t = childIt.status;
       }
     });
-    result.push({ ...it.toObject(), status: t });
+    if (it.id.toString() !== id.toString()) {
+      result.push({ ...it.toObject(), status: t });
+    }
   });
 
   res.status(200).json({
