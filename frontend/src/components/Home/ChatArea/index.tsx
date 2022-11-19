@@ -27,7 +27,9 @@ const ChatArea = () => {
   const [toggleEmoji, setToggleEmoji] = useState(false);
   const [toggleOption, setToggleOption] = useState(false);
   const [toggleImageZoom, setToggleImageZoom] = useState(false);
-  const [imageZoomList, setImageZoomList] = useState<Array<{ name: string; url: string; type: string }>>([]);
+  const [imageZoomList, setImageZoomList] = useState<
+    Array<{ name: string; url: string; type: string }>
+  >([]);
 
   //chatInput
   const chatInput = useRef<HTMLSpanElement>(null);
@@ -132,7 +134,7 @@ const ChatArea = () => {
             />
           </S.ChatAreaHeadAvatar>
           <S.ChatAreaHeadNameWrapper>
-          {context.roomInfo.roomName !== '-1' && (
+            {context.roomInfo.roomName !== '-1' && (
               <S.ChatAreaHeadName>
                 {context.roomInfo.roomName}
               </S.ChatAreaHeadName>
@@ -145,12 +147,11 @@ const ChatArea = () => {
         </S.ChatAreaHeadInfo>
         <S.ChatAreaHeadOption onClick={() => setToggleOption(true)} />
       </S.ChatAreaHead>
-      {toggleOption && (
-        <MoreOptions
-          roomInfo={context.roomInfo}
-          setToggleOption={setToggleOption}
-        />
-      )}
+      <MoreOptions
+        roomInfo={context.roomInfo}
+        setToggleOption={setToggleOption}
+        toggleOption={toggleOption}
+      />
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
@@ -167,7 +168,10 @@ const ChatArea = () => {
             {({ getRootProps, getInputProps, isDragActive }) => (
               <S.ChatAreaMain {...getRootProps()}>
                 {toggleImageZoom && (
-                  <ChatImageZoom imageZoomList={imageZoomList} setToggleImageZoom={setToggleImageZoom} />
+                  <ChatImageZoom
+                    imageZoomList={imageZoomList}
+                    setToggleImageZoom={setToggleImageZoom}
+                  />
                 )}
                 <S.ChatAreaMainMsg>
                   <S.ChatAreaMainMsgInner>
