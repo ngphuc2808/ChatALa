@@ -1,11 +1,9 @@
 import Image from 'next/image';
 import * as S from './TopBar.styled';
 import React, { useEffect, useState } from 'react';
-import { UserAvatar, UserName } from '../../../utils/dataConfig';
 import Logo from '../../../assets/imgs/LogoFullLong.png';
 import UserInfo from './UserInfo';
 import NotiModal from './NotiModal';
-import { useGlobalContext } from '../../../contexts/globalContext';
 import SettingsModal from './SettingsModal';
 import { UsersApi } from '../../../services/api/users';
 import SearchModal from './SearchModal';
@@ -88,7 +86,7 @@ const TopBar = () => {
         </S.RightWrapper>
         {userInfoModal && (
           <UserInfo
-            phoneNumber={loggedUser.info.phone}
+            phone={loggedUser.info.phone}
             name={loggedUser.info.name}
             gender={loggedUser.info.gender}
             dob={loggedUser.info.dob}

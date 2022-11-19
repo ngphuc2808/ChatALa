@@ -1,9 +1,12 @@
 import ChatPreviewItem from '../ChatPreviewItem';
 import * as S from './ChatList.styled';
 import React from 'react';
-import { useGlobalContext } from '../../../../contexts/globalContext';
 import { RoomApi } from '../../../../services/api/room';
 import { ClipLoader } from 'react-spinners';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectRoomListState } from '../../../../features/redux/slices/roomListSlice';
+import { roomInfoActions } from '../../../../features/redux/slices/roomInfoSlice';
+import { messageActions } from '../../../../features/redux/slices/messageSlice';
 
 interface IChatList {
   selected: number;
@@ -11,27 +14,30 @@ interface IChatList {
 }
 
 const ChatList = ({ selected, setSelected }: IChatList) => {
-  const context = useGlobalContext();
+  const roomList = useSelector(selectRoomListState);
+  const dispatch = useDispatch();
 
   const roomSelect = async (index: number) => {
-    const result = await RoomApi.getRoomInfo(
-      context.roomList[index].roomInfo._id
+    dispatch(roomInfoActions.requestRoomInfo(null));
+
+    const result = await RoomApi.getRoomInfo(roomList.list[index].roomInfo._id);
+
+    dispatch(
+      roomInfoActions.setRoomInfo({
+        roomName: result.roomName,
+        roomInfo: result.roomInfo,
+        roomAvatar: result.roomAvatar,
+      })
     );
 
-    context.setRoomInfo({
-      roomName: result.roomName,
-      roomInfo: result.roomInfo,
-      roomAvatar: result.roomAvatar,
-    });
-    context.setRoomMsg(result.messages);
-    context.setRoomChoosen(true);
+    dispatch(messageActions.setMessage(result.messages));
   };
 
   return (
     <S.ChatList>
       <S.Wrapper>
-        {context.roomList.length > 0 ? (
-          context.roomList.map((data, index) => (
+        {roomList.list.length > 0 ? (
+          roomList.list.map((data, index) => (
             <React.Fragment key={index}>
               <ChatPreviewItem
                 avatar={data.roomAvatar}
