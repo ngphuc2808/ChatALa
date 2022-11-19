@@ -1,34 +1,52 @@
-const asyncHandler = require("express-async-handler");
-const Notifications = require("../models/notificationModel");
-const { decodeJWT } = require("../utils/utilFunctions");
-const Friends = require("../models/friendModel");
-const ErrorHandler = require("../utils/errorHandler");
+const asyncHandler = require('express-async-handler');
+const Notifications = require('../models/notificationModel');
+const { decodeJWT } = require('../utils/utilFunctions');
+const Friends = require('../models/friendModel');
+const ErrorHandler = require('../utils/errorHandler');
 
 const friendReq = asyncHandler(async (req, res, next) => {
-  const id = req.user._id
+  const id = req.user._id;
   const receiveId = req.params.id;
 
-  const notification = await Notifications.findOneAndUpdate(
-    {
-      receiveId: receiveId,
-      requestId: id,
-    },
-    {
-      $set: {
-        status: "Pending",
+  const friend = await Notifications.findOne({
+    $or: [
+      {
+        uid1: id,
+        uid2: receiveId,
       },
-    }
-  );
-
-  !notification &&
-    Notifications.create({
-      receiveId: receiveId,
-      requestId: id,
-    });
-
-  res.status(200).json({
-    message: "Request successfully",
+      {
+        uid1: receiveId,
+        uid2: id,
+      },
+    ],
   });
+  if (!friend) {
+    const notification = await Notifications.findOneAndUpdate(
+      {
+        receiveId: receiveId,
+        requestId: id,
+      },
+      {
+        $set: {
+          status: 'Pending',
+        },
+      }
+    );
+
+    !notification &&
+      Notifications.create({
+        receiveId: receiveId,
+        requestId: id,
+      });
+
+    res.status(200).json({
+      message: 'Request successfully',
+    });
+  } else {
+    res.status(500).json({
+      message: 'Unhandled error!',
+    });
+  }
 });
 
 const friendAccept = asyncHandler(async (req, res, next) => {
@@ -46,10 +64,10 @@ const friendAccept = asyncHandler(async (req, res, next) => {
       },
     ],
   });
-  if (notification && notification.status == "Pending" && !inRelationship) {
+  if (notification && notification.status == 'Pending' && !inRelationship) {
     await Notifications.findByIdAndUpdate(notificationId, {
       $set: {
-        status: "Accepted",
+        status: 'Accepted',
       },
     });
     await Friends.create({
@@ -57,10 +75,10 @@ const friendAccept = asyncHandler(async (req, res, next) => {
       uid2: notification.receiveId,
     });
     return res.status(200).json({
-      message: "Accept successfully",
+      message: 'Accept successfully',
     });
   } else {
-    return next(new ErrorHandler("Unhandled error!", 500));
+    return next(new ErrorHandler('Unhandled error!', 500));
   }
 });
 
@@ -69,17 +87,17 @@ const friendDecline = asyncHandler(async (req, res, next) => {
 
   await Notifications.findOneAndUpdate(id, {
     $set: {
-      status: "Denied",
+      status: 'Denied',
     },
   });
 
   res.status(200).json({
-    message: "Decline successfully",
+    message: 'Decline successfully',
   });
 });
 
 const block = asyncHandler(async (req, res, next) => {
-  const id = req.user._id
+  const id = req.user._id;
   const targetId = req.params.id;
 
   const friend = await Friends.findOne({
@@ -100,41 +118,41 @@ const block = asyncHandler(async (req, res, next) => {
       uid1: id,
       uid2: targetId,
       status: {
-        type: "oneWayBlock",
+        type: 'oneWayBlock',
         blockedId: targetId,
       },
     });
     return res.status(200).json({
-      message: "Block successfully",
+      message: 'Block successfully',
     });
   } else {
     if (
       friend.status &&
-      friend.status.type === "oneWayBlock" &&
+      friend.status.type === 'oneWayBlock' &&
       friend.status.blockedId.toString() === id
     ) {
       await Friends.findByIdAndUpdate(friend.id, {
         $set: {
-          status: { type: "twoWayBlock", blockedId: undefined },
+          status: { type: 'twoWayBlock', blockedId: undefined },
         },
       });
     }
-    if (friend.status && friend.status.type === "available") {
+    if (friend.status && friend.status.type === 'available') {
       await Friends.findByIdAndUpdate(friend.id, {
         $set: {
-          status: { type: "oneWayBlock", blockedId: targetId },
+          status: { type: 'oneWayBlock', blockedId: targetId },
         },
       });
     }
   }
 
   return res.status(200).json({
-    message: "Block successfully",
+    message: 'Block successfully',
   });
 });
 
 const unblock = asyncHandler(async (req, res, next) => {
-  const id = req.user._id
+  const id = req.user._id;
   const targetId = req.params.id;
 
   const friend = await Friends.findOne({
@@ -154,22 +172,22 @@ const unblock = asyncHandler(async (req, res, next) => {
   if (friend) {
     if (
       friend.status &&
-      friend.status.type === "oneWayBlock" &&
+      friend.status.type === 'oneWayBlock' &&
       friend.status.blockedId.toString() === targetId
     ) {
       await Friends.findByIdAndDelete(friend.id);
     }
-    if (friend.status && friend.status.type === "twoWayBlock") {
+    if (friend.status && friend.status.type === 'twoWayBlock') {
       await Friends.findByIdAndUpdate(friend.id, {
         $set: {
-          status: { type: "oneWayBlock", blockedId: id },
+          status: { type: 'oneWayBlock', blockedId: id },
         },
       });
     }
   }
 
   res.status(200).json({
-    message: "Unblock successfully",
+    message: 'Unblock successfully',
   });
 });
 

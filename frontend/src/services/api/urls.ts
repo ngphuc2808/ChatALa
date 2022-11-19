@@ -1,5 +1,4 @@
-const BASEURL =
-  process.env.NEXT_PUBLIC_API_ENDPOINT || 'http://localhost:5000'; // Staging
+const BASEURL = process.env.NEXT_PUBLIC_API_ENDPOINT || 'http://localhost:5000'; // Staging
 
 const API_BASE = `${BASEURL}/api`;
 
@@ -16,4 +15,5 @@ export const API_URL = {
   getRoomList: `${API_BASE}/room`,
   getRoomInfo: `${API_BASE}/room`,
   getLoggedUser: `${API_BASE}/user/getLoggedUser`,
+  findUser: `${API_BASE}/user/find`,
 };

@@ -64,6 +64,7 @@ const MoreOptions = ({
               style={{
                 fontSize: '24px',
                 transition: '300ms',
+                cursor: 'pointer',
                 transform: !mediaExtend ? 'rotate(-90deg)' : 'none',
               }}
               onClick={() => setMediaExtend(!mediaExtend)}
