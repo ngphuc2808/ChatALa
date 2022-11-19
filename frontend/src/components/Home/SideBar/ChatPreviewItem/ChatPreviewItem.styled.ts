@@ -26,7 +26,7 @@ export const Content = styled.div`
 `;
 
 export const Name = styled.div`
-  ${tw`font-semibold text-black text-[16px]`}
+  ${tw`font-semibold text-black text-[16px] text-left`}
 `;
 
 export const Msg = styled.div`

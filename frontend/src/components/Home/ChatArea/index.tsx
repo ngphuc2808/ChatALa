@@ -1,31 +1,42 @@
 import Image from 'next/image';
 import * as S from './ChatArea.styled';
-import { UserAvatar, UserName } from '../../../utils/dataConfig';
 import { FormEvent, useRef, useState } from 'react';
 import ChatMsg from './ChatMsg';
 import EmojiPicker, { EmojiStyle, EmojiClickData } from 'emoji-picker-react';
 import MoreOptions from './MoreOptions';
-import { useOutsideClick } from '../../Global/ProcessFunctions';
+import {
+  useOutsideClick,
+  validImageTypes,
+} from '../../Global/ProcessFunctions';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import FilePreview from './FilePreview';
 import DropZone from 'react-dropzone';
-import { messageType } from '../../../utils/types';
+import {
+  ClientToServerEvents,
+  messageSendType,
+  messageType,
+  ServerToClientEvents,
+} from '../../../utils/types';
 import ChatImageZoom from './ChatMsgImageZoom';
-import { useSelector } from 'react-redux';
-import { selectMessageState } from '../../../features/redux/slices/messageSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { messageActions, selectMessageState } from '../../../features/redux/slices/messageSlice';
 import { selectRoomInfoState } from '../../../features/redux/slices/roomInfoSlice';
+import { API_KEY, MessageApi } from '../../../services/api/messages';
+import { Socket } from 'socket.io-client';
+import { roomListActions } from '../../../features/redux/slices/roomListSlice';
 
-type FormValues = {
-  msg: string;
-  files: Array<File>;
-};
+interface IChatArea {
+  socket: Socket<ServerToClientEvents, ClientToServerEvents>;
+}
 
-const ChatArea = () => {
+const ChatArea = ({ socket }: IChatArea) => {
   const status = 1;
 
-  const messages = useSelector(selectMessageState)
-  const roomInfo = useSelector(selectRoomInfoState)
+  const dispatch = useDispatch();
+
+  const messages = useSelector(selectMessageState);
+  const roomInfo = useSelector(selectRoomInfoState);
 
   const [toggleEmoji, setToggleEmoji] = useState(false);
   const [toggleOption, setToggleOption] = useState(false);
@@ -52,18 +63,18 @@ const ChatArea = () => {
     const list = messages.list;
 
     if (
-      data.fromSender !== list[index + 1]?.fromSender &&
-      data.fromSender === list[index - 1]?.fromSender
+      data.senderId !== list[index + 1]?.senderId &&
+      data.senderId === list[index - 1]?.senderId
     )
       return 'top';
     else if (
-      data.fromSender === list[index - 1]?.fromSender &&
-      data.fromSender === list[index + 1]?.fromSender
+      data.senderId === list[index - 1]?.senderId &&
+      data.senderId === list[index + 1]?.senderId
     )
       return 'middle';
     else if (
-      data.fromSender !== list[index - 1]?.fromSender &&
-      data.fromSender !== list[index + 1]?.fromSender
+      data.senderId !== list[index - 1]?.senderId &&
+      data.senderId !== list[index + 1]?.senderId
     )
       return 'alone';
     else return 'bottom';
@@ -71,6 +82,7 @@ const ChatArea = () => {
 
   //Form
   const initialValues = {
+    roomId: roomInfo.info?.roomInfo._id || '',
     msg: '',
     files: [],
   };
@@ -80,9 +92,10 @@ const ChatArea = () => {
     files: Yup.mixed(),
   });
 
+  //File
   const fileChoosen = (
     e: FormEvent<HTMLInputElement>,
-    values: FormValues,
+    values: messageSendType,
     setFieldValue: any
   ) => {
     if (e.currentTarget.files) {
@@ -100,7 +113,7 @@ const ChatArea = () => {
 
   const fileDropped = (
     newFiles: File[],
-    values: FormValues,
+    values: messageSendType,
     setFieldValue: any
   ) => {
     const files = values.files;
@@ -111,16 +124,58 @@ const ChatArea = () => {
     setFieldValue('files', files);
   };
 
-  const onSubmit = (values: FormValues, { setFieldValue }: any) => {
-    if (values.msg !== '' || values.files.length > 0) {
-      console.log(values);
-      setToggleEmoji(false);
-      if (values.msg !== '') {
-      }
-      chatInput.current!.innerText = '';
+  const uploadFile = async (
+    file: File,
+    signedKey: { signature: string; timestamp: number }
+  ) => {
+    const name = validImageTypes.includes(file.type) ? 'Image' : file.name;
+    const type = validImageTypes.includes(file.type) ? 'image' : 'file';
 
-      setFieldValue('msg', '');
-      setFieldValue('files', []);
+    const form = new FormData();
+    form.append('file', file);
+    form.append('api_key', API_KEY);
+    form.append('timestamp', signedKey.timestamp.toString());
+    form.append('signature', signedKey.signature);
+    const uploadedFile = await MessageApi.uploadFile(form);
+
+    return { name, url: uploadedFile.secure_url, type };
+  };
+
+  //Upload files
+  const uploadFiles = async (files: File[]) => {
+    const signedKey = await MessageApi.getSignedKey();
+
+    const uploadedFiles = [];
+
+    // This for loop won't run if no files are selected
+    for (let i = 0; i < files.length; i++) {
+      const uploadedFile = await uploadFile(files[i], signedKey);
+      uploadedFiles.push(uploadedFile);
+    }
+
+    return uploadedFiles;
+  };
+
+  //Submit
+  const onSubmit = async (values: messageSendType, { setFieldValue }: any) => {
+    if (values.msg !== '' || values.files.length > 0) {
+      setToggleEmoji(false);
+
+      // const uploadedFiles = await uploadFiles(values.files);
+      // console.log(uploadedFiles);
+
+      try {
+        const res = await MessageApi.send(values);
+
+        dispatch(messageActions.newMessage(res.result))
+        dispatch(roomListActions.setNewLastMsg(res.result))
+
+        chatInput.current!.innerText = '';
+        setFieldValue('msg', '');
+        setFieldValue('files', []);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -137,10 +192,8 @@ const ChatArea = () => {
             />
           </S.ChatAreaHeadAvatar>
           <S.ChatAreaHeadNameWrapper>
-          {roomInfo.info!.roomName !== '-1' && (
-              <S.ChatAreaHeadName>
-                {roomInfo.info!.roomName}
-              </S.ChatAreaHeadName>
+            {roomInfo.info!.roomName !== '-1' && (
+              <S.ChatAreaHeadName>{roomInfo.info!.roomName}</S.ChatAreaHeadName>
             )}
             <S.ChatAreaHeadStatus>
               {status ? 'Online' : 'Offline'}
@@ -161,6 +214,7 @@ const ChatArea = () => {
         initialValues={initialValues}
         onSubmit={onSubmit}
         validationSchema={validationSchema}
+        enableReinitialize
       >
         {({ values, setFieldValue, submitForm }) => (
           <DropZone

@@ -49,10 +49,10 @@ const UserInfo = ({
               <HiOutlineX onClick={() => setUserInfoModal(false)} />
             </S.Title>
             <S.Banner>
-              <Image src={avatar} layout='fill' objectFit='cover' />
+              <Image src={banner} layout='fill' objectFit='cover' />
             </S.Banner>
             <S.Avatar onClick={() => setSeeAvatar(true)}>
-              <Image src={banner} layout='fill' objectFit='contain' />
+              <Image src={avatar} layout='fill' objectFit='cover' />
             </S.Avatar>
           </S.Header>
           <S.Content>

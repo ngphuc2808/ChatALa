@@ -41,9 +41,9 @@ export const ChatMsgFileImages = styled.div<{ imgNum: number }>`
   ${tw`relative grid gap-1 mt-1`}
   ${({ imgNum }) =>
     imgNum === 1
-      ? tw`grid-cols-1 w-[500px]`
+      ? tw`grid-cols-1 w-[400px]`
       : imgNum === 2
-      ? tw`grid-cols-2 w-[400px]`
+      ? tw`grid-cols-2 w-[350px]`
       : imgNum >= 3 && tw`grid-cols-3 w-[300px]`}
 `;
 

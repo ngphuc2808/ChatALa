@@ -13,15 +13,13 @@ export type userInfo = {
 
 export type messageSendType = {
   roomId: string;
-  senderId: string;
   msg: string;
   files: File[];
-  unSend: boolean;
 };
 
 export type messageType = {
   roomId: string;
-  fromSender: boolean;
+  senderId: string;
   msg: string;
   files: { name: string; url: string; type: string }[];
   unSend: boolean;
@@ -87,3 +85,13 @@ export type SearchResult = {
   status: string;
   notificationId: string;
 };
+
+export interface ServerToClientEvents {
+  noArg: () => void;
+  basicEmit: (a: number, b: string, c: Buffer) => void;
+  withAck: (d: string, callback: (e: number) => void) => void;
+}
+
+export interface ClientToServerEvents {
+  hello: () => void;
+}

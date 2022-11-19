@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
+import { selectRoomListState } from '../../../../features/redux/slices/roomListSlice';
 import * as S from './ChatPreviewItem.styled';
 
 interface IChatPreviewItem {
@@ -6,8 +8,8 @@ interface IChatPreviewItem {
   active: boolean;
   msg: string;
   name?: string;
-  id: number;
-  setSelected: (id: number) => void;
+  index: number;
+  setRoomSelected: (id: number) => void;
   onClick: () => void;
 }
 
@@ -16,15 +18,16 @@ const ChatPreviewItem = ({
   msg,
   name = 'Chat Bot',
   active,
-  id,
-  setSelected,
+  index,
+  setRoomSelected,
   onClick,
 }: IChatPreviewItem) => {
-  const status = 1;
+
+  const roomList = useSelector(selectRoomListState);
 
   return (
-    <S.ChatPreviewItem active={active} Id={id} onClick={onClick}>
-      <S.Wrapper onClick={() => setSelected(id)}>
+    <S.ChatPreviewItem active={active} Id={index} onClick={onClick}>
+      <S.Wrapper onClick={() => setRoomSelected(index)}>
         <S.ChatAvatarWrapper>
           {avatar ? (
             <>
@@ -36,7 +39,7 @@ const ChatPreviewItem = ({
                   objectFit='cover'
                 />
               </S.ChatAvatar>
-              <S.ChatStatus status={status} />
+              <S.ChatStatus status={roomList.activeList[index]} />
             </>
           ) : (
             <S.ChatBotAvatar />

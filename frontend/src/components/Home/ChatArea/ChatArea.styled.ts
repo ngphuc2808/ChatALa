@@ -48,7 +48,7 @@ export const ChatAreaMain = styled.div`
 `;
 
 export const ChatAreaMainMsg = styled.div`
-  ${tw`flex-grow overflow-y-scroll overflow-x-hidden h-0 mb-3 pt-5 rounded-3xl pr-1.5 flex flex-col-reverse`}
+  ${tw`flex-grow overflow-y-scroll overflow-x-hidden h-0 mb-3 pt-5 pr-1.5 flex flex-col-reverse`}
 
   &::-webkit-scrollbar-track {
     ${tw`rounded-[10px] bg-transparent`}
@@ -116,7 +116,7 @@ export const ChatAreaMainInputEmojiPicker = styled.div`
 `;
 
 export const ChatAreaMainInputText = styled.span<{ username: string }>`
-  ${tw`flex-grow outline-none bg-transparent text-xl ml-2.5 w-1 overflow-auto max-h-24 whitespace-normal hover:cursor-text`}
+  ${tw`flex-grow outline-none bg-transparent text-lg ml-2.5 w-1 overflow-auto max-h-24 whitespace-normal hover:cursor-text`}
 
   &:empty::before {
     content: "Write something to ${({ username }) => username}...";

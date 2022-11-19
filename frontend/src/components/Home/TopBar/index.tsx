@@ -83,7 +83,7 @@ const TopBar = () => {
                 src={loggedUser.info.avatar}
                 alt='avatar'
                 layout='fill'
-                objectFit='contain'
+                objectFit='cover'
               />
             )}
           </S.Avatar>

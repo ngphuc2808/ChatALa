@@ -6,6 +6,7 @@ import { roomInfo } from '../../../utils/types';
 // Type for our state
 export interface roomListState {
   list: roomInfo[];
+  activeList: number[];
   loading: boolean;
 }
 
@@ -14,6 +15,7 @@ const roomListInitialState: roomInfo[] = [];
 // Initial state
 const initialState: roomListState = {
   list: roomListInitialState,
+  activeList: [],
   loading: false,
 };
 
@@ -30,6 +32,41 @@ export const roomListSlice = createSlice({
     setRoomList(state, action) {
       state.loading = false;
       state.list = action.payload;
+
+      let temp = [];
+      for (let i = 0; i < action.payload.length; i++) {
+        temp.push(0);
+      }
+      state.activeList = temp;
+    },
+
+    setActiveRoom(state, action) {
+      const activeUser: Array<{ socketId: string; uid: string }> =
+        action.payload;
+
+      state.list.forEach((room, index) => {
+        if (!room.roomInfo.isGroup) {
+          if (
+            activeUser.find(
+              (user) => user.uid === room.roomInfo.users[0]._id
+            ) &&
+            activeUser.find((user) => user.uid === room.roomInfo.users[1]._id)
+          )
+            state.activeList[index] = 1;
+        }
+      });
+    },
+
+    setNewLastMsg(state, action) {
+      const message = action.payload;
+      const roomIndex = state.list.findIndex(
+        (room) => room.roomInfo._id === message.roomId
+      );
+
+      state.list[roomIndex].roomInfo.lastMsg =
+        message.msg !== ''
+          ? message.msg
+          : message.files[message.files.length - 1].name;
     },
 
     clearRoomList(state, action) {

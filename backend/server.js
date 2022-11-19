@@ -33,20 +33,6 @@ app.use(express.json()); //allow accept json data
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-app.get("/", (req, res) => {
-  res.send("server is ready!");
-});
-
-//route
-app.use("/api/user", userRoutes);
-app.use("/api/room", roomRoutes);
-app.use("/api/friend", friendRoutes);
-app.use("/api/message", messageRoutes);
-app.use("/api/util", utilRoutes);
-
-//middleware
-app.use(errorMiddleware); //handle error
-
 //connect DB
 connectDB();
 
@@ -61,11 +47,63 @@ const server = app.listen(
 // config socket
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
-  cors:{
-    origin: ['http://localhost:3000']
-  }
-})
+  cors: {
+    origin: ["http://localhost:3000"],
+  },
+});
+
+// all connected user
+let users = [];
+
+const addUser = (uid, socketId) => {
+  !users.some((user) => user.uid === uid) && users.push({ uid, socketId });
+};
+
+const removeUser = (socketId) => {
+  users = users.filter((user) => user.socketId !== socketId);
+};
 
 io.on("connection", (socket) => {
-  console.log("socket connected".green.bold);
-})
+  console.log("A user connected".magenta.bold);
+
+  socket.on("newUserConnect", (uid) => {
+    addUser(uid, socket.id);
+    io.emit("getUsers", users);
+  });
+
+  socket.on("roomSelected", (roomId, uid) => {
+    socket.join(roomId);
+  });
+
+  // socket.on("sendMessage", (message, roomId) => {
+  //   console.log("new message: ", message);
+  //   console.log("roomId: ", roomId);
+  //   socket.to(roomId).emit("receiveMessage", message);
+  // });
+
+  socket.on("disconnect", () => {
+    console.log("A user disconnected".gray.bold);
+    removeUser(socket.id);
+    io.emit("getUsers", users);
+  });
+});
+
+app.get("/", (req, res) => {
+  res.send("server is ready!");
+});
+
+// pass io object to controller
+app.use(function (req, res, next) {
+  req.io = io;
+  next();
+});
+
+//route
+app.use("/api/user", userRoutes);
+app.use("/api/room", roomRoutes);
+app.use("/api/friend", friendRoutes);
+app.use("/api/message", messageRoutes);
+app.use("/api/util", utilRoutes);
+
+//middleware
+app.use(errorMiddleware); //handle error

@@ -1,4 +1,5 @@
-const BASEURL = process.env.NEXT_PUBLIC_API_ENDPOINT || 'http://localhost:5000'; // Staging
+export const BASEURL =
+  process.env.NEXT_PUBLIC_API_ENDPOINT || 'http://localhost:5000'; // Staging
 
 const API_BASE = `${BASEURL}/api`;
 
@@ -19,4 +20,7 @@ export const API_URL = {
   friendRequest: `${API_BASE}/friend/request`,
   friendAccept: `${API_BASE}/friend/accept`,
   friendDecline: `${API_BASE}/friend/decline`,
+  sendMessage: `${API_BASE}/message/`,
+  getSignedKey: `${API_BASE}/util/signedKey`,
+  uploadFile: `https://api.cloudinary.com/v1_1`
 };

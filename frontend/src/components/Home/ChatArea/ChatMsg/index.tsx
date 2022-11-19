@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectRoomInfoState } from '../../../../features/redux/slices/roomInfoSlice';
+import { selectUserState } from '../../../../features/redux/slices/userSlice';
 import { messageType } from '../../../../utils/types';
 import { getFileIcon, shorterChars } from '../../../Global/ProcessFunctions';
 import * as S from './ChatMsg.styled';
@@ -21,6 +22,7 @@ const ChatMsg = ({ data, position, setToggleImageZoom, setImageZoomList }: IChat
   >([]);
 
   const roomInfo = useSelector(selectRoomInfoState);
+  const user = useSelector(selectUserState);
 
   const getImageList = () => {
     const _images: Array<{ name: string; url: string; type: string }> = [];
@@ -41,7 +43,7 @@ const ChatMsg = ({ data, position, setToggleImageZoom, setImageZoomList }: IChat
 
   return (
     <>
-      {data.fromSender ? (
+      {data.senderId === user.info._id ? (
         <S.ChatMsgRight position={position}>
           <S.ChatMsgWrapper>
             {!data.unSend ? (
@@ -100,10 +102,10 @@ const ChatMsg = ({ data, position, setToggleImageZoom, setImageZoomList }: IChat
         </S.ChatMsgRight>
       ) : (
         <S.ChatMsgLeft position={position}>
-          {roomInfo.info.roomAvatar && (
+          {roomInfo.info!.roomAvatar && (
             <S.ChatMsgAvatar position={position}>
               <Image
-                src={roomInfo.info.roomAvatar}
+                src={roomInfo.info!.roomAvatar}
                 alt='avatar'
                 layout='fill'
                 objectFit='cover'

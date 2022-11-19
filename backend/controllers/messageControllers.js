@@ -1,11 +1,11 @@
 const asyncHandler = require("express-async-handler");
 const Messages = require("../models/messageModel");
 const Rooms = require("../models/roomModel");
-const { decodeJWT } = require("../utils/utilFunctions");
 
 const sendMessage = asyncHandler(async (req, res, next) => {
+  const io = req.io;
+  const id = req.user._id;
   const { roomId, msg, files } = req.body;
-  const id = req.user._id
 
   const result = await Messages.create({
     roomId,
@@ -14,9 +14,11 @@ const sendMessage = asyncHandler(async (req, res, next) => {
     files,
   });
   if (result) {
-    const lastMsg = msg !== "" ? msg : files[0].name;
+    const lastMsg = msg !== "" ? msg : files[files.length-1].name;
     await Rooms.findByIdAndUpdate(roomId, { lastMsg }, { new: true });
   }
+
+  io.in(roomId).emit("receiveMessage", result);
 
   res.status(200).json({
     result,

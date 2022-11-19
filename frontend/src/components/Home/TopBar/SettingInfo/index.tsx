@@ -96,7 +96,7 @@ const SettingInfo = ({
                   <Image src={UserAvatar} layout="fill" objectFit="cover" />
                 </S.Banner>
                 <S.AvatarLabel htmlFor="avatar">
-                  <Image src={previewAvt} layout="fill" objectFit="contain" />
+                  <Image src={previewAvt} layout="fill" objectFit="cover" />
                 </S.AvatarLabel>
               </S.Header>
               <S.Content>

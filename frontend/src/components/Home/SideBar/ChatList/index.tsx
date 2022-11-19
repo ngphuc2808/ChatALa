@@ -9,28 +9,32 @@ import { roomInfoActions } from '../../../../features/redux/slices/roomInfoSlice
 import { messageActions } from '../../../../features/redux/slices/messageSlice';
 
 interface IChatList {
-  selected: number;
-  setSelected: (num: number) => void;
+  roomSelected: number;
+  setRoomSelected: (num: number) => void;
 }
 
-const ChatList = ({ selected, setSelected }: IChatList) => {
+const ChatList = ({ roomSelected, setRoomSelected }: IChatList) => {
   const roomList = useSelector(selectRoomListState);
   const dispatch = useDispatch();
 
   const roomSelect = async (index: number) => {
-    dispatch(roomInfoActions.requestRoomInfo(null));
+    if (roomSelected !== index) {
+      dispatch(roomInfoActions.requestRoomInfo(null));
 
-    const result = await RoomApi.getRoomInfo(roomList.list[index].roomInfo._id);
+      const result = await RoomApi.getRoomInfo(
+        roomList.list[index].roomInfo._id
+      );
 
-    dispatch(
-      roomInfoActions.setRoomInfo({
-        roomName: result.roomName,
-        roomInfo: result.roomInfo,
-        roomAvatar: result.roomAvatar,
-      })
-    );
+      dispatch(
+        roomInfoActions.setRoomInfo({
+          roomName: result.roomName,
+          roomInfo: result.roomInfo,
+          roomAvatar: result.roomAvatar,
+        })
+      );
 
-    dispatch(messageActions.setMessage(result.messages));
+      dispatch(messageActions.setMessage(result.messages));
+    }
   };
 
   return (
@@ -43,9 +47,9 @@ const ChatList = ({ selected, setSelected }: IChatList) => {
                 avatar={data.roomAvatar}
                 msg={data.roomInfo.lastMsg}
                 name={data.roomName}
-                id={index}
-                active={selected === index}
-                setSelected={setSelected}
+                index={index}
+                active={roomSelected === index}
+                setRoomSelected={setRoomSelected}
                 onClick={() => roomSelect(index)}
               />
             </React.Fragment>

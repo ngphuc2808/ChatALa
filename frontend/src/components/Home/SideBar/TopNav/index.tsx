@@ -7,10 +7,10 @@ import { useDispatch } from 'react-redux';
 import { roomInfoActions } from '../../../../features/redux/slices/roomInfoSlice';
 
 interface ITopNav {
-  setSelected: (number: number) => void;
+  setRoomSelected: (number: number) => void;
 }
 
-const TopNav = ({ setSelected }: ITopNav) => {
+const TopNav = ({ setRoomSelected }: ITopNav) => {
   const [toggleCreateGroup, setToggleCreateGroup] = useState(false);
   const [toggleShowFriends, setToggleShowFriends] = useState(false);
 
@@ -23,10 +23,10 @@ const TopNav = ({ setSelected }: ITopNav) => {
         <S.AddGroupOption onClick={() => setToggleCreateGroup(true)} />
       </S.Options>
       <ChatPreviewItem
-        id={-2}
+        index={-2}
         active={false}
         msg='Halo halo niece and nephew, today uncle Roger'
-        setSelected={setSelected}
+        setRoomSelected={setRoomSelected}
         onClick={() => dispatch(roomInfoActions.clearRoomInfo(null))}
       />
       {toggleCreateGroup && (
