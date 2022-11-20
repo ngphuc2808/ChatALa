@@ -3,8 +3,8 @@ import tw from 'twin.macro';
 import { VscHubot } from 'react-icons/vsc';
 
 export const ChatAvatarWrapper = styled.div`
-${tw`relative`}
-`
+  ${tw`relative`}
+`;
 
 export const ChatAvatar = styled.figure`
   ${tw`relative w-[50px] h-[50px] rounded-full overflow-hidden flex-shrink-0`}
@@ -13,7 +13,7 @@ export const ChatAvatar = styled.figure`
 
 export const ChatStatus = styled.span<{ status: number }>`
   ${tw`absolute w-[13px] h-[13px] rounded-full right-[1px] bottom-[1px]`}
-  ${({status}) => status === 1 ? tw`bg-green-400` : tw`bg-gray-500`}
+  ${({ status }) => (status === 1 ? tw`bg-green-400` : tw`bg-gray-500`)}
   border: 1px solid white;
 `;
 
@@ -30,7 +30,7 @@ export const Name = styled.div`
 `;
 
 export const Msg = styled.div`
-  ${tw`text-[14px] w-full overflow-hidden whitespace-nowrap`}
+  ${tw`text-[14px] w-full text-left overflow-hidden whitespace-nowrap`}
   text-overflow: ellipsis;
 `;
 
