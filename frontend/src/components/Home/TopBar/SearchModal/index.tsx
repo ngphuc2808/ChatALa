@@ -1,12 +1,9 @@
 import * as S from './SearchModal.styled';
 import * as React from 'react';
-import { SearchListArray } from '../../../../utils/dataConfig';
 import Image from 'next/image';
 import { useOutsideClick } from '../../../Global/ProcessFunctions';
 import { SearchResult } from '../../../../utils/types';
 import { FriendApi } from '../../../../services/api/friend';
-import moment from 'moment';
-
 interface ISearchModalModal {
   setSearchModal: (isActive: boolean) => void;
   searchResult: SearchResult[];

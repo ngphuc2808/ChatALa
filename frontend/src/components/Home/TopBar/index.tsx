@@ -102,8 +102,9 @@ const TopBar = () => {
               placeholder='Search...'
               onChange={(e) => setSearchInput(e.target.value)}
               value={searchInput}
+              onFocus={() => setSearchModal(true)}
             />
-            {searchInput && (
+            {searchModal && searchInput && (
               <SearchModal
                 setSearchModal={setSearchModal}
                 searchResult={searchResult}

@@ -21,31 +21,16 @@ const friendReq = asyncHandler(async (req, res, next) => {
     ],
   });
   if (!friend) {
-    const notification = await Notifications.findOneAndUpdate(
-      {
-        receiveId: receiveId,
-        requestId: id,
-      },
-      {
-        $set: {
-          status: 'Pending',
-        },
-      }
-    );
-
-    !notification &&
-      Notifications.create({
-        receiveId: receiveId,
-        requestId: id,
-      });
+    await Notifications.create({
+      receiveId: receiveId,
+      requestId: id,
+    });
 
     res.status(200).json({
       message: 'Request successfully',
     });
   } else {
-    res.status(500).json({
-      message: 'Unhandled error!',
-    });
+    return next(new ErrorHandler('Unhandled error!', 500));
   }
 });
 
