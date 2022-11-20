@@ -31,7 +31,8 @@ const TopBar = () => {
   const getLoggedUser = async () => {
     dispatch(userActions.requestUserInfo(null));
     const result = await UsersApi.getLoggedUser();
-    dispatch(userActions.setUserInfo(result));
+    if(result)
+      dispatch(userActions.setUserInfo(result));
   };
 
   const logout = async () => {
