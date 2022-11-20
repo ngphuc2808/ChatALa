@@ -72,7 +72,7 @@ const SearchModal = ({
                   <S.SearchModalName>{data.name}</S.SearchModalName>
                 </S.SearchModalNameWrapper>
               </S.SearchModalInfo>
-              {data.status === 'friend' ? (
+              {data.status === 'available' ? (
                 <S.SearchModalMessage>Message</S.SearchModalMessage>
               ) : data.status === 'receive' ? (
                 <S.FlexWrap>
