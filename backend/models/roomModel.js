@@ -4,6 +4,7 @@ const { COLLECTION_ROOMS } = require("../config/db");
 const roomSchema = mongoose.Schema(
   {
     groupName: { type: String, trim: true, default: "" },
+    groupAvatar: { type: String, trim: true, default: "" },
     isGroup: { type: Boolean, default: false },
     users: [
       {
@@ -13,7 +14,7 @@ const roomSchema = mongoose.Schema(
         avatar: { type: String },
       },
     ],
-    lastMsg: { type: String, trim: true, default: ""},
+    lastMsg: { type: String, trim: true, default: "" },
   },
   { timestamps: true }
 );

@@ -95,11 +95,11 @@ export const ChatAreaMainInput = styled.div`
 `;
 
 export const ChatAreaMainInputFile = styled.label`
-  ${tw`flex flex-shrink-0 shadow text-darker bg-primary rounded-full w-12 h-12 items-center justify-center text-4xl hover:cursor-pointer hover:opacity-80`}
+  ${tw`flex flex-shrink-0 shadow text-darker bg-primary rounded-full w-10 h-10 items-center justify-center text-3xl hover:cursor-pointer hover:opacity-80`}
 `;
 
 export const ChatAreaMainInputMsg = styled.div`
-  ${tw`flex flex-grow shadow items-center p-1.5 bg-[#DFE2E2] ml-2.5 rounded-[20px] relative`}
+  ${tw`flex flex-grow shadow items-center px-1 py-1 bg-[#DFE2E2] ml-2.5 rounded-[20px] relative`}
 `;
 
 export const ChatAreaMainInputEmoji = styled(BsEmojiLaughingFill)`

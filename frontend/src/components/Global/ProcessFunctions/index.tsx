@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect } from "react";
 import {
   BsFillFileExcelFill,
   BsFillFilePdfFill,
@@ -9,55 +9,58 @@ import {
   BsFileCodeFill,
   BsFillFileZipFill,
   BsFileMedicalFill,
-} from 'react-icons/bs';
+} from "react-icons/bs";
 
 export const validImageTypes = [
-  'image/gif',
-  'image/jpeg',
-  'image/png',
-  'image/jfif',
-  'image/jpg',
-  'image/x-icon',
+  "image/gif",
+  "image/jpeg",
+  "image/png",
+  "image/jfif",
+  "image/jpg",
+  "image/x-icon",
 ];
 
 export const fileTypes = [
   {
-    type: <BsFillFileExcelFill size={23} color='#217346' />,
-    extension: ['xlsx', 'xls', 'xlsm', 'xml', 'xlam', 'xla', 'csv'],
+    type: <BsFillFileExcelFill size={23} color="#217346" />,
+    extension: ["xlsx", "xls", "xlsm", "xml", "xlam", "xla", "csv"],
   },
   {
-    type: <BsFillFilePdfFill size={23} color='#B90F12' />,
-    extension: ['pdf', 'ps', 'eps', 'html', 'html'],
+    type: <BsFillFilePdfFill size={23} color="#B90F12" />,
+    extension: ["pdf", "ps", "eps", "html", "html"],
   },
   {
-    type: <BsFillFilePlayFill size={23} color='#326dba' />,
-    extension: ['webm', 'mkv', 'flv', 'gif', 'mp4', 'wmv', 'avi', 'swf'],
+    type: <BsFillFilePlayFill size={23} color="#326dba" />,
+    extension: ["webm", "mkv", "flv", "gif", "mp4", "wmv", "avi", "swf"],
   },
   {
-    type: <BsFillFilePptFill size={23} color='#BD3311' />,
-    extension: ['pptx', 'pptm', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppsx'],
+    type: <BsFillFilePptFill size={23} color="#BD3311" />,
+    extension: ["pptx", "pptm", "ppt", "xps", "potx", "potm", "pot", "ppsx"],
   },
   {
-    type: <BsFileText size={23} color='#4d4d4d' />,
-    extension: ['txt', 'tex', 'rtf', 'odt', 'wpd'],
+    type: <BsFileText size={23} color="#4d4d4d" />,
+    extension: ["txt", "tex", "rtf", "odt", "wpd"],
   },
   {
-    type: <BsFillFileWordFill size={23} color='#2B579A' />,
-    extension: ['doc', 'docm', 'docx', 'dot', 'dotx'],
+    type: <BsFillFileWordFill size={23} color="#2B579A" />,
+    extension: ["doc", "docm", "docx", "dot", "dotx"],
   },
   {
-    type: <BsFileCodeFill size={23} color='#4E4E4E' />,
-    extension: ['exe', 'ini', 'bat', 'msi', 'mui'],
+    type: <BsFileCodeFill size={23} color="#4E4E4E" />,
+    extension: ["exe", "ini", "bat", "msi", "mui"],
   },
   {
-    type: <BsFillFileZipFill size={23} color='#C56B36' />,
-    extension: ['zip', 'zipx', 'jar', 'iso', 'rar', '7z'],
+    type: <BsFillFileZipFill size={23} color="#C56B36" />,
+    extension: ["zip", "zipx", "jar", "iso", "rar", "7z"],
   },
 ];
 
 export const getExtension = (filename: string) => {
-  const parts = filename.split('.');
-  return parts[parts.length - 1];
+  if (filename) {
+    const parts = filename.split(".");
+    return parts[parts.length - 1];
+  }
+  return ''
 };
 
 export const getFileIcon = (
@@ -84,7 +87,7 @@ export const shorterText = (text: string, limit: number = 35) => {
   let _string = text.trim();
   if (_string.length <= limit) return _string;
   _string = _string.substring(0, limit);
-  return _string.substring(0, _string.lastIndexOf(' ')) + '...';
+  return _string.substring(0, _string.lastIndexOf(" ")) + "...";
 };
 
 export const shorterChars = (text: string, limit: number = 35) => {
@@ -93,20 +96,20 @@ export const shorterChars = (text: string, limit: number = 35) => {
   let _string = text.trim();
   if (_string.length <= limit) return _string;
   _string = _string.substring(0, limit);
-  return _string + '...';
+  return _string + "...";
 };
 
 const padTo2Digits = (num: number) => {
-  return num.toString().padStart(2, '0');
-}
+  return num.toString().padStart(2, "0");
+};
 
 export const formatDate = (_date: string) => {
-  const date = new Date(_date)
+  const date = new Date(_date);
   return [
     padTo2Digits(date.getDate()),
     padTo2Digits(date.getMonth() + 1),
     date.getFullYear(),
-  ].join('/');
+  ].join("/");
 };
 
 export const useOutsideClick = (callback: () => void) => {
@@ -118,9 +121,9 @@ export const useOutsideClick = (callback: () => void) => {
         callback();
       }
     };
-    document.addEventListener('mousedown', handleClick);
+    document.addEventListener("mousedown", handleClick);
     return () => {
-      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener("mousedown", handleClick);
     };
   }, [ref]);
   return ref;
@@ -130,9 +133,9 @@ export const useOutsideClick = (callback: () => void) => {
 export const createImage = (url: any) => {
   return new Promise((resolve, reject) => {
     const image = new Image();
-    image.addEventListener('load', () => resolve(image));
-    image.addEventListener('error', (error) => reject(error));
-    image.setAttribute('crossOrigin', 'anonymous');
+    image.addEventListener("load", () => resolve(image));
+    image.addEventListener("error", (error) => reject(error));
+    image.setAttribute("crossOrigin", "anonymous");
     image.src = url;
   });
 };
@@ -159,8 +162,8 @@ export default async function getCroppedImg(
   flip = { horizontal: false, vertical: false }
 ) {
   const image: any = await createImage(imageSrc);
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
 
   if (!ctx) {
     return null;
@@ -198,8 +201,8 @@ export default async function getCroppedImg(
 
   return new Promise((resolve, reject) => {
     canvas.toBlob((file: any) => {
-      file.name = 'cropped.jpeg';
+      file.name = "cropped.jpeg";
       resolve({ file: file, url: URL.createObjectURL(file) });
-    }, 'image/jpeg');
+    }, "image/jpeg");
   });
 }

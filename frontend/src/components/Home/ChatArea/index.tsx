@@ -1,30 +1,39 @@
-import Image from 'next/image';
-import * as S from './ChatArea.styled';
-import { FormEvent, useRef, useState } from 'react';
-import ChatMsg from './ChatMsg';
-import EmojiPicker, { EmojiStyle, EmojiClickData } from 'emoji-picker-react';
-import MoreOptions from './MoreOptions';
+import Image from "next/image";
+import * as S from "./ChatArea.styled";
+import { FormEvent, useRef, useState } from "react";
+import ChatMsg from "./ChatMsg";
+import EmojiPicker, { EmojiStyle, EmojiClickData } from "emoji-picker-react";
+import MoreOptions from "./MoreOptions";
 import {
   useOutsideClick,
   validImageTypes,
-} from '../../Global/ProcessFunctions';
-import * as Yup from 'yup';
-import { Form, Formik } from 'formik';
-import FilePreview from './FilePreview';
-import DropZone from 'react-dropzone';
+} from "../../Global/ProcessFunctions";
+import * as Yup from "yup";
+import { Form, Formik } from "formik";
+import FilePreview from "./FilePreview";
+import DropZone from "react-dropzone";
 import {
   ClientToServerEvents,
   messageSendType,
   messageType,
   ServerToClientEvents,
-} from '../../../utils/types';
-import ChatImageZoom from './ChatMsgImageZoom';
-import { useDispatch, useSelector } from 'react-redux';
-import { messageActions, selectMessageState } from '../../../features/redux/slices/messageSlice';
-import { selectRoomInfoState } from '../../../features/redux/slices/roomInfoSlice';
-import { API_KEY, MessageApi } from '../../../services/api/messages';
-import { Socket } from 'socket.io-client';
-import { roomListActions } from '../../../features/redux/slices/roomListSlice';
+} from "../../../utils/types";
+import ChatImageZoom from "./ChatMsgImageZoom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  messageActions,
+  selectMessageState,
+} from "../../../features/redux/slices/messageSlice";
+import { selectRoomInfoState } from "../../../features/redux/slices/roomInfoSlice";
+import {
+  API_KEY,
+  CLOUD_NAME,
+  CLOUD_PRESET,
+  MessageApi,
+} from "../../../services/api/messages";
+import { Socket } from "socket.io-client";
+import { roomListActions } from "../../../features/redux/slices/roomListSlice";
+import { API_URL } from "../../../services/api/urls";
 
 interface IChatArea {
   socket: Socket<ServerToClientEvents, ClientToServerEvents>;
@@ -55,7 +64,7 @@ const ChatArea = ({ socket }: IChatArea) => {
   const emojiRef = useOutsideClick(handleEmojiOutsideClick);
   const emojiClicked = (emoData: EmojiClickData, setFieldValue: any) => {
     chatInput.current!.innerText = chatInput.current!.innerText + emoData.emoji;
-    setFieldValue('msg', chatInput.current?.innerText);
+    setFieldValue("msg", chatInput.current?.innerText);
   };
 
   //Message
@@ -66,24 +75,24 @@ const ChatArea = ({ socket }: IChatArea) => {
       data.senderId !== list[index + 1]?.senderId &&
       data.senderId === list[index - 1]?.senderId
     )
-      return 'top';
+      return "top";
     else if (
       data.senderId === list[index - 1]?.senderId &&
       data.senderId === list[index + 1]?.senderId
     )
-      return 'middle';
+      return "middle";
     else if (
       data.senderId !== list[index - 1]?.senderId &&
       data.senderId !== list[index + 1]?.senderId
     )
-      return 'alone';
-    else return 'bottom';
+      return "alone";
+    else return "bottom";
   };
 
   //Form
   const initialValues = {
-    roomId: roomInfo.info?.roomInfo._id || '',
-    msg: '',
+    roomId: roomInfo.info?.roomInfo._id || "",
+    msg: "",
     files: [],
   };
 
@@ -106,8 +115,8 @@ const ChatArea = ({ socket }: IChatArea) => {
         files.push(newFiles[i]);
       }
 
-      setFieldValue('files', files);
-      e.currentTarget.value = '';
+      setFieldValue("files", files);
+      e.currentTarget.value = "";
     }
   };
 
@@ -121,24 +130,43 @@ const ChatArea = ({ socket }: IChatArea) => {
       files.push(newFiles[i]);
     }
 
-    setFieldValue('files', files);
+    setFieldValue("files", files);
   };
 
   const uploadFile = async (
     file: File,
-    signedKey: { signature: string; timestamp: number }
+    signedKey: {
+      signature: string;
+      timestamp: number;
+      api_key: string;
+      cloud_name: string;
+    }
   ) => {
-    const name = validImageTypes.includes(file.type) ? 'Image' : file.name;
-    const type = validImageTypes.includes(file.type) ? 'image' : 'file';
+    const name = validImageTypes.includes(file.type) ? "Image" : file.name;
+    const type = validImageTypes.includes(file.type) ? "image" : "file";
 
     const form = new FormData();
-    form.append('file', file);
-    form.append('api_key', API_KEY);
-    form.append('timestamp', signedKey.timestamp.toString());
-    form.append('signature', signedKey.signature);
-    const uploadedFile = await MessageApi.uploadFile(form);
+    form.append("file", file);
+    form.append("upload_preset", CLOUD_PRESET);
+    form.append("api_key", signedKey.api_key);
+    form.append("timestamp", signedKey.timestamp.toString());
+    form.append("signature", signedKey.signature);
 
-    return { name, url: uploadedFile.secure_url, type };
+    // try {
+    //   const uploadedFile = await MessageApi.uploadFile(
+    //     form,
+    //     signedKey.cloud_name
+    //   );
+    //   return { name, url: uploadedFile.secure_url, type };
+    // } catch (err: any) {
+    //   console.log(err);
+    // }
+
+    // const res = await fetch(
+    //   `${API_URL.uploadFile}/${signedKey.cloud_name}/image/upload`,
+    //   { method: "POST", body: form }
+    // );
+    // return res;
   };
 
   //Upload files
@@ -158,24 +186,24 @@ const ChatArea = ({ socket }: IChatArea) => {
 
   //Submit
   const onSubmit = async (values: messageSendType, { setFieldValue }: any) => {
-    if (values.msg !== '' || values.files.length > 0) {
+    if (values.msg !== "" || values.files.length > 0) {
       setToggleEmoji(false);
 
-      // const uploadedFiles = await uploadFiles(values.files);
-      // console.log(uploadedFiles);
+      const uploadedFiles = await uploadFiles(values.files);
+      console.log(uploadedFiles);
 
-      try {
-        const res = await MessageApi.send(values);
+      // try {
+      //   const res = await MessageApi.send(values);
 
-        dispatch(messageActions.newMessage(res.result))
-        dispatch(roomListActions.setNewLastMsg(res.result))
+      //   dispatch(messageActions.newMessage(res.result));
+      //   dispatch(roomListActions.setNewLastMsg(res.result));
 
-        chatInput.current!.innerText = '';
-        setFieldValue('msg', '');
-        setFieldValue('files', []);
-      } catch (err) {
-        console.log(err);
-      }
+      //   chatInput.current!.innerText = "";
+      //   setFieldValue("msg", "");
+      //   setFieldValue("files", []);
+      // } catch (err) {
+      //   console.log(err);
+      // }
     }
   };
 
@@ -186,17 +214,17 @@ const ChatArea = ({ socket }: IChatArea) => {
           <S.ChatAreaHeadAvatar>
             <Image
               src={roomInfo.info!.roomAvatar}
-              alt='avatar'
-              layout='fill'
-              objectFit='cover'
+              alt="avatar"
+              layout="fill"
+              objectFit="cover"
             />
           </S.ChatAreaHeadAvatar>
           <S.ChatAreaHeadNameWrapper>
-            {roomInfo.info!.roomName !== '-1' && (
+            {roomInfo.info!.roomName !== "-1" && (
               <S.ChatAreaHeadName>{roomInfo.info!.roomName}</S.ChatAreaHeadName>
             )}
             <S.ChatAreaHeadStatus>
-              {status ? 'Online' : 'Offline'}
+              {status ? "Online" : "Offline"}
               <S.ChatAreaHeadStatusIcon status={status} />
             </S.ChatAreaHeadStatus>
           </S.ChatAreaHeadNameWrapper>
@@ -274,7 +302,7 @@ const ChatArea = ({ socket }: IChatArea) => {
                         />
                       </S.ChatAreaMainInputEmojiPicker>
                     )}
-                    <S.ChatAreaMainInputFile htmlFor='fileInput'>
+                    <S.ChatAreaMainInputFile htmlFor="fileInput">
                       +
                     </S.ChatAreaMainInputFile>
                     <S.ChatAreaMainInputMsg>
@@ -286,24 +314,24 @@ const ChatArea = ({ socket }: IChatArea) => {
                         contentEditable
                         ref={chatInput}
                         onInput={(e) =>
-                          setFieldValue('msg', e.currentTarget.innerText)
+                          setFieldValue("msg", e.currentTarget.innerText)
                         }
                         onKeyDown={(e) => {
-                          if (e.code === 'Enter' && !e.shiftKey) {
+                          if (e.code === "Enter" && !e.shiftKey) {
                             e.preventDefault();
                             submitForm();
                           }
                         }}
                       />
-                      <S.ChatAreaMainInputButtonSend type='submit'>
+                      <S.ChatAreaMainInputButtonSend type="submit">
                         <S.ChatAreaMainInputSendIcon />
                       </S.ChatAreaMainInputButtonSend>
                     </S.ChatAreaMainInputMsg>
                   </S.ChatAreaMainInput>
                   <input
                     {...getInputProps({
-                      type: 'file',
-                      id: 'fileInput',
+                      type: "file",
+                      id: "fileInput",
                       hidden: true,
                       multiple: true,
                       onChange: (e) => fileChoosen(e, values, setFieldValue),
