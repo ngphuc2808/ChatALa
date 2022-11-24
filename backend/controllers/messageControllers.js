@@ -14,8 +14,13 @@ const sendMessage = asyncHandler(async (req, res, next) => {
     files,
   });
   if (result) {
-    const lastMsg = msg !== "" ? msg : files[files.length-1].name;
+    const lastMsg = msg !== "" ? msg : files[files.length - 1].name;
     await Rooms.findByIdAndUpdate(roomId, { lastMsg }, { new: true });
+    io.emit("newLastMsg", {
+      files,
+      lastMsg,
+      roomId,
+    });
   }
 
   io.in(roomId).emit("receiveMessage", result);

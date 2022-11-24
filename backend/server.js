@@ -75,6 +75,12 @@ io.on("connection", (socket) => {
     socket.join(roomId);
   });
 
+  socket.on("logout", (roomId) => {
+    socket.leave(roomId);
+    removeUser(socket.id)
+    console.log("A user logout");
+  })
+
   // socket.on("sendMessage", (message, roomId) => {
   //   console.log("new message: ", message);
   //   console.log("roomId: ", roomId);

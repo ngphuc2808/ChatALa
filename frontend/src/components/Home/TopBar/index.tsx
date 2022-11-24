@@ -1,44 +1,59 @@
-import Image from 'next/image';
-import * as S from './TopBar.styled';
-import React, { useEffect, useState } from 'react';
-import Logo from '../../../assets/imgs/LogoFullLong.png';
-import UserInfo from './UserInfo';
-import NotiModal from './NotiModal';
-import SettingsModal from './SettingsModal';
-import { UsersApi } from '../../../services/api/users';
-import SearchModal from './SearchModal';
-import { useSelector, useDispatch } from 'react-redux';
+import Image from "next/image";
+import * as S from "./TopBar.styled";
+import React, { useEffect, useState } from "react";
+import Logo from "../../../assets/imgs/LogoFullLong.png";
+import UserInfo from "./UserInfo";
+import NotiModal from "./NotiModal";
+import SettingsModal from "./SettingsModal";
+import { UsersApi } from "../../../services/api/users";
+import SearchModal from "./SearchModal";
+import { useSelector, useDispatch } from "react-redux";
 import {
   selectUserState,
   userActions,
-} from '../../../features/redux/slices/userSlice';
-import { useRouter } from 'next/router';
-import { SearchResult } from '../../../utils/types';
+} from "../../../features/redux/slices/userSlice";
+import { useRouter } from "next/router";
+import {
+  ClientToServerEvents,
+  SearchResult,
+  ServerToClientEvents,
+} from "../../../utils/types";
+import { Socket } from "socket.io-client";
+import { roomInfoActions, selectRoomInfoState } from "../../../features/redux/slices/roomInfoSlice";
+import { roomListActions } from "../../../features/redux/slices/roomListSlice";
 
-const TopBar = () => {
+interface ITopBar {
+  socket: Socket<ServerToClientEvents, ClientToServerEvents>;
+}
+
+const TopBar = ({ socket }: ITopBar) => {
   const [userInfoModal, setUserInfoModal] = useState(false);
   const [activeNotiModal, setActiveNotiModal] = useState(false);
   const [settingVisible, setSettingVisible] = useState(false);
   const [searchResult, setSearchResult] = useState<SearchResult[]>([]);
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
   const [searchModal, setSearchModal] = useState(false);
   const [action, setAction] = useState(false);
 
   const loggedUser = useSelector(selectUserState);
+  const roomInfo = useSelector(selectRoomInfoState);
   const dispatch = useDispatch();
   const router = useRouter();
 
   const getLoggedUser = async () => {
     dispatch(userActions.requestUserInfo(null));
     const result = await UsersApi.getLoggedUser();
-    if(result)
-      dispatch(userActions.setUserInfo(result));
+    if (result) dispatch(userActions.setUserInfo(result));
   };
 
   const logout = async () => {
-    dispatch(userActions.clearUserInfo(null));
     await UsersApi.logout();
-    router.push('/login');
+    //@ts-ignore
+    socket.emit("logout", roomInfo.info?.roomInfo._id)
+    dispatch(userActions.clearUserInfo(null));
+    dispatch(roomInfoActions.clearRoomInfo(null))
+    dispatch(roomListActions.clearRoomList(null))
+    router.push("/login");
   };
 
   const getSearchResult = async () => {
@@ -79,12 +94,12 @@ const TopBar = () => {
       <S.Wrapper>
         <S.LeftWrapper onClick={() => setUserInfoModal(true)}>
           <S.Avatar>
-            {loggedUser.info.avatar !== '' && (
+            {loggedUser.info.avatar !== "" && (
               <Image
                 src={loggedUser.info.avatar}
-                alt='avatar'
-                layout='fill'
-                objectFit='cover'
+                alt="avatar"
+                layout="fill"
+                objectFit="cover"
               />
             )}
           </S.Avatar>
@@ -93,13 +108,13 @@ const TopBar = () => {
         <S.RightWrapper>
           <S.LogoContainer>
             <S.Logo>
-              <Image src={Logo} alt='logo' />
+              <Image src={Logo} alt="logo" />
             </S.Logo>
           </S.LogoContainer>
           <S.Search>
             <S.SearchIcon />
             <S.SearchInput
-              placeholder='Search...'
+              placeholder="Search..."
               onChange={(e) => setSearchInput(e.target.value)}
               value={searchInput}
               onFocus={() => setSearchModal(true)}

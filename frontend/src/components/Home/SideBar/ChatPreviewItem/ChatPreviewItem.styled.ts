@@ -22,7 +22,7 @@ export const ChatBotAvatar = styled(VscHubot)`
 `;
 
 export const Content = styled.div`
-  ${tw`ml-3.5 overflow-hidden`}
+  ${tw`flex-grow ml-3.5 overflow-hidden`}
 `;
 
 export const Name = styled.div`

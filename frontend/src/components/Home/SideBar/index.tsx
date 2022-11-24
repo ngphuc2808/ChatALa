@@ -9,7 +9,6 @@ import {
 import { Socket } from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import { selectRoomListState } from '../../../features/redux/slices/roomListSlice';
-import { selectUserState } from '../../../features/redux/slices/userSlice';
 
 interface ISideBar {
   socket: Socket<ServerToClientEvents, ClientToServerEvents>;

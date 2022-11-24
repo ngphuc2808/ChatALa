@@ -168,7 +168,6 @@ const ChatArea = ({ socket }: IChatArea) => {
         const res = await MessageApi.send(values);
 
         dispatch(messageActions.newMessage(res.result))
-        dispatch(roomListActions.setNewLastMsg(res.result))
 
         chatInput.current!.innerText = '';
         setFieldValue('msg', '');

@@ -59,13 +59,14 @@ export const roomListSlice = createSlice({
 
     setNewLastMsg(state, action) {
       const message = action.payload;
+      console.log(message);
       const roomIndex = state.list.findIndex(
         (room) => room.roomInfo._id === message.roomId
       );
 
       state.list[roomIndex].roomInfo.lastMsg =
-        message.msg !== ''
-          ? message.msg
+        message.lastMsg !== ''
+          ? message.lastMsg
           : message.files[message.files.length - 1].name;
     },
 
