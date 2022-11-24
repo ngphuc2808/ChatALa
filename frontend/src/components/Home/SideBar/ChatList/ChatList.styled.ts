@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import tw from 'twin.macro';
+import styled from "styled-components";
+import tw from "twin.macro";
 
 export const ChatList = styled.div`
-  ${tw`overflow-y-scroll flex-grow h-0 rounded-2xl mt-2.5 pr-1`}
+  ${tw`overflow-y-auto flex-grow h-0 rounded-2xl mt-2.5 pr-1`}
   &::-webkit-scrollbar-track {
     ${tw`bg-transparent rounded-[10px]`}
   }

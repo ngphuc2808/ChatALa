@@ -79,6 +79,34 @@ export const NotiListArray = [
   },
 ];
 
+export const CreateGroupArray = [
+  {
+    uid: '1',
+    avatar: UserAvatar,
+    name: 'SpaceSpeaker',
+  },
+  {
+    uid: '2',
+    avatar: UserAvatar,
+    name: 'Dalabasd',
+  },
+  {
+    uid: '3',
+    avatar: UserAvatar,
+    name: 'Justateasdasde',
+  },
+  {
+    uid: '4',
+    avatar: UserAvatar,
+    name: 'Zenwaqwe asdqza',
+  },
+  {
+    uid: '5',
+    avatar: UserAvatar,
+    name: 'Zenwaqwe asdqza',
+  },
+];
+
 export const SearchListArray = [
   {
     _id: '',

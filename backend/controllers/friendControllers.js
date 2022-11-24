@@ -1,6 +1,5 @@
 const asyncHandler = require('express-async-handler');
 const Notifications = require('../models/notificationModel');
-const { decodeJWT } = require('../utils/utilFunctions');
 const Friends = require('../models/friendModel');
 const ErrorHandler = require('../utils/errorHandler');
 

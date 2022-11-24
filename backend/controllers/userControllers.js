@@ -3,7 +3,6 @@ const Users = require('../models/userModel');
 const { generateJWT } = require('../utils/utilFunctions');
 const ErrorHandler = require('../utils/errorHandler');
 const Friends = require('../models/friendModel');
-const { decodeJWT } = require('../utils/utilFunctions');
 const Notifications = require('../models/notificationModel');
 
 const checkUser = asyncHandler(async (req, res, next) => {
@@ -175,7 +174,6 @@ const findUser = asyncHandler(async (req, res, next) => {
     ...tempResult.request,
     ...tempResult.undefined,
   ];
-  console.log(tempResult);
 
   res.status(200).json({
     result,

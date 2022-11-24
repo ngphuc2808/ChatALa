@@ -1,11 +1,11 @@
 import { zoomIn } from "react-animations";
 import { BiSearchAlt } from "react-icons/bi";
 import styled, { keyframes } from "styled-components";
-import tw from "twin.macro"
+import tw from "twin.macro";
 
 export const ShowFriendsModal = styled.div`
-${tw`flex fixed top-0 left-0 bottom-0 right-0 z-30`}
-`
+  ${tw`flex fixed top-0 left-0 bottom-0 right-0 z-30`}
+`;
 
 export const ShowFriendsOverlay = styled.div`
   ${tw`absolute bg-[#00000080] h-full w-full`}
@@ -36,7 +36,7 @@ export const ShowFriendsSearchIcon = styled(BiSearchAlt)`
 `;
 
 export const GreateGroupList = styled.div`
-  ${tw`max-h-[60vh] overflow-y-scroll pr-1`}
+  ${tw`max-h-[60vh] overflow-y-auto pr-1`}
   &::-webkit-scrollbar-track {
     ${tw`bg-transparent rounded-[10px]`}
   }

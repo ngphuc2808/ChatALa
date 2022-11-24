@@ -1,6 +1,6 @@
-import styled, { keyframes } from 'styled-components';
-import tw from 'twin.macro';
-import { merge, zoomIn, slideInRight, slideInDown } from 'react-animations';
+import styled, { keyframes } from "styled-components";
+import tw from "twin.macro";
+import { merge, zoomIn, slideInRight, slideInDown } from "react-animations";
 
 const cbAnimate1 = merge(slideInRight, slideInDown);
 const NotiAnimate = keyframes`${merge(zoomIn, cbAnimate1)}`;
@@ -17,7 +17,7 @@ export const NotiTitles = styled.div`
 `;
 
 export const NotiList = styled.div`
-  ${tw`max-h-[70vh] overflow-y-scroll pr-1`}
+  ${tw`max-h-[70vh] overflow-y-auto pr-1`}
   &::-webkit-scrollbar-track {
     ${tw`bg-transparent rounded-[10px]`}
   }

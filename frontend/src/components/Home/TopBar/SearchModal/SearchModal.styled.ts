@@ -1,6 +1,6 @@
-import styled, { keyframes } from 'styled-components';
-import tw from 'twin.macro';
-import { merge, zoomIn, slideInDown } from 'react-animations';
+import styled, { keyframes } from "styled-components";
+import tw from "twin.macro";
+import { merge, zoomIn, slideInDown } from "react-animations";
 
 const SearchModalAnimate = keyframes`${merge(zoomIn, slideInDown)}`;
 
@@ -10,7 +10,7 @@ export const SearchModal = styled.div`
 `;
 
 export const SearchModalList = styled.div`
-  ${tw`max-h-[70vh] overflow-y-scroll pr-1`}
+  ${tw`max-h-[70vh] overflow-y-auto pr-1`}
   &::-webkit-scrollbar-track {
     ${tw`bg-transparent rounded-[10px]`}
   }
