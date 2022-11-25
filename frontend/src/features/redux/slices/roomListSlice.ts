@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { AppState } from '../store';
-import { HYDRATE } from 'next-redux-wrapper';
-import { roomInfo } from '../../../utils/types';
+import { createSlice } from "@reduxjs/toolkit";
+import { AppState } from "../store";
+import { HYDRATE } from "next-redux-wrapper";
+import { roomInfo } from "../../../utils/types";
 
 // Type for our state
 export interface roomListState {
@@ -21,7 +21,7 @@ const initialState: roomListState = {
 
 // Actual Slice
 export const roomListSlice = createSlice({
-  name: 'roomList',
+  name: "roomList",
   initialState,
   reducers: {
     requestRoomList(state, action) {
@@ -42,17 +42,25 @@ export const roomListSlice = createSlice({
 
     setActiveRoom(state, action) {
       const activeUser: Array<{ socketId: string; uid: string }> =
-        action.payload;
+        action.payload.users;
+      const loggedUid = action.payload.loggedUid;
 
       state.list.forEach((room, index) => {
         if (!room.roomInfo.isGroup) {
           if (
-            activeUser.find(
-              (user) => user.uid === room.roomInfo.users[0]._id
-            ) &&
-            activeUser.find((user) => user.uid === room.roomInfo.users[1]._id)
+            activeUser.some(
+              (user) =>
+                user.uid === room.roomInfo.users[0].uid &&
+                user.uid !== loggedUid
+            ) ||
+            activeUser.some(
+              (user) =>
+                user.uid === room.roomInfo.users[1].uid &&
+                user.uid !== loggedUid
+            )
           )
             state.activeList[index] = 1;
+          else state.activeList[index] = 0;
         }
       });
     },
@@ -64,7 +72,7 @@ export const roomListSlice = createSlice({
       );
 
       state.list[roomIndex].roomInfo.lastMsg =
-        message.lastMsg !== ''
+        message.lastMsg !== ""
           ? message.lastMsg
           : message.files[message.files.length - 1].name;
     },

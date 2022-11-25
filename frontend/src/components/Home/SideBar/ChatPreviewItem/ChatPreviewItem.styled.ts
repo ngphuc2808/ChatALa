@@ -13,7 +13,7 @@ export const ChatAvatar = styled.figure`
 
 export const ChatStatus = styled.span<{ status: number }>`
   ${tw`absolute w-[13px] h-[13px] rounded-full right-[1px] bottom-[1px]`}
-  ${({ status }) => (status === 1 ? tw`bg-green-400` : tw`bg-gray-500`)}
+  ${({ status }) => (status === 1 ? tw`bg-green-400` : tw`bg-gray-400`)}
   border: 1px solid white;
 `;
 

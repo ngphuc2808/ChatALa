@@ -29,18 +29,18 @@ import { API_KEY, MessageApi } from "../../../services/api/messages";
 import { Socket } from "socket.io-client";
 import { PulseLoader } from "react-spinners";
 import { debounce } from "lodash";
+import { selectRoomListState } from "../../../features/redux/slices/roomListSlice";
 
 interface IChatArea {
   socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 }
 
 const ChatArea = ({ socket }: IChatArea) => {
-  const status = 1;
-
   const dispatch = useDispatch();
 
   const messages = useSelector(selectMessageState);
   const roomInfo = useSelector(selectRoomInfoState);
+  const roomList = useSelector(selectRoomListState);
 
   const [toggleEmoji, setToggleEmoji] = useState(false);
   const [toggleOption, setToggleOption] = useState(false);
@@ -50,13 +50,25 @@ const ChatArea = ({ socket }: IChatArea) => {
   >([]);
   const [toggleTyping, setToggleTyping] = useState(false);
   const [sendTyping, setSendTyping] = useState(false);
+  const [status, setStatus] = useState(1);
+
+  //Handle status
+  const handleStatus = () => {
+    const roomSelectedIndex = roomList.list.findIndex(
+      (room) => room.roomInfo._id === roomInfo.info?.roomInfo._id
+    );
+    setStatus(roomList.activeList[roomSelectedIndex]);
+  };
+  useEffect(() => {
+    handleStatus();
+  }, [roomList.activeList]);
 
   //Handle Typing
   useEffect(() => {
     if (socket) {
       //@ts-ignore
       socket.on("typing", () => {
-        setToggleTyping(val => !val)
+        setToggleTyping((val) => !val);
       });
     }
   }, []);

@@ -36,6 +36,7 @@ const Home = () => {
       // @ts-ignore
       socket.current.on("getUsers", (users) => {
         console.log(users);
+        dispatch(roomListActions.setActiveRoom({users, loggedUid: user.info._id}))
       });
       // @ts-ignore
       socket.current.on("receiveMessage", (result) => {

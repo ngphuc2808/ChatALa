@@ -78,11 +78,11 @@ io.on("connection", (socket) => {
   socket.on("logout", (roomId) => {
     socket.leave(roomId);
     removeUser(socket.id)
+    io.emit("getUsers", users);
     console.log("A user logout");
   })
 
   socket.on("typing", (roomId) => {
-    console.log(roomId, "is typing");
     socket.to(roomId).emit("typing");
   })
 

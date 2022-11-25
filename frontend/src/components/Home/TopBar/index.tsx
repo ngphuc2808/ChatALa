@@ -50,6 +50,7 @@ const TopBar = ({ socket }: ITopBar) => {
     await UsersApi.logout();
     //@ts-ignore
     socket.emit("logout", roomInfo.info?.roomInfo._id)
+    socket.disconnect()
     dispatch(userActions.clearUserInfo(null));
     dispatch(roomInfoActions.clearRoomInfo(null))
     dispatch(roomListActions.clearRoomList(null))

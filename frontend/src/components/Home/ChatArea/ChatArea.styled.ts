@@ -36,7 +36,7 @@ export const ChatAreaHeadStatus = styled.div`
 
 export const ChatAreaHeadStatusIcon = styled(FaCircle)<{ status: number }>`
   ${tw`mt-[-2px] text-[12px]`}
-  ${({ status }) => (status === 1 ? `color: #04BF00` : `color: #BF0000`)}
+  ${({ status }) => (status === 1 ? tw`text-green-400` : tw`text-gray-400`)}
 `;
 
 export const ChatAreaHeadOption = styled(IoMenu)`
@@ -64,7 +64,7 @@ export const ChatAreaMainMsg = styled.div`
 `;
 
 export const ChatAreaMainMsgInner = styled.div`
-  ${tw`flex flex-col-reverse`}
+  ${tw`flex flex-col-reverse pb-2`}
 `;
 
 export const ChatAreaMainMsgInnerBottom = styled.div``;
@@ -72,7 +72,7 @@ export const ChatAreaMainMsgInnerBottom = styled.div``;
 const typingAnimate = keyframes`${merge(zoomIn, slideInUp)}`;
 
 export const ChatAreaMainMsgInnerTyping = styled.div`
-  ${tw`ml-2`}
+  ${tw`absolute bg-primary px-1 ml-0.5 mb-[-10px] rounded-[10px] shadow-md z-50`}
   width: fit-content;
   animation: 0.2 ${typingAnimate}
 `;
