@@ -59,7 +59,6 @@ export const roomListSlice = createSlice({
 
     setNewLastMsg(state, action) {
       const message = action.payload;
-      console.log(message);
       const roomIndex = state.list.findIndex(
         (room) => room.roomInfo._id === message.roomId
       );

@@ -36,20 +36,7 @@ const getRoomInfo = asyncHandler(async (req, res, next) => {
   const roomInfo = await Rooms.findById(roomId);
   const messages = await Messages.find({
     roomId: roomId,
-  }).sort({ updatedAt: -1 });
-
-  // let messages = [];
-  // messageList.forEach((message) => {
-  //   if (message.senderId.toString() === req.user._id.toString()) {
-  //     const temp = message.toJSON();
-  //     const { senderId, ...rest } = temp;
-  //     messages.push({ fromSender: true, ...rest });
-  //   } else {
-  //     const temp = message.toJSON();
-  //     const { senderId, ...rest } = temp;
-  //     messages.push({ fromSender: false, ...rest });
-  //   }
-  // });
+  }).sort({ updatedAt: -1 }).limit(50);
 
   let roomAvatar = roomInfo.users[0].avatar;
   let roomName = roomInfo.users[0].nickname;

@@ -4,7 +4,7 @@ import { FaCircle } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { BsEmojiLaughingFill } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { zoomIn } from "react-animations";
+import { merge, slideInUp, zoomIn } from "react-animations";
 export const ChatArea = styled.div`
   ${tw`relative bg-secondary shadow-md rounded-[20px] flex-grow flex flex-col overflow-hidden`}
 `;
@@ -65,6 +65,16 @@ export const ChatAreaMainMsg = styled.div`
 
 export const ChatAreaMainMsgInner = styled.div`
   ${tw`flex flex-col-reverse`}
+`;
+
+export const ChatAreaMainMsgInnerBottom = styled.div``;
+
+const typingAnimate = keyframes`${merge(zoomIn, slideInUp)}`;
+
+export const ChatAreaMainMsgInnerTyping = styled.div`
+  ${tw`ml-2`}
+  width: fit-content;
+  animation: 0.2 ${typingAnimate}
 `;
 
 export const ChatChatAreaFilePreview = styled.div`

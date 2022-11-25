@@ -81,6 +81,11 @@ io.on("connection", (socket) => {
     console.log("A user logout");
   })
 
+  socket.on("typing", (roomId) => {
+    console.log(roomId, "is typing");
+    socket.to(roomId).emit("typing");
+  })
+
   // socket.on("sendMessage", (message, roomId) => {
   //   console.log("new message: ", message);
   //   console.log("roomId: ", roomId);
