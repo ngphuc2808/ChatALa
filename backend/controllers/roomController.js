@@ -4,6 +4,43 @@ const Messages = require("../models/messageModel");
 const ErrorHandler = require("../utils/errorHandler");
 const Users = require("../models/userModel");
 
+const createRoom = asyncHandler(async (req, res, next) => {
+  const { isGroup, users } = req.body;
+
+  users.push({
+    uid: req.user._id,
+    role: true,
+    nickname: req.user.name,
+    avatar: req.user.avatar,
+  });
+
+  let roomToCreate = {};
+  roomToCreate.users = users
+
+  if (isGroup) {
+    let groupName = users[0].nickname;
+    for (let i = 1; i < users.length; i++) {
+      if (i < 3) {
+        groupName = groupName + ", " + users[i].nickname;
+      }
+    }
+    if(users.length > 3){
+      groupName += '...'
+    }
+    roomToCreate.groupName = groupName;
+    roomToCreate.isGroup = true;
+  }
+  else{
+    if(users.length > 2){
+      return next(new ErrorHandler("Create non-group chat but receive more than 1 user!", 400))
+    }
+  }
+
+  const createdRoom = await Rooms.create(roomToCreate)
+
+  res.status(200).json(createdRoom)
+});
+
 const getRoomList = asyncHandler(async (req, res, next) => {
   const rooms = await Rooms.find({ "users.uid": req.user._id });
 
@@ -21,6 +58,10 @@ const getRoomList = asyncHandler(async (req, res, next) => {
             : room.users[0].avatar;
         result.push({ roomName, roomAvatar, roomInfo: room });
       }
+      else{
+        let roomName = room.groupName
+        result.push({ roomName, roomInfo: room });
+      }
     });
 
     res.status(200).json({
@@ -36,7 +77,9 @@ const getRoomInfo = asyncHandler(async (req, res, next) => {
   const roomInfo = await Rooms.findById(roomId);
   const messages = await Messages.find({
     roomId: roomId,
-  }).sort({ updatedAt: -1 }).limit(50);
+  })
+    .sort({ updatedAt: -1 })
+    .limit(50);
 
   let roomAvatar = roomInfo.users[0].avatar;
   let roomName = roomInfo.users[0].nickname;
@@ -136,6 +179,7 @@ const addMember = asyncHandler(async (req, res, next) => {
 });
 
 module.exports = {
+  createRoom,
   getRoomList,
   getRoomInfo,
   changeRoomName,

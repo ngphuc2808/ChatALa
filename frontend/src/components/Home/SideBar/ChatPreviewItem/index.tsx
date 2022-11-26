@@ -42,7 +42,7 @@ const ChatPreviewItem = ({
               {!roomList.list[index].roomInfo.isGroup && <S.ChatStatus status={roomList.activeList[index]} />}
             </>
           ) : (
-            <S.ChatBotAvatar />
+            <S.ChatGroupAvatar />
           )}
         </S.ChatAvatarWrapper>
         <S.Content>

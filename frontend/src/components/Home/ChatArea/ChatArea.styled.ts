@@ -6,6 +6,7 @@ import { BsEmojiLaughingFill } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { bounce, merge, slideInUp, zoomIn } from "react-animations";
 import { Form } from "formik";
+import { HiUserGroup } from "react-icons/hi";
 export const ChatArea = styled.div`
   ${tw`relative bg-secondary shadow-md rounded-[20px] flex-grow flex flex-col overflow-hidden`}
 `;
@@ -16,6 +17,10 @@ export const ChatAreaHead = styled.div`
 
 export const ChatAreaHeadInfo = styled.div`
   ${tw`flex items-center cursor-default`}
+`;
+
+export const ChatGroupAvatar = styled(HiUserGroup)`
+  ${tw`text-gray-600 text-[50px] rounded-full`}
 `;
 
 export const ChatAreaHeadAvatar = styled.figure`

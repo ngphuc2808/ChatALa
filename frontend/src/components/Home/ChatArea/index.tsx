@@ -126,10 +126,12 @@ const ChatArea = ({ socket }: IChatArea) => {
     if (!useIntersection(bottomDiv)) setNewMsgNoti(true);
   };
   useEffect(() => {
-    if (messages.list[messages.list.length - 1].senderId !== user.info._id) {
-      showNewMsgNoti();
-    } else {
-      scrollToNewMsg();
+    if (messages.list.length > 0) {
+      if (messages.list[messages.list.length - 1].senderId !== user.info._id) {
+        showNewMsgNoti();
+      } else {
+        scrollToNewMsg();
+      }
     }
   }, [messages]);
 
@@ -266,22 +268,30 @@ const ChatArea = ({ socket }: IChatArea) => {
     <S.ChatArea>
       <S.ChatAreaHead>
         <S.ChatAreaHeadInfo>
-          <S.ChatAreaHeadAvatar>
-            <Image
-              src={roomInfo.info!.roomAvatar}
-              alt="avatar"
-              layout="fill"
-              objectFit="cover"
-            />
-          </S.ChatAreaHeadAvatar>
+          {roomInfo.info?.roomInfo.isGroup ? (
+            <S.ChatGroupAvatar />
+          ) : (
+            <S.ChatAreaHeadAvatar>
+              <Image
+                src={roomInfo.info!.roomAvatar}
+                alt="avatar"
+                layout="fill"
+                objectFit="cover"
+              />
+            </S.ChatAreaHeadAvatar>
+          )}
           <S.ChatAreaHeadNameWrapper>
-            {roomInfo.info!.roomName !== "-1" && (
-              <S.ChatAreaHeadName>{roomInfo.info!.roomName}</S.ChatAreaHeadName>
+            <S.ChatAreaHeadName>
+              {roomInfo.info?.roomInfo.isGroup
+                ? roomInfo.info.roomInfo.groupName
+                : roomInfo.info?.roomName}
+            </S.ChatAreaHeadName>
+            {!roomInfo.info?.roomInfo.isGroup && (
+              <S.ChatAreaHeadStatus>
+                {status ? "Online" : "Offline"}
+                <S.ChatAreaHeadStatusIcon status={status} />
+              </S.ChatAreaHeadStatus>
             )}
-            <S.ChatAreaHeadStatus>
-              {status ? "Online" : "Offline"}
-              <S.ChatAreaHeadStatusIcon status={status} />
-            </S.ChatAreaHeadStatus>
           </S.ChatAreaHeadNameWrapper>
         </S.ChatAreaHeadInfo>
         <S.ChatAreaHeadOption onClick={() => setToggleOption(true)} />

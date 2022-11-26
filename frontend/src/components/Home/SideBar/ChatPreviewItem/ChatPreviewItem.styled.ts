@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { VscHubot } from 'react-icons/vsc';
+import { HiUserGroup } from 'react-icons/hi';
 
 export const ChatAvatarWrapper = styled.div`
   ${tw`relative`}
@@ -17,8 +17,8 @@ export const ChatStatus = styled.span<{ status: number }>`
   border: 1px solid white;
 `;
 
-export const ChatBotAvatar = styled(VscHubot)`
-  ${tw`text-black text-[55px]`}
+export const ChatGroupAvatar = styled(HiUserGroup)`
+  ${tw`text-gray-600 text-[50px] rounded-full`}
 `;
 
 export const Content = styled.div`
