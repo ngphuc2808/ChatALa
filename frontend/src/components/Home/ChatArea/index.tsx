@@ -1,6 +1,13 @@
 import Image from "next/image";
 import * as S from "./ChatArea.styled";
-import { FormEvent, useRef, useState, useEffect, useCallback } from "react";
+import {
+  FormEvent,
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+} from "react";
 import ChatMsg from "./ChatMsg";
 import EmojiPicker, { EmojiStyle, EmojiClickData } from "emoji-picker-react";
 import MoreOptions from "./MoreOptions";
@@ -30,6 +37,9 @@ import { Socket } from "socket.io-client";
 import { PulseLoader } from "react-spinners";
 import { debounce } from "lodash";
 import { selectRoomListState } from "../../../features/redux/slices/roomListSlice";
+import { selectUserState } from "../../../features/redux/slices/userSlice";
+import { FiChevronsDown } from "react-icons/fi";
+import useIntersection from "../../Global/useIntersection";
 
 interface IChatArea {
   socket: Socket<ServerToClientEvents, ClientToServerEvents>;
@@ -41,6 +51,7 @@ const ChatArea = ({ socket }: IChatArea) => {
   const messages = useSelector(selectMessageState);
   const roomInfo = useSelector(selectRoomInfoState);
   const roomList = useSelector(selectRoomListState);
+  const user = useSelector(selectUserState);
 
   const [toggleEmoji, setToggleEmoji] = useState(false);
   const [toggleOption, setToggleOption] = useState(false);
@@ -50,6 +61,7 @@ const ChatArea = ({ socket }: IChatArea) => {
   >([]);
   const [toggleTyping, setToggleTyping] = useState(false);
   const [sendTyping, setSendTyping] = useState(false);
+  const [newMsgNoti, setNewMsgNoti] = useState(false);
   const [status, setStatus] = useState(1);
 
   //Handle status
@@ -63,12 +75,19 @@ const ChatArea = ({ socket }: IChatArea) => {
     handleStatus();
   }, [roomList.activeList]);
 
-  //Handle Typing
+  //Handle Typing and Receive new messages
   useEffect(() => {
     if (socket) {
       //@ts-ignore
       socket.on("typing", () => {
         setToggleTyping((val) => !val);
+      });
+      // @ts-ignore
+      socket.on("receiveMessage", (result) => {
+        //add new message if not sender
+        if (result.senderId !== user.info._id) {
+          dispatch(messageActions.newMessage(result));
+        }
       });
     }
   }, []);
@@ -99,8 +118,19 @@ const ChatArea = ({ socket }: IChatArea) => {
     if (bottomDiv.current)
       bottomDiv.current.scrollIntoView({ behavior: "smooth" });
   };
-  useEffect(() => {
+  const newMsgNotiClick = () => {
     scrollToNewMsg();
+    setNewMsgNoti(false);
+  };
+  const showNewMsgNoti = () => {
+    if (!useIntersection(bottomDiv)) setNewMsgNoti(true);
+  };
+  useEffect(() => {
+    if (messages.list[messages.list.length - 1].senderId !== user.info._id) {
+      showNewMsgNoti();
+    } else {
+      scrollToNewMsg();
+    }
   }, [messages]);
 
   //Emoji
@@ -290,16 +320,6 @@ const ChatArea = ({ socket }: IChatArea) => {
                     <S.ChatAreaMainMsgInnerBottom
                       ref={bottomDiv}
                     ></S.ChatAreaMainMsgInnerBottom>
-                    {toggleTyping && (
-                      <S.ChatAreaMainMsgInnerTyping>
-                        <PulseLoader
-                          speedMultiplier={0.5}
-                          size={7}
-                          color="#769FCD"
-                          margin={2}
-                        />
-                      </S.ChatAreaMainMsgInnerTyping>
-                    )}
                     {messages.list.map((data, index) => (
                       <ChatMsg
                         data={data}
@@ -311,6 +331,22 @@ const ChatArea = ({ socket }: IChatArea) => {
                     ))}
                   </S.ChatAreaMainMsgInner>
                 </S.ChatAreaMainMsg>
+                {toggleTyping && (
+                  <S.ChatAreaMainMsgInnerTyping>
+                    <PulseLoader
+                      speedMultiplier={0.5}
+                      size={7}
+                      color="#769FCD"
+                      margin={2}
+                    />
+                  </S.ChatAreaMainMsgInnerTyping>
+                )}
+                {newMsgNoti && (
+                  <S.ChatAreaMainMsgNewNoti onClick={() => newMsgNotiClick()}>
+                    New message
+                    <FiChevronsDown size={20} />
+                  </S.ChatAreaMainMsgNewNoti>
+                )}
                 {values.files.length > 0 && (
                   <S.ChatChatAreaFilePreview>
                     <S.ChatChatAreaFilePreviewInner>
@@ -325,7 +361,7 @@ const ChatArea = ({ socket }: IChatArea) => {
                     </S.ChatChatAreaFilePreviewInner>
                   </S.ChatChatAreaFilePreview>
                 )}
-                <Form>
+                <S.ChatAreaMainForm>
                   <S.ChatAreaMainInput>
                     {toggleEmoji && (
                       <S.ChatAreaMainInputEmojiPicker ref={emojiRef}>
@@ -378,7 +414,7 @@ const ChatArea = ({ socket }: IChatArea) => {
                       Drop files here
                     </S.ChatAreaMainDropZone>
                   )}
-                </Form>
+                </S.ChatAreaMainForm>
               </S.ChatAreaMain>
             )}
           </DropZone>

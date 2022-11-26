@@ -4,7 +4,8 @@ import { FaCircle } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { BsEmojiLaughingFill } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { merge, slideInUp, zoomIn } from "react-animations";
+import { bounce, merge, slideInUp, zoomIn } from "react-animations";
+import { Form } from "formik";
 export const ChatArea = styled.div`
   ${tw`relative bg-secondary shadow-md rounded-[20px] flex-grow flex flex-col overflow-hidden`}
 `;
@@ -44,11 +45,11 @@ export const ChatAreaHeadOption = styled(IoMenu)`
 `;
 
 export const ChatAreaMain = styled.div`
-  ${tw`flex flex-col flex-grow bg-dark px-6 pb-4 pt-0 rounded-[20px] shadow-inner`}
+  ${tw`relative flex flex-col flex-grow bg-dark px-6 pb-4 pt-0 rounded-[20px] shadow-inner items-center`}
 `;
 
 export const ChatAreaMainMsg = styled.div`
-  ${tw`flex-grow overflow-y-auto overflow-x-hidden h-0 mb-3 pt-5 pr-1.5 flex flex-col-reverse`}
+  ${tw`relative flex-grow w-full overflow-y-auto overflow-x-hidden h-0 mb-3 pt-5 pr-1.5 flex flex-col-reverse`}
 
   &::-webkit-scrollbar-track {
     ${tw`rounded-[10px] bg-transparent`}
@@ -63,6 +64,23 @@ export const ChatAreaMainMsg = styled.div`
   }
 `;
 
+const msgNewNotiAnimation = keyframes`
+  0% {
+    transform: translateY(0)
+  }
+  90% {
+    transform: translateY(0)
+  }
+  100% {
+    transform: translateY(3px)
+  }
+`
+
+export const ChatAreaMainMsgNewNoti = styled.div`
+  ${tw`absolute bg-secondary top-3 pl-2 pr-1.5 py-1 shadow-md rounded-[10px] opacity-80 flex items-center z-50 hover:cursor-pointer hover:opacity-100`}
+  animation: ${msgNewNotiAnimation} 1.5s linear infinite alternate;
+`;
+
 export const ChatAreaMainMsgInner = styled.div`
   ${tw`flex flex-col-reverse pb-2`}
 `;
@@ -72,13 +90,13 @@ export const ChatAreaMainMsgInnerBottom = styled.div``;
 const typingAnimate = keyframes`${merge(zoomIn, slideInUp)}`;
 
 export const ChatAreaMainMsgInnerTyping = styled.div`
-  ${tw`absolute bg-primary px-1 ml-0.5 mb-[-10px] rounded-[10px] shadow-md z-50`}
+  ${tw`absolute bg-primary px-1 ml-0.5 mb-[-10px] rounded-[10px] bottom-[85px] shadow-md z-50`}
   width: fit-content;
-  animation: 0.2 ${typingAnimate}
+  animation: 0.2s ${typingAnimate};
 `;
 
 export const ChatChatAreaFilePreview = styled.div`
-  ${tw`flex rounded-[10px] pb-1 bg-[#E6E9EA] mb-1.5 overflow-hidden`}
+  ${tw`flex w-full rounded-[10px] pb-1 bg-[#E6E9EA] mb-1.5 overflow-hidden`}
 `;
 
 export const ChatChatAreaFilePreviewInner = styled.div`
@@ -98,6 +116,10 @@ export const ChatChatAreaFilePreviewInner = styled.div`
   &::-webkit-scrollbar-thumb:hover {
     ${tw`bg-darker`}
   }
+`;
+
+export const ChatAreaMainForm = styled(Form)`
+  ${tw`w-full`}
 `;
 
 export const ChatAreaMainInput = styled.div`

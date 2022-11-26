@@ -36,15 +36,9 @@ const Home = () => {
       // @ts-ignore
       socket.current.on("getUsers", (users) => {
         console.log(users);
-        dispatch(roomListActions.setActiveRoom({users, loggedUid: user.info._id}))
-      });
-      // @ts-ignore
-      socket.current.on("receiveMessage", (result) => {
-        //add new message if not sender
-        if (result.senderId !== user.info._id) {
-          dispatch(messageActions.newMessage(result));
-          // dispatch(roomListActions.setNewLastMsg(result));
-        }
+        dispatch(
+          roomListActions.setActiveRoom({ users, loggedUid: user.info._id })
+        );
       });
       // @ts-ignore
       socket.current.on("newLastMsg", (result) => {
@@ -63,6 +57,7 @@ const Home = () => {
         console.log(err);
         if (err.errors.message === "Unauthorized!") {
           alert("Your session is over, redirecting to login page.");
+          socket.current?.disconnect()
           router.push("/login");
         }
       }
