@@ -39,7 +39,6 @@ import { debounce } from "lodash";
 import { selectRoomListState } from "../../../features/redux/slices/roomListSlice";
 import { selectUserState } from "../../../features/redux/slices/userSlice";
 import { FiChevronsDown } from "react-icons/fi";
-import useIntersection from "../../Global/useIntersection";
 
 interface IChatArea {
   socket: Socket<ServerToClientEvents, ClientToServerEvents>;
@@ -62,6 +61,8 @@ const ChatArea = ({ socket }: IChatArea) => {
   const [toggleTyping, setToggleTyping] = useState(false);
   const [sendTyping, setSendTyping] = useState(false);
   const [newMsgNoti, setNewMsgNoti] = useState(false);
+  const [chatAtBottom, setChatAtBottom] = useState(true);
+  const [chatScrollBottom, setChatScrollBottom] = useState(false);
   const [status, setStatus] = useState(1);
 
   //Handle status
@@ -122,13 +123,31 @@ const ChatArea = ({ socket }: IChatArea) => {
     scrollToNewMsg();
     setNewMsgNoti(false);
   };
-  const showNewMsgNoti = () => {
-    if (!useIntersection(bottomDiv)) setNewMsgNoti(true);
+  const checkChatScrollBottom = (e: any) => {
+
+    //e.target.scrollTop is bottom when value is 0, scroll up cause value goes negative
+    //Check if chat scroll at bottom
+    if (e.target.scrollTop === 0) {
+      setChatAtBottom(true);
+    } else {
+      setChatAtBottom(false);
+    }
+
+    //Check if chat scroll smaller than -500px then show scroll down button
+    if(e.target.scrollTop > -500){
+      setChatScrollBottom(false)
+    }
+    else{
+      setChatScrollBottom(true)
+    }
   };
   useEffect(() => {
     if (messages.list.length > 0) {
-      if (messages.list[messages.list.length - 1].senderId !== user.info._id) {
-        showNewMsgNoti();
+      if (
+        messages.list[messages.list.length - 1].senderId !== user.info._id &&
+        !chatAtBottom
+      ) {
+        setNewMsgNoti(true);
       } else {
         scrollToNewMsg();
       }
@@ -325,7 +344,7 @@ const ChatArea = ({ socket }: IChatArea) => {
                     setToggleImageZoom={setToggleImageZoom}
                   />
                 )}
-                <S.ChatAreaMainMsg>
+                <S.ChatAreaMainMsg onScroll={(e) => checkChatScrollBottom(e)}>
                   <S.ChatAreaMainMsgInner>
                     <S.ChatAreaMainMsgInnerBottom
                       ref={bottomDiv}
@@ -341,21 +360,22 @@ const ChatArea = ({ socket }: IChatArea) => {
                     ))}
                   </S.ChatAreaMainMsgInner>
                 </S.ChatAreaMainMsg>
+                {chatScrollBottom && <S.ChatAreaMainScrollBottom onClick={scrollToNewMsg} />}
                 {toggleTyping && (
-                  <S.ChatAreaMainMsgInnerTyping>
+                  <S.ChatAreaMainTyping>
                     <PulseLoader
                       speedMultiplier={0.5}
                       size={7}
                       color="#769FCD"
                       margin={2}
                     />
-                  </S.ChatAreaMainMsgInnerTyping>
+                  </S.ChatAreaMainTyping>
                 )}
                 {newMsgNoti && (
-                  <S.ChatAreaMainMsgNewNoti onClick={() => newMsgNotiClick()}>
+                  <S.ChatAreaMainNewNoti onClick={() => newMsgNotiClick()}>
                     New message
                     <FiChevronsDown size={20} />
-                  </S.ChatAreaMainMsgNewNoti>
+                  </S.ChatAreaMainNewNoti>
                 )}
                 {values.files.length > 0 && (
                   <S.ChatChatAreaFilePreview>

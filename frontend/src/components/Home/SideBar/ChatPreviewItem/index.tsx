@@ -26,7 +26,7 @@ const ChatPreviewItem = ({
   const roomList = useSelector(selectRoomListState);
 
   return (
-    <S.ChatPreviewItem active={active} Id={index} onClick={onClick}>
+    <S.ChatPreviewItem active={active} onClick={onClick}>
       <S.Wrapper onClick={() => setRoomSelected(index)}>
         <S.ChatAvatarWrapper>
           {avatar ? (

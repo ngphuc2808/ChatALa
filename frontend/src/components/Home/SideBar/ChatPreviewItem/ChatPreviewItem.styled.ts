@@ -38,8 +38,7 @@ export const Wrapper = styled.div`
   ${tw`flex px-3 py-2.5 items-center relative w-full`}
 `;
 
-export const ChatPreviewItem = styled.div<{ active?: boolean; Id?: number }>`
+export const ChatPreviewItem = styled.div<{ active?: boolean }>`
   ${tw`flex items-center relative hover:cursor-pointer hover:bg-dark rounded-[20px]`}
-  ${({ active }) => active && tw`bg-darker`}
-  ${({ Id }) => (Id !== -2 ? tw`my-1` : tw`bg-dark`)}
+  ${({ active }) => active && tw`bg-darker shadow-md`}
 `;

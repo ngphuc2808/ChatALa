@@ -2,11 +2,11 @@ import styled, { keyframes } from "styled-components";
 import tw from "twin.macro";
 import { FaCircle } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
-import { BsEmojiLaughingFill } from "react-icons/bs";
+import { BsChevronCompactDown, BsEmojiLaughingFill } from "react-icons/bs";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { bounce, merge, slideInUp, zoomIn } from "react-animations";
+import { merge, slideInUp, zoomIn } from "react-animations";
 import { Form } from "formik";
-import { HiUserGroup } from "react-icons/hi";
+import { HiOutlineChevronDown, HiUserGroup } from "react-icons/hi";
 export const ChatArea = styled.div`
   ${tw`relative bg-secondary shadow-md rounded-[20px] flex-grow flex flex-col overflow-hidden`}
 `;
@@ -79,9 +79,9 @@ const msgNewNotiAnimation = keyframes`
   100% {
     transform: translateY(3px)
   }
-`
+`;
 
-export const ChatAreaMainMsgNewNoti = styled.div`
+export const ChatAreaMainNewNoti = styled.div`
   ${tw`absolute bg-secondary top-3 pl-2 pr-1.5 py-1 shadow-md rounded-[10px] opacity-80 flex items-center z-50 hover:cursor-pointer hover:opacity-100`}
   animation: ${msgNewNotiAnimation} 1.5s linear infinite alternate;
 `;
@@ -94,10 +94,14 @@ export const ChatAreaMainMsgInnerBottom = styled.div``;
 
 const typingAnimate = keyframes`${merge(zoomIn, slideInUp)}`;
 
-export const ChatAreaMainMsgInnerTyping = styled.div`
+export const ChatAreaMainTyping = styled.div`
   ${tw`absolute bg-primary px-1 ml-0.5 mb-[-10px] rounded-[10px] bottom-[85px] shadow-md z-50`}
   width: fit-content;
   animation: 0.2s ${typingAnimate};
+`;
+
+export const ChatAreaMainScrollBottom = styled(BsChevronCompactDown)`
+  ${tw`absolute transition-all text-[25px] rounded-full bottom-[-3px] hover:cursor-pointer hover:bottom-[-5px]`}
 `;
 
 export const ChatChatAreaFilePreview = styled.div`
