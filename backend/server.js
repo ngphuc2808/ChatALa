@@ -31,7 +31,7 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(express.json()); //allow accept json data
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(cookieParser(process.env.COOKIE_SECRET, {secure: true, samesite:'none'}));
 
 //connect DB
 connectDB();
