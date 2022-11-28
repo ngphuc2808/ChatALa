@@ -14,7 +14,7 @@ const errorMiddleware = require("./middlewares/errors");
 const PORT = process.env.PORT || 5000;
 
 const corsOptions = {
-  origin: ["http://localhost:3000", "https://chatala-frontend.vercel.app", "https://chatala-frontend.vercel.app/"],
+  origin: ["http://localhost:3000", "https://chatala-frontend.vercel.app"],
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
