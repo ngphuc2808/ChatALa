@@ -7,9 +7,12 @@ import { UserLogin } from '../../utils/types';
 import { useRouter } from 'next/router';
 import { UsersApi } from '../../services/api/users';
 import { ClipLoader } from 'react-spinners';
+import { BsEyeSlash, BsEye } from "react-icons/bs";
+import { useState } from 'react';
 
 const Login = () => {
   const router = useRouter();
+  const [eye, setEye] = useState<boolean>(false);
   const initialValues = {
     phone: '',
     password: '',
@@ -25,7 +28,7 @@ const Login = () => {
     password: Yup.string()
       .required('This field is required.')
       .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+        /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{8,}$/,
         'Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number.'
       ),
   });
@@ -34,9 +37,7 @@ const Login = () => {
     { setSubmitting }: any
   ) => {
     try {
-      const result = await UsersApi.login(values);
-      // console.log(1);
-      
+      const result = await UsersApi.login(values);      
       result && router.push('/');
     } catch (error: any) {
       if (error.statusCode === 404) {
@@ -66,12 +67,17 @@ const Login = () => {
               />
               <ErrorMessage name='phone' component={S.ErrorMsg} />
 
-              <S.Input
-                placeholder='Password'
-                type='password'
-                name='password'
-                error={errors.password && touched.password ? 1 : 0}
-              />
+              <S.InputPassword>
+                <S.Password
+                  placeholder='Password'
+                  type= {eye ? 'text' : 'password' }
+                  name='password'
+                  error={errors.password && touched.password ? 1 : 0}
+                />
+                <S.ButtonEye onClick={() =>setEye(!eye)}>
+                  {eye ? <BsEyeSlash/> : <BsEye/>}
+                </S.ButtonEye>
+              </S.InputPassword>
               <ErrorMessage name='password' component={S.ErrorMsg} />
 
               <S.Forgot>

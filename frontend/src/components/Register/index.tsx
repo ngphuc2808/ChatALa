@@ -7,9 +7,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as S from './Register.styled';
 import * as Yup from 'yup';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { UsersApi } from '../../services/api/users';
 import { FormValue } from '../../utils/types';
+import { BsEyeSlash, BsEye } from "react-icons/bs";
+
 
 declare global {
   interface Window {
@@ -20,6 +22,8 @@ declare global {
 
 const Register = () => {
   const router = useRouter();
+
+  const [eye, setEye] = useState<boolean>(false);
 
   const initialValues = {
     name: router.query.name as string || '',
@@ -38,10 +42,10 @@ const Register = () => {
       ),
 
     password: Yup.string()
-      .required('This field is required.')
-      .matches(
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-        'Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number.'
+    .required('This field is required.')
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{8,}$/,
+      'Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number.'
       ),
 
     confirmPassword: Yup.string()
@@ -132,12 +136,17 @@ const Register = () => {
                 error={errors.name && touched.name ? 1 : 0}
               />
               <ErrorMessage name='name' component={S.ErrorMsg} />
-              <S.Input
-                placeholder='Password'
-                type='password'
-                name='password'
-                error={errors.password && touched.password ? 1 : 0}
-              />
+              <S.InputPassword>
+                <S.Password
+                  placeholder='Password'
+                  type= {eye ? 'text' : 'password' }
+                  name='password'
+                  error={errors.password && touched.password ? 1 : 0}
+                />
+                <S.ButtonEye onClick={() =>setEye(!eye)}>
+                  {eye ? <BsEyeSlash/> : <BsEye/>}
+                </S.ButtonEye>
+              </S.InputPassword>
               <ErrorMessage name='password' component={S.ErrorMsg} />
               <S.Input
                 placeholder='Confirm password'
