@@ -124,7 +124,6 @@ const ChatArea = ({ socket }: IChatArea) => {
     setNewMsgNoti(false);
   };
   const checkChatScrollBottom = (e: any) => {
-
     //e.target.scrollTop is bottom when value is 0, scroll up cause value goes negative
     //Check if chat scroll at bottom
     if (e.target.scrollTop === 0) {
@@ -134,11 +133,10 @@ const ChatArea = ({ socket }: IChatArea) => {
     }
 
     //Check if chat scroll smaller than -500px then show scroll down button
-    if(e.target.scrollTop > -500){
-      setChatScrollBottom(false)
-    }
-    else{
-      setChatScrollBottom(true)
+    if (e.target.scrollTop > -500) {
+      setChatScrollBottom(false);
+    } else {
+      setChatScrollBottom(true);
     }
   };
   useEffect(() => {
@@ -242,6 +240,8 @@ const ChatArea = ({ socket }: IChatArea) => {
     form.append("api_key", API_KEY);
     form.append("timestamp", signedKey.timestamp.toString());
     form.append("signature", signedKey.signature);
+    console.log(form);
+
     const uploadedFile = await MessageApi.uploadFile(form);
 
     return { name, url: uploadedFile.secure_url, type };
@@ -267,19 +267,19 @@ const ChatArea = ({ socket }: IChatArea) => {
     if (values.msg !== "" || values.files.length > 0) {
       setToggleEmoji(false);
 
-      // const uploadedFiles = await uploadFiles(values.files);
-      // console.log(uploadedFiles);
+      const uploadedFiles = await uploadFiles(values.files);
+      console.log(uploadedFiles);
 
-      try {
-        const res = await MessageApi.send(values);
+      // try {
+      //   const res = await MessageApi.send(values);
 
-        dispatch(messageActions.newMessage(res.result));
-        chatInput.current!.innerText = "";
-        setFieldValue("msg", "");
-        setFieldValue("files", []);
-      } catch (err) {
-        console.log(err);
-      }
+      //   dispatch(messageActions.newMessage(res.result));
+      //   chatInput.current!.innerText = "";
+      //   setFieldValue("msg", "");
+      //   setFieldValue("files", []);
+      // } catch (err) {
+      //   console.log(err);
+      // }
     }
   };
 
@@ -360,7 +360,9 @@ const ChatArea = ({ socket }: IChatArea) => {
                     ))}
                   </S.ChatAreaMainMsgInner>
                 </S.ChatAreaMainMsg>
-                {chatScrollBottom && <S.ChatAreaMainScrollBottom onClick={scrollToNewMsg} />}
+                {chatScrollBottom && (
+                  <S.ChatAreaMainScrollBottom onClick={scrollToNewMsg} />
+                )}
                 {toggleTyping && (
                   <S.ChatAreaMainTyping>
                     <PulseLoader
