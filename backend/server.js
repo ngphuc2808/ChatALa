@@ -110,11 +110,11 @@ app.use(function (req, res, next) {
 });
 
 //route
-app.use("/api/user", userRoutes);
-app.use("/api/room", roomRoutes);
-app.use("/api/friend", friendRoutes);
-app.use("/api/message", messageRoutes);
-app.use("/api/util", utilRoutes);
+app.use("api/user", userRoutes);
+app.use("api/room", roomRoutes);
+app.use("api/friend", friendRoutes);
+app.use("api/message", messageRoutes);
+app.use("api/util", utilRoutes);
 
 //middleware
 app.use(errorMiddleware); //handle error
