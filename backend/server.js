@@ -14,7 +14,7 @@ const errorMiddleware = require("./middlewares/errors");
 const PORT = process.env.PORT || 5000;
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000/", "https://chatala-frontend.vercel.app/"],
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
@@ -48,7 +48,7 @@ const server = app.listen(
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000/", "https://chatala-frontend.vercel.app/"],
   },
 });
 
