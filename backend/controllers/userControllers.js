@@ -51,6 +51,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
         signed: true,
         httpOnly: true,
         secure: true,
+        sameSite: 'none',
       });
       res.status(200).json({
         message: 'Login successfully',
