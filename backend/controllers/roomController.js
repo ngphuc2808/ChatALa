@@ -15,7 +15,7 @@ const createRoom = asyncHandler(async (req, res, next) => {
   });
 
   let roomToCreate = {};
-  roomToCreate.users = users
+  roomToCreate.users = users;
 
   if (isGroup) {
     let groupName = users[0].nickname;
@@ -24,21 +24,25 @@ const createRoom = asyncHandler(async (req, res, next) => {
         groupName = groupName + ", " + users[i].nickname;
       }
     }
-    if(users.length > 3){
-      groupName += '...'
+    if (users.length > 3) {
+      groupName += "...";
     }
     roomToCreate.groupName = groupName;
     roomToCreate.isGroup = true;
-  }
-  else{
-    if(users.length > 2){
-      return next(new ErrorHandler("Create non-group chat but receive more than 1 user!", 400))
+  } else {
+    if (users.length > 2) {
+      return next(
+        new ErrorHandler(
+          "Create non-group chat but receive more than 1 user!",
+          400
+        )
+      );
     }
   }
 
-  const createdRoom = await Rooms.create(roomToCreate)
+  const createdRoom = await Rooms.create(roomToCreate);
 
-  res.status(200).json(createdRoom)
+  res.status(200).json(createdRoom);
 });
 
 const getRoomList = asyncHandler(async (req, res, next) => {
@@ -48,19 +52,16 @@ const getRoomList = asyncHandler(async (req, res, next) => {
   if (rooms.length > 0) {
     rooms.forEach((room) => {
       if (!room.isGroup) {
-        let roomName =
-          room.users[0].uid.toString() === req.user._id.toString()
-            ? room.users[1].nickname
-            : room.users[0].nickname;
-        let roomAvatar =
-          room.users[0].uid.toString() === req.user._id.toString()
-            ? room.users[1].avatar
-            : room.users[0].avatar;
+        let roomName;
+        let roomAvatar;
+        if (room.users[0].uid.toString() === req.user._id.toString()) {
+          roomName = room.users[1].nickname;
+          roomAvatar = room.users[1].avatar;
+        } else {
+          roomName = room.users[0].nickname;
+          roomAvatar = room.users[0].avatar;
+        }
         result.push({ roomName, roomAvatar, roomInfo: room });
-      }
-      else{
-        let roomName = room.groupName
-        result.push({ roomName, roomInfo: room });
       }
     });
 
