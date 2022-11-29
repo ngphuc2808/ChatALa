@@ -53,8 +53,8 @@ const Home = () => {
       const rooms = await RoomApi.getRoomList();
       dispatch(roomListActions.setRoomList(rooms.result));
     } catch (err: any) {
+      console.log(err);
       if (err.errors?.error.statusCode === 401) {
-        console.log(err);
         if (err.errors.message === "Unauthorized!") {
           alert("Your session is over, redirecting to login page.");
           socket.current?.disconnect()
