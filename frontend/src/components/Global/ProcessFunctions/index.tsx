@@ -22,42 +22,42 @@ export const validImageTypes = [
 
 export const fileTypes = [
   {
-    type: <BsFillFileExcelFill size={23} color='#217346' />,
+    type: <BsFillFileExcelFill size={23} color="#217346" />,
     extension: ['xlsx', 'xls', 'xlsm', 'xml', 'xlam', 'xla', 'csv'],
   },
   {
-    type: <BsFillFilePdfFill size={23} color='#B90F12' />,
+    type: <BsFillFilePdfFill size={23} color="#B90F12" />,
     extension: ['pdf', 'ps', 'eps', 'html', 'html'],
   },
   {
-    type: <BsFillFilePlayFill size={23} color='#326dba' />,
+    type: <BsFillFilePlayFill size={23} color="#326dba" />,
     extension: ['webm', 'mkv', 'flv', 'gif', 'mp4', 'wmv', 'avi', 'swf'],
   },
   {
-    type: <BsFillFilePptFill size={23} color='#BD3311' />,
+    type: <BsFillFilePptFill size={23} color="#BD3311" />,
     extension: ['pptx', 'pptm', 'ppt', 'xps', 'potx', 'potm', 'pot', 'ppsx'],
   },
   {
-    type: <BsFileText size={23} color='#4d4d4d' />,
+    type: <BsFileText size={23} color="#4d4d4d" />,
     extension: ['txt', 'tex', 'rtf', 'odt', 'wpd'],
   },
   {
-    type: <BsFillFileWordFill size={23} color='#2B579A' />,
+    type: <BsFillFileWordFill size={23} color="#2B579A" />,
     extension: ['doc', 'docm', 'docx', 'dot', 'dotx'],
   },
   {
-    type: <BsFileCodeFill size={23} color='#4E4E4E' />,
+    type: <BsFileCodeFill size={23} color="#4E4E4E" />,
     extension: ['exe', 'ini', 'bat', 'msi', 'mui'],
   },
   {
-    type: <BsFillFileZipFill size={23} color='#C56B36' />,
+    type: <BsFillFileZipFill size={23} color="#C56B36" />,
     extension: ['zip', 'zipx', 'jar', 'iso', 'rar', '7z'],
   },
 ];
 
 export const getExtension = (filename: string) => {
-  const parts = filename.split('.');
-  return parts[parts.length - 1];
+  const parts = filename?.split('.');
+  return parts?.length ? parts[parts.length - 1] : '';
 };
 
 export const getFileIcon = (
@@ -98,10 +98,10 @@ export const shorterChars = (text: string, limit: number = 35) => {
 
 const padTo2Digits = (num: number) => {
   return num.toString().padStart(2, '0');
-}
+};
 
 export const formatDate = (_date: string) => {
-  const date = new Date(_date)
+  const date = new Date(_date);
   return [
     padTo2Digits(date.getDate()),
     padTo2Digits(date.getMonth() + 1),

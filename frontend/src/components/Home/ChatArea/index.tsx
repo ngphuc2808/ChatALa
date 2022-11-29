@@ -242,9 +242,24 @@ const ChatArea = ({ socket }: IChatArea) => {
     form.append("signature", signedKey.signature);
     console.log(form);
 
-    const uploadedFile = await MessageApi.uploadFile(form);
+    // let uploadedFile: any = undefined;
 
-    return { name, url: uploadedFile.secure_url, type };
+    const response = await fetch(
+      "https://api.cloudinary.com/v1_1/dzikgumce/auto/upload",
+      {
+        method: "POST",
+        body: form,
+      }
+    ).then((response) => {
+      return response.json();
+    });
+
+    const uploadedFile = response.secure_url;
+    console.log(response);
+
+    // const uploadedFile = await MessageApi.uploadFile(form);
+
+    return { name, url: uploadedFile, type };
   };
 
   //Upload files
@@ -268,18 +283,19 @@ const ChatArea = ({ socket }: IChatArea) => {
       setToggleEmoji(false);
 
       const uploadedFiles = await uploadFiles(values.files);
+      values.files = uploadedFiles as unknown as File[];
       console.log(uploadedFiles);
 
-      // try {
-      //   const res = await MessageApi.send(values);
+      try {
+        const res = await MessageApi.send(values);
 
-      //   dispatch(messageActions.newMessage(res.result));
-      //   chatInput.current!.innerText = "";
-      //   setFieldValue("msg", "");
-      //   setFieldValue("files", []);
-      // } catch (err) {
-      //   console.log(err);
-      // }
+        dispatch(messageActions.newMessage(res.result));
+        chatInput.current!.innerText = "";
+        setFieldValue("msg", "");
+        setFieldValue("files", []);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
