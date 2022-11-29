@@ -31,7 +31,9 @@ const app = express();
 app.use(cors(corsOptions));
 app.use(express.json()); //allow accept json data
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser(process.env.COOKIE_SECRET, {secure: true, samesite:'none'}));
+app.use(
+  cookieParser(process.env.COOKIE_SECRET, { secure: true, samesite: "none" })
+);
 
 //connect DB
 connectDB();
@@ -77,14 +79,14 @@ io.on("connection", (socket) => {
 
   socket.on("logout", (roomId) => {
     socket.leave(roomId);
-    removeUser(socket.id)
+    removeUser(socket.id);
     io.emit("getUsers", users);
     console.log("A user logout");
-  })
+  });
 
   socket.on("typing", (roomId) => {
     socket.to(roomId).emit("typing");
-  })
+  });
 
   // socket.on("sendMessage", (message, roomId) => {
   //   console.log("new message: ", message);

@@ -1,9 +1,9 @@
-const asyncHandler = require('express-async-handler');
-const Users = require('../models/userModel');
-const { generateJWT } = require('../utils/utilFunctions');
-const ErrorHandler = require('../utils/errorHandler');
-const Friends = require('../models/friendModel');
-const Notifications = require('../models/notificationModel');
+const asyncHandler = require("express-async-handler");
+const Users = require("../models/userModel");
+const { generateJWT } = require("../utils/utilFunctions");
+const ErrorHandler = require("../utils/errorHandler");
+const Friends = require("../models/friendModel");
+const Notifications = require("../models/notificationModel");
 
 const checkUser = asyncHandler(async (req, res, next) => {
   const phone = req.query.phone;
@@ -12,10 +12,10 @@ const checkUser = asyncHandler(async (req, res, next) => {
 
   if (!user) {
     res.status(200).json({
-      message: 'Valid phone number!',
+      message: "Valid phone number!",
     });
   } else {
-    return next(new ErrorHandler('Phone number already exists!', 404));
+    return next(new ErrorHandler("Phone number already exists!", 404));
   }
 });
 
@@ -27,16 +27,16 @@ const registerUser = asyncHandler(async (req, res, next) => {
 
   if (phone.match(regexPhone) && password.match(regexPassword)) {
     await Users.create({
-      name: name.replace(/\s+/g, ' ').trim(),
+      name: name.replace(/\s+/g, " ").trim(),
       phone,
       password,
     });
 
     res.status(200).json({
-      message: 'Register Successfully!',
+      message: "Register Successfully!",
     });
   } else {
-    return next(new ErrorHandler('Register failed!', 404));
+    return next(new ErrorHandler("Register failed!", 404));
   }
 });
 
@@ -47,23 +47,23 @@ const loginUser = asyncHandler(async (req, res, next) => {
 
   if (user) {
     if (await user.matchPassword(password)) {
-      res.cookie('token', generateJWT(user._id), {
+      res.cookie("token", generateJWT(user._id), {
         signed: true,
         httpOnly: true,
         secure: true,
-        sameSite: 'none',
+        sameSite: "none",
       });
       res.status(200).json({
-        message: 'Login successfully',
+        message: "Login successfully",
       });
     } else {
       return next(
-        new ErrorHandler('Phone Number not found or Incorrect Password', 404)
+        new ErrorHandler("Phone Number not found or Incorrect Password", 404)
       );
     }
   } else {
     return next(
-      new ErrorHandler('Phone Number not found or Incorrect Password', 404)
+      new ErrorHandler("Phone Number not found or Incorrect Password", 404)
     );
   }
 });
@@ -73,8 +73,8 @@ const getLoggedUser = asyncHandler(async (req, res, next) => {
 });
 
 const logoutUser = asyncHandler(async (req, res, next) => {
-  res.clearCookie('token');
-  res.status(200).json({ message: 'Logout successfully' });
+  res.clearCookie("token");
+  res.status(200).json({ message: "Logout successfully" });
 });
 
 const findUser = asyncHandler(async (req, res, next) => {
@@ -109,20 +109,20 @@ const findUser = asyncHandler(async (req, res, next) => {
         requestId: id,
       },
     ],
-    status: 'Pending',
+    status: "Pending",
   });
 
   pendingId.forEach((it) => {
     if (it.receiveId.toString() === id.toString()) {
       listRelatedId.push({
         id: it.requestId.toString(),
-        status: 'receive',
+        status: "receive",
         notificationId: it.id,
       });
     } else {
       listRelatedId.push({
         id: it.receiveId.toString(),
-        status: 'request',
+        status: "request",
         notificationId: it.id,
       });
     }
@@ -133,13 +133,13 @@ const findUser = asyncHandler(async (req, res, next) => {
       {
         phone: {
           $regex: search,
-          $options: 'i',
+          $options: "i",
         },
       },
       {
         name: {
           $regex: search,
-          $options: 'i',
+          $options: "i",
         },
       },
     ],

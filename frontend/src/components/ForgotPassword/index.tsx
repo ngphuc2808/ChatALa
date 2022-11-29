@@ -48,10 +48,10 @@ const RenewPassword = () => {
         )}
       </Formik>
       <S.SignUp>
-        <Link href='/register'>
+        <Link href='/login'>
           <span>
             <p>Remembered your password?</p>
-            <p>{`Let's Sign Up!`}</p>
+            <p>`Let&apos;s Sign In!`</p>
           </span>
         </Link>
       </S.SignUp>
