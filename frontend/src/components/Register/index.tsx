@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import * as S from './Register.styled';
 import * as Yup from 'yup';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { UsersApi } from '../../services/api/users';
 import { FormValue } from '../../utils/types';
 import { BsEyeSlash, BsEye } from "react-icons/bs";
@@ -21,7 +21,9 @@ declare global {
 }
 
 const Register = () => {
-  // window.history.replaceState(null, '', `/register`);
+  useEffect(() => {
+    window.history.replaceState(null, '', `/register`);
+  }, [])
 
   const router = useRouter();
 
