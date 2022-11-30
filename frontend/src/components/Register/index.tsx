@@ -11,7 +11,7 @@ import { ChangeEvent, useState } from 'react';
 import { UsersApi } from '../../services/api/users';
 import { FormValue } from '../../utils/types';
 import { BsEyeSlash, BsEye } from "react-icons/bs";
-
+import { ClipLoader } from 'react-spinners';
 
 declare global {
   interface Window {
@@ -21,6 +21,8 @@ declare global {
 }
 
 const Register = () => {
+  window.history.replaceState(null, '', `/register`);
+
   const router = useRouter();
 
   const [eye, setEye] = useState<boolean>(false);
@@ -46,7 +48,7 @@ const Register = () => {
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{8,}$/,
       'Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number.'
-      ),
+    ),
 
     confirmPassword: Yup.string()
       .required('This field is required.')
@@ -87,7 +89,7 @@ const Register = () => {
           phone: values.phone,
           password: values.password
         }
-      }, { shallow: true });
+      });
     } catch {
       alert('Registration failed, Phone number already exists!');
     }
@@ -102,7 +104,7 @@ const Register = () => {
         onSubmit={handleSubmit}
         enableReinitialize
       >
-        {({ errors, touched, setFieldValue }) => (
+        {({ errors, touched, isSubmitting, setFieldValue }) => (
           <S.NewForm>
             <S.SetWidth>
               <S.InputGroup
@@ -158,7 +160,13 @@ const Register = () => {
                 }
               />
               <ErrorMessage name='confirmPassword' component={S.ErrorMsg} />
-              <S.Button type='submit'>Continue</S.Button>
+              <S.Button type='submit'>
+                {isSubmitting ? (
+                  <ClipLoader color='#fff' size={25} />
+                ) : (
+                  'Continue'
+                )}
+              </S.Button>
             </S.SetWidth>
           </S.NewForm>
         )}

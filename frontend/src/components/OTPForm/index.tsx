@@ -5,9 +5,12 @@ import { withRouter, useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { UsersApi } from '../../services/api/users';
 import { UserRegister } from '../../utils/types';
+import { ClipLoader } from 'react-spinners';
 
 const OTPCode = () => {
   const router = useRouter();
+  window.history.replaceState(null, '', `/otp`);
+
   const [checkError, setCheckError] = useState('false');
   const [countdown, setCountdown] = useState(30);
 
@@ -62,6 +65,7 @@ const OTPCode = () => {
               query: {
                 name: router.query.name,
                 phone: router.query.phone,
+                password: router.query.password
               },
             })
           }
@@ -99,7 +103,11 @@ const OTPCode = () => {
                 </S.CheckPhoneNumber>
               )}
               <S.Button type='submit' disabled={isSubmitting ? true : false}>
-                Verify
+                {isSubmitting ? (
+                  <ClipLoader color='#fff' size={25} />
+                ) : (
+                  'Verify'
+                )}
               </S.Button>
             </S.SetWidth>
           </S.NewForm>
