@@ -21,7 +21,7 @@ declare global {
 }
 
 const Register = () => {
-  window.history.replaceState(null, '', `/register`);
+  // window.history.replaceState(null, '', `/register`);
 
   const router = useRouter();
 

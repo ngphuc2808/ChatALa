@@ -9,7 +9,7 @@ import { ClipLoader } from 'react-spinners';
 
 const OTPCode = () => {
   const router = useRouter();
-  window.history.replaceState(null, '', `/otp`);
+  // window.history.replaceState(null, '', `/otp`);
 
   const [checkError, setCheckError] = useState('false');
   const [countdown, setCountdown] = useState(30);
