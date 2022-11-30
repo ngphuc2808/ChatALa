@@ -85,8 +85,9 @@ const Register = () => {
         query: {
           name: values.name,
           phone: values.phone,
-        },
-      });
+          password: values.password
+        }
+      }, { shallow: true });
     } catch {
       alert('Registration failed, Phone number already exists!');
     }

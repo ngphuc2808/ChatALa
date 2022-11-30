@@ -64,6 +64,7 @@ export type FormValue = {
 export type UserRegister = {
   name: string;
   phone: string;
+  password: string;
 };
 
 export type UserLogin = {

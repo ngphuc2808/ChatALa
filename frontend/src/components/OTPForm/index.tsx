@@ -23,7 +23,9 @@ const OTPCode = () => {
       const data: UserRegister = {
         name: router.query.name as string,
         phone: router.query.phone as string,
+        password: router.query.password as string
       };
+      
       await UsersApi.register(data);
       alert('Registration succeed!');
       router.push('/login');
