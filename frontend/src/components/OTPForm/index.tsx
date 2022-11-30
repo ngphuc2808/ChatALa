@@ -64,8 +64,7 @@ const OTPCode = () => {
               pathname: '/register',
               query: {
                 name: router.query.name,
-                phone: router.query.phone,
-                password: router.query.password
+                phone: router.query.phone
               },
             })
           }
