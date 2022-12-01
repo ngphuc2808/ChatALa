@@ -15,7 +15,7 @@ const checkUser = asyncHandler(async (req, res, next) => {
       message: "Valid phone number!",
     });
   } else {
-    return next(new ErrorHandler("Phone number already exists!", 404));
+    return next(new ErrorHandler("Phone number already exists!", 400));
   }
 });
 
