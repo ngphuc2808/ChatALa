@@ -1,16 +1,17 @@
-import FormTemplate from "../Global/FormTemplate";
-import { authentication } from "../Global/Firebase";
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import { NumberPhoneArea } from "../../utils/dataConfig";
-import { Formik, ErrorMessage } from "formik";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import * as S from "./Register.styled";
-import * as Yup from "yup";
-import { ChangeEvent, useState } from "react";
-import { UsersApi } from "../../services/api/users";
-import { FormValue } from "../../utils/types";
+import FormTemplate from '../Global/FormTemplate';
+import { authentication } from '../Global/Firebase';
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import { NumberPhoneArea } from '../../utils/dataConfig';
+import { Formik, ErrorMessage } from 'formik';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import * as S from './Register.styled';
+import * as Yup from 'yup';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { UsersApi } from '../../services/api/users';
+import { FormValue } from '../../utils/types';
 import { BsEyeSlash, BsEye } from "react-icons/bs";
+import { ClipLoader } from 'react-spinners';
 
 declare global {
   interface Window {
@@ -20,6 +21,10 @@ declare global {
 }
 
 const Register = () => {
+  useEffect(() => {
+    window.history.replaceState(null, '', `/register`);
+  }, [])
+
   const router = useRouter();
 
   const [eye, setEye] = useState<boolean>(false);
@@ -41,10 +46,10 @@ const Register = () => {
       ),
 
     password: Yup.string()
-      .required("This field is required.")
+      .required('This field is required.')
       .matches(
         /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{8,}$/,
-        "Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number."
+        'Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number.'
       ),
 
     confirmPassword: Yup.string()
@@ -83,7 +88,8 @@ const Register = () => {
         query: {
           name: values.name,
           phone: values.phone,
-        },
+          password: values.password
+        }
       });
     } catch (err: any) {
       if (err.statusCode === 400) {
@@ -101,7 +107,7 @@ const Register = () => {
         onSubmit={handleSubmit}
         enableReinitialize
       >
-        {({ errors, touched, setFieldValue }) => (
+        {({ errors, touched, isSubmitting, setFieldValue }) => (
           <S.NewForm>
             <S.SetWidth>
               <S.InputGroup
@@ -156,8 +162,14 @@ const Register = () => {
                   errors.confirmPassword && touched.confirmPassword ? 1 : 0
                 }
               />
-              <ErrorMessage name="confirmPassword" component={S.ErrorMsg} />
-              <S.Button type="submit">Continue</S.Button>
+              <ErrorMessage name='confirmPassword' component={S.ErrorMsg} />
+              <S.Button type='submit'>
+                {isSubmitting ? (
+                  <ClipLoader color='#fff' size={25} />
+                ) : (
+                  'Continue'
+                )}
+              </S.Button>
             </S.SetWidth>
           </S.NewForm>
         )}

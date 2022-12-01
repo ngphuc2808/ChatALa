@@ -5,9 +5,11 @@ import { withRouter, useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { UsersApi } from '../../services/api/users';
 import { UserRegister } from '../../utils/types';
+import { ClipLoader } from 'react-spinners';
 
 const OTPCode = () => {
   const router = useRouter();
+
   const [checkError, setCheckError] = useState('false');
   const [countdown, setCountdown] = useState(30);
 
@@ -23,7 +25,9 @@ const OTPCode = () => {
       const data: UserRegister = {
         name: router.query.name as string,
         phone: router.query.phone as string,
+        password: router.query.password as string
       };
+      
       await UsersApi.register(data);
       alert('Registration succeed!');
       router.push('/login');
@@ -37,6 +41,7 @@ const OTPCode = () => {
     if (!router.query.name) {
       router.replace('/register');
     }
+    window.history.replaceState(null, '', `/otp`);
   }, []);
 
   useEffect(() => {
@@ -59,7 +64,7 @@ const OTPCode = () => {
               pathname: '/register',
               query: {
                 name: router.query.name,
-                phone: router.query.phone,
+                phone: router.query.phone
               },
             })
           }
@@ -97,7 +102,11 @@ const OTPCode = () => {
                 </S.CheckPhoneNumber>
               )}
               <S.Button type='submit' disabled={isSubmitting ? true : false}>
-                Verify
+                {isSubmitting ? (
+                  <ClipLoader color='#fff' size={25} />
+                ) : (
+                  'Verify'
+                )}
               </S.Button>
             </S.SetWidth>
           </S.NewForm>
