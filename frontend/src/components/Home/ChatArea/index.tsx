@@ -1,13 +1,6 @@
 import Image from "next/image";
 import * as S from "./ChatArea.styled";
-import {
-  FormEvent,
-  useRef,
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react";
+import { FormEvent, useRef, useState, useEffect, useCallback } from "react";
 import ChatMsg from "./ChatMsg";
 import EmojiPicker, { EmojiStyle, EmojiClickData } from "emoji-picker-react";
 import MoreOptions from "./MoreOptions";
@@ -16,7 +9,7 @@ import {
   validImageTypes,
 } from "../../Global/ProcessFunctions";
 import * as Yup from "yup";
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import FilePreview from "./FilePreview";
 import DropZone from "react-dropzone";
 import {
@@ -32,13 +25,18 @@ import {
   selectMessageState,
 } from "../../../features/redux/slices/messageSlice";
 import { selectRoomInfoState } from "../../../features/redux/slices/roomInfoSlice";
-import { API_KEY, MessageApi } from "../../../services/api/messages";
+import {
+  API_KEY,
+  MessageApi,
+  CLOUD_NAME,
+} from "../../../services/api/messages";
 import { Socket } from "socket.io-client";
 import { PulseLoader } from "react-spinners";
 import { debounce } from "lodash";
 import { selectRoomListState } from "../../../features/redux/slices/roomListSlice";
 import { selectUserState } from "../../../features/redux/slices/userSlice";
 import { FiChevronsDown } from "react-icons/fi";
+import { API_URL } from "../../../services/api/urls";
 
 interface IChatArea {
   socket: Socket<ServerToClientEvents, ClientToServerEvents>;
@@ -245,7 +243,7 @@ const ChatArea = ({ socket }: IChatArea) => {
     // let uploadedFile: any = undefined;
 
     const response = await fetch(
-      "https://api.cloudinary.com/v1_1/dzikgumce/auto/upload",
+      `${API_URL.uploadFile}/${CLOUD_NAME}/auto/upload`,
       {
         method: "POST",
         body: form,
@@ -254,12 +252,9 @@ const ChatArea = ({ socket }: IChatArea) => {
       return response.json();
     });
 
-    const uploadedFile = response.secure_url;
-    console.log(response);
-
     // const uploadedFile = await MessageApi.uploadFile(form);
 
-    return { name, url: uploadedFile, type };
+    return { name, url: response.secure_url, type };
   };
 
   //Upload files

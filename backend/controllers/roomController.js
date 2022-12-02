@@ -7,17 +7,30 @@ const Users = require("../models/userModel");
 const createRoom = asyncHandler(async (req, res, next) => {
   const { isGroup, users } = req.body;
 
-  users.push({
-    uid: req.user._id,
-    role: true,
-    nickname: req.user.name,
-    avatar: req.user.avatar,
-  });
+  if (users.every((user) => user.uid.toString() !== req.user._id.toString())) {
+    users.push({
+      uid: req.user._id,
+      role: true,
+      nickname: req.user.name,
+      avatar: req.user.avatar,
+    });
+  } else {
+    return next(new ErrorHandler("Group member cannot include creator!", 400));
+  }
 
   let roomToCreate = {};
   roomToCreate.users = users;
 
   if (isGroup) {
+    if (users.length < 3) {
+      return next(
+        new ErrorHandler(
+          "Create group chat but receive less than 2 members!",
+          400
+        )
+      );
+    }
+
     let groupName = users[0].nickname;
     for (let i = 1; i < users.length; i++) {
       if (i < 3) {
@@ -29,15 +42,13 @@ const createRoom = asyncHandler(async (req, res, next) => {
     }
     roomToCreate.groupName = groupName;
     roomToCreate.isGroup = true;
-  } else {
-    if (users.length > 2) {
-      return next(
-        new ErrorHandler(
-          "Create non-group chat but receive more than 1 user!",
-          400
-        )
-      );
-    }
+  } else if (users.length > 2) {
+    return next(
+      new ErrorHandler(
+        "Create non-group chat but receive more than 1 member!",
+        400
+      )
+    );
   }
 
   const createdRoom = await Rooms.create(roomToCreate);
@@ -62,6 +73,9 @@ const getRoomList = asyncHandler(async (req, res, next) => {
           roomAvatar = room.users[0].avatar;
         }
         result.push({ roomName, roomAvatar, roomInfo: room });
+      }
+      else{
+        result.push({ roomName: room.groupName, roomAvatar: "", roomInfo: room });
       }
     });
 

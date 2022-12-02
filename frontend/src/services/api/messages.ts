@@ -2,7 +2,7 @@ import { messageSendType } from '../../utils/types';
 import http from '../http';
 import { API_URL } from './urls';
 
-const CLOUD_NAME = 'dzikgumce';
+export const CLOUD_NAME = 'dzikgumce';
 export const API_KEY = '883356262461341';
 
 export const MessageApi = {

@@ -14,6 +14,8 @@ import { BASEURL } from "../src/services/api/urls";
 import { ClientToServerEvents, ServerToClientEvents } from "../src/utils/types";
 import { selectUserState } from "../src/features/redux/slices/userSlice";
 import { messageActions } from "../src/features/redux/slices/messageSlice";
+import { friendListActions } from "../src/features/redux/slices/friendListSlice";
+import { FriendApi } from "../src/services/api/friend";
 
 const Home = () => {
   const router = useRouter();
@@ -47,7 +49,7 @@ const Home = () => {
     }
   }, [user]);
 
-  const getRoomData = async () => {
+  const getRoomList = async () => {
     try {
       dispatch(roomListActions.requestRoomList(null));
       const rooms = await RoomApi.getRoomList();
@@ -57,15 +59,29 @@ const Home = () => {
       if (err.errors?.error.statusCode === 401) {
         if (err.errors.message === "Unauthorized!") {
           alert("Your session is over, redirecting to login page.");
-          socket.current?.disconnect()
+          socket.current?.disconnect();
           router.push("/login");
         }
       }
     }
   };
 
+  const getFriendList = async () => {
+    try {
+      dispatch(friendListActions.requestFriendList(null));
+      const friends = await FriendApi.friendList();
+      dispatch(friendListActions.setFriendList(friends));
+    } catch (err: any) {
+      console.log(err);
+      if (err.errors?.error.statusCode === 400) {
+        alert(err.errors.message)
+      }
+    }
+  };
+
   useEffect(() => {
-    getRoomData();
+    getRoomList();
+    getFriendList();
   }, []);
 
   return (

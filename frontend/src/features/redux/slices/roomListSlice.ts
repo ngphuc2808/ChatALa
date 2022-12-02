@@ -98,5 +98,3 @@ export const roomListSlice = createSlice({
 export const roomListActions = roomListSlice.actions;
 
 export const selectRoomListState = (state: AppState) => state.roomList;
-
-export default roomListSlice.reducer;

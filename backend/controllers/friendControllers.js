@@ -1,7 +1,8 @@
-const asyncHandler = require('express-async-handler');
-const Notifications = require('../models/notificationModel');
-const Friends = require('../models/friendModel');
-const ErrorHandler = require('../utils/errorHandler');
+const asyncHandler = require("express-async-handler");
+const Notifications = require("../models/notificationModel");
+const Friends = require("../models/friendModel");
+const ErrorHandler = require("../utils/errorHandler");
+const Users = require("../models/userModel");
 
 const friendReq = asyncHandler(async (req, res, next) => {
   const id = req.user._id;
@@ -25,11 +26,11 @@ const friendReq = asyncHandler(async (req, res, next) => {
       requestId: id,
     });
 
-    res.status(200).json({
-      message: 'Request successfully',
+    return res.status(200).json({
+      message: "Request successfully",
     });
   } else {
-    return next(new ErrorHandler('Unhandled error!', 500));
+    return next(new ErrorHandler("Unhandled error!", 500));
   }
 });
 
@@ -48,10 +49,10 @@ const friendAccept = asyncHandler(async (req, res, next) => {
       },
     ],
   });
-  if (notification && notification.status == 'Pending' && !inRelationship) {
+  if (notification && notification.status == "Pending" && !inRelationship) {
     await Notifications.findByIdAndUpdate(notificationId, {
       $set: {
-        status: 'Accepted',
+        status: "Accepted",
       },
     });
     await Friends.create({
@@ -59,10 +60,10 @@ const friendAccept = asyncHandler(async (req, res, next) => {
       uid2: notification.receiveId,
     });
     return res.status(200).json({
-      message: 'Accept successfully',
+      message: "Accept successfully",
     });
   } else {
-    return next(new ErrorHandler('Unhandled error!', 500));
+    return next(new ErrorHandler("Unhandled error!", 500));
   }
 });
 
@@ -71,12 +72,12 @@ const friendDecline = asyncHandler(async (req, res, next) => {
 
   await Notifications.findByIdAndUpdate(id, {
     $set: {
-      status: 'Denied',
+      status: "Denied",
     },
   });
 
-  res.status(200).json({
-    message: 'Decline successfully',
+  return res.status(200).json({
+    message: "Decline successfully",
   });
 });
 
@@ -102,36 +103,36 @@ const block = asyncHandler(async (req, res, next) => {
       uid1: id,
       uid2: targetId,
       status: {
-        type: 'oneWayBlock',
+        type: "oneWayBlock",
         blockedId: targetId,
       },
     });
     return res.status(200).json({
-      message: 'Block successfully',
+      message: "Block successfully",
     });
   } else {
     if (
       friend.status &&
-      friend.status.type === 'oneWayBlock' &&
+      friend.status.type === "oneWayBlock" &&
       friend.status.blockedId.toString() === id
     ) {
       await Friends.findByIdAndUpdate(friend.id, {
         $set: {
-          status: { type: 'twoWayBlock', blockedId: undefined },
+          status: { type: "twoWayBlock", blockedId: undefined },
         },
       });
     }
-    if (friend.status && friend.status.type === 'available') {
+    if (friend.status && friend.status.type === "available") {
       await Friends.findByIdAndUpdate(friend.id, {
         $set: {
-          status: { type: 'oneWayBlock', blockedId: targetId },
+          status: { type: "oneWayBlock", blockedId: targetId },
         },
       });
     }
   }
 
   return res.status(200).json({
-    message: 'Block successfully',
+    message: "Block successfully",
   });
 });
 
@@ -155,23 +156,57 @@ const unblock = asyncHandler(async (req, res, next) => {
   if (friend) {
     if (
       friend.status &&
-      friend.status.type === 'oneWayBlock' &&
+      friend.status.type === "oneWayBlock" &&
       friend.status.blockedId.toString() === targetId
     ) {
       await Friends.findByIdAndDelete(friend.id);
     }
-    if (friend.status && friend.status.type === 'twoWayBlock') {
+    if (friend.status && friend.status.type === "twoWayBlock") {
       await Friends.findByIdAndUpdate(friend.id, {
         $set: {
-          status: { type: 'oneWayBlock', blockedId: id },
+          status: { type: "oneWayBlock", blockedId: id },
         },
       });
     }
   }
 
-  res.status(200).json({
-    message: 'Unblock successfully',
+  return res.status(200).json({
+    message: "Unblock successfully",
   });
 });
 
-module.exports = { friendReq, friendAccept, friendDecline, block, unblock };
+const friendList = asyncHandler(async (req, res, next) => {
+  const user = req.user;
+
+  const friends = await Friends.find({
+    $or: [
+      {
+        uid1: user._id,
+      },
+      {
+        uid2: user._id,
+      },
+    ],
+  });
+
+  const result = [];
+  for(const friend of friends) {
+    const friendId =
+    friend.uid1.toString() === user._id.toString()
+      ? friend.uid2
+      : friend.uid1;
+  const friendInfo = await Users.findById(friendId);
+  if (friendInfo) result.push(friendInfo);
+  }
+
+  return res.status(200).json(result);
+});
+
+module.exports = {
+  friendReq,
+  friendAccept,
+  friendDecline,
+  block,
+  unblock,
+  friendList,
+};
