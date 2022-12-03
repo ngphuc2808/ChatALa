@@ -12,7 +12,7 @@ http.interceptors.response.use(
   (response: AxiosResponse) => response.data,
   (error) => {
     return Promise.reject({
-      error: error,
+      error: error.response.data ? error.response.data : error,
     });
   }
 );

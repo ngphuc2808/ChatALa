@@ -30,7 +30,7 @@ const friendReq = asyncHandler(async (req, res, next) => {
       message: "Request successfully",
     });
   } else {
-    return next(new ErrorHandler("Unhandled error!", 500));
+    return next(new ErrorHandler("Already friend!", 400));
   }
 });
 
@@ -190,13 +190,13 @@ const friendList = asyncHandler(async (req, res, next) => {
   });
 
   const result = [];
-  for(const friend of friends) {
+  for (const friend of friends) {
     const friendId =
-    friend.uid1.toString() === user._id.toString()
-      ? friend.uid2
-      : friend.uid1;
-  const friendInfo = await Users.findById(friendId);
-  if (friendInfo) result.push(friendInfo);
+      friend.uid1.toString() === user._id.toString()
+        ? friend.uid2
+        : friend.uid1;
+    const friendInfo = await Users.findById(friendId);
+    if (friendInfo) result.push(friendInfo);
   }
 
   return res.status(200).json(result);

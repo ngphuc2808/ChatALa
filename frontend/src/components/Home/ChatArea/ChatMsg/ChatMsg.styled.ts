@@ -8,6 +8,7 @@ export const ChatMsg = styled.div`
 
 export const ChatMsgText = styled.div`
   ${tw`relative px-3 py-2 shadow-md`}
+  width: fit-content;
 `;
 
 export const ChatMsgTextTail = styled.div`

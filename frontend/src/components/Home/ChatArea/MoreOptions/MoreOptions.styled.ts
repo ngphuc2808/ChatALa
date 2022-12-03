@@ -24,9 +24,13 @@ export const RoomInfoAvatar = styled.figure`
   ${tw`relative w-[60px] h-[60px] rounded-full overflow-hidden mt-4 mb-2 border-2 border-darker`}
 `;
 
-export const RoomInfoName = styled.div`
+export const RoomInfoNameWrap = styled.div`
   ${tw`relative flex items-center text-[20px] font-semibold mb-4`}
 `;
+
+export const RoomInfoName = styled.div`
+${tw`w-[200px] whitespace-nowrap overflow-ellipsis overflow-hidden`}
+`
 
 export const RoomInfoNameEditIcon = styled(AiOutlineEdit)`
   ${tw`absolute right[-30px] bg-dark rounded-full p-[2px] text-[23px] hover:cursor-pointer hover:opacity-80`}

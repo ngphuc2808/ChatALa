@@ -56,8 +56,8 @@ const Home = () => {
       dispatch(roomListActions.setRoomList(rooms.result));
     } catch (err: any) {
       console.log(err);
-      if (err.errors?.error.statusCode === 401) {
-        if (err.errors.message === "Unauthorized!") {
+      if (err.error?.error.statusCode === 401) {
+        if (err.error.message === "Unauthorized!") {
           alert("Your session is over, redirecting to login page.");
           socket.current?.disconnect();
           router.push("/login");
@@ -72,9 +72,8 @@ const Home = () => {
       const friends = await FriendApi.friendList();
       dispatch(friendListActions.setFriendList(friends));
     } catch (err: any) {
-      console.log(err);
-      if (err.errors?.error.statusCode === 400) {
-        alert(err.errors.message)
+      if (err.error?.error.statusCode === 400) {
+        alert(err.error.message)
       }
     }
   };
