@@ -6,6 +6,7 @@ import { roomListActions } from "../../../../../features/redux/slices/roomListSl
 import { RoomApi } from "../../../../../services/api/room";
 import { CreateGroupArray } from "../../../../../utils/dataConfig";
 import { userInfo } from "../../../../../utils/types";
+import UserInfo from "../../../TopBar/UserInfo";
 import * as S from "./CreateGroup.styled";
 
 interface ICreateGroup {
@@ -22,8 +23,15 @@ const CreateGroup = ({ setToggleCreateGroup }: ICreateGroup) => {
   const dispatch = useDispatch();
 
   const [addedUsers, setAddedUsers] = useState<userInfo[]>([]);
+  const [toggleFriendProfile, setToggleFriendProfile] = useState(false);
+  const [friendProfile, setFriendProfile] = useState<userInfo>();
 
   const friends = useSelector(selectFriendListState);
+
+  const showFriendProfile = (data: userInfo) => {
+    setToggleFriendProfile(true);
+    setFriendProfile(data);
+  };
 
   const addUserToGroup = (data: userInfo) => {
     if (addedUsers.every((user) => user._id !== data._id)) {
@@ -53,7 +61,7 @@ const CreateGroup = ({ setToggleCreateGroup }: ICreateGroup) => {
         if (createdRoom) {
           const rooms = await RoomApi.getRoomList();
           dispatch(roomListActions.setRoomList(rooms.result));
-          setToggleCreateGroup(false)
+          setToggleCreateGroup(false);
         }
       } catch (err: any) {
         console.log(err);
@@ -99,7 +107,10 @@ const CreateGroup = ({ setToggleCreateGroup }: ICreateGroup) => {
         )}
         <S.GreateGroupList>
           {friends.list.map((data, index) => (
-            <S.CreateGroupItem key={index}>
+            <S.CreateGroupItem
+              key={index}
+              onClick={() => showFriendProfile(data)}
+            >
               <S.CreateGroupInfo>
                 <S.CreateGroupAvatar>
                   <Image
@@ -121,6 +132,12 @@ const CreateGroup = ({ setToggleCreateGroup }: ICreateGroup) => {
             </S.CreateGroupItem>
           ))}
         </S.GreateGroupList>
+        {toggleFriendProfile && (
+          <UserInfo
+            friendProfile={friendProfile}
+            setUserInfoModal={setToggleFriendProfile}
+          />
+        )}
       </S.CreateGroupBody>
     </S.CreateGroupModal>
   );

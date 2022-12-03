@@ -35,7 +35,7 @@ export const ShowFriendsSearchIcon = styled(BiSearchAlt)`
   ${tw`absolute hover:cursor-pointer text-[28px] text-[#002B98] ml-1.5 left-0`}
 `;
 
-export const GreateGroupList = styled.div`
+export const FriendList = styled.div`
   ${tw`max-h-[60vh] overflow-y-auto pr-1`}
   &::-webkit-scrollbar-track {
     ${tw`bg-transparent rounded-[10px]`}
@@ -50,17 +50,17 @@ export const GreateGroupList = styled.div`
   }
 `;
 
-export const ShowFriendsItem = styled.div`
-  ${tw`flex p-2 rounded-[20px] my-1.5 items-center relative w-full bg-secondary justify-between`}
-`;
+// export const ShowFriendsItem = styled.div`
+//   ${tw`flex p-2 rounded-[20px] my-1.5 items-center relative w-full bg-secondary justify-between`}
+// `;
 
 export const ShowFriendsInfo = styled.div`
-  ${tw`flex flex-grow items-center hover:cursor-pointer`}
+  ${tw`relative flex flex-grow rounded-[20px] my-1 p-2 items-center hover:cursor-pointer bg-secondary`}
 `;
 
 export const ShowFriendsAvatar = styled.figure`
   ${tw`relative w-[55px] h-[55px] rounded-full overflow-hidden flex-shrink-0`}
-  border: 2px solid black;
+  border: 1px solid gray;
 `;
 
 export const ShowFriendsName = styled.div`

@@ -29,7 +29,7 @@ export const RoomInfoNameWrap = styled.div`
 `;
 
 export const RoomInfoName = styled.div`
-${tw`w-[200px] whitespace-nowrap overflow-ellipsis overflow-hidden`}
+${tw`w-[200px] text-center whitespace-nowrap overflow-ellipsis overflow-hidden`}
 `
 
 export const RoomInfoNameEditIcon = styled(AiOutlineEdit)`
