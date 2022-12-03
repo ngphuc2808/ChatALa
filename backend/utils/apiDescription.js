@@ -69,7 +69,7 @@ const editUserInfo = {
 };
 
 const friendRequest = {
-  url: "api/user/friend-request/:id",
+  url: "api/friend/request/:id",
   auth: true,
   method: "POST",
   req: {},
@@ -79,7 +79,7 @@ const friendRequest = {
 };
 
 const friendAccept = {
-  url: "api/user/notification/:id/accept",
+  url: "api/friend/accept",
   auth: true,
   method: "POST",
   req: {},
@@ -89,7 +89,7 @@ const friendAccept = {
 };
 
 const friendDecline = {
-  url: "api/user/notification/:id/decline",
+  url: "api/friend/decline",
   auth: true,
   method: "POST",
   req: {},
@@ -99,7 +99,7 @@ const friendDecline = {
 };
 
 const block = {
-  url: "api/user/block/:id",
+  url: "api/friend/block/:id",
   auth: true,
   method: "POST",
   req: {},
@@ -109,7 +109,7 @@ const block = {
 };
 
 const unblock = {
-  url: "api/user/unblock/:id",
+  url: "api/friend/unblock/:id",
   auth: true,
   method: "POST",
   req: {},
@@ -131,6 +131,20 @@ const setAvatar = {
   },
 };
 
+const getFriendRequestList = {
+  url: "api/friend",
+  auth: true,
+  method: "Get",
+  req: {},
+  res: [
+    {
+      uid: String,
+      name: String,
+      avatar: String,
+    },
+  ],
+};
+
 // ROOM
 
 const createRoom = {
@@ -149,8 +163,8 @@ const createRoom = {
   },
   res: {
     //room created
-  }
-}
+  },
+};
 
 const getRoomList = {
   url: "api/room",
@@ -249,11 +263,13 @@ const sendMessage = {
   req: {
     roomId: String,
     msg: String,
-    files: [{
-      url: String,
-      name: String,
-      type: String, //file or image
-    }],
+    files: [
+      {
+        url: String,
+        name: String,
+        type: String, //file or image
+      },
+    ],
   },
   res: {
     message: String,
@@ -291,4 +307,4 @@ const signedFileUrl = {
     signature: String,
     timestamps: String,
   },
-}
+};
