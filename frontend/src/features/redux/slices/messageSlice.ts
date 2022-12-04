@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { AppState } from '../store';
-import { HYDRATE } from 'next-redux-wrapper';
-import { messageType } from '../../../utils/types';
+import { createSlice } from "@reduxjs/toolkit";
+import { AppState } from "../store";
+import { HYDRATE } from "next-redux-wrapper";
+import { messageType } from "../../../utils/types";
 
 // Type for our state
 export interface messageState {
@@ -9,7 +9,7 @@ export interface messageState {
   loading: boolean;
 }
 
-const messageInitialState: messageType[] = []
+const messageInitialState: messageType[] = [];
 
 // Initial state
 const initialState: messageState = {
@@ -19,7 +19,7 @@ const initialState: messageState = {
 
 // Actual Slice
 export const messageSlice = createSlice({
-  name: 'messages',
+  name: "messages",
   initialState,
   reducers: {
     requestMessage(state, action) {
@@ -57,5 +57,3 @@ export const messageSlice = createSlice({
 export const messageActions = messageSlice.actions;
 
 export const selectMessageState = (state: AppState) => state.messages;
-
-export default messageSlice.reducer;

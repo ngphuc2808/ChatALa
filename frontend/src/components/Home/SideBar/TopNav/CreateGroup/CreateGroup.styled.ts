@@ -56,7 +56,7 @@ export const CreateGroupAddedUsersInner = styled.div`
 `;
 
 export const CreateGroupSubmit = styled.div`
-  ${tw`bg-dark ml-1 p-2 rounded-[20px] hover:cursor-pointer hover:bg-secondary transition-colors`}
+  ${tw`text-primary ml-1 p-2 rounded-[20px] hover:cursor-pointer`}
 `;
 
 export const CreateGroupAddedUser = styled.span`
@@ -108,6 +108,10 @@ export const CreateGroupName = styled.div`
   ${tw`flex-grow font-semibold text-[18px] overflow-ellipsis ml-3.5`}
 `;
 
-export const CreateGroupOption = styled.div`
-  ${tw`text-blue-300 bg-gray-500 rounded-[50px] font-semibold text-sm px-5 py-2.5 ml-1 hover:opacity-100 hover:cursor-pointer opacity-90`}
+export const CreateGroupAdd = styled.div`
+  ${tw`text-primary bg-darker rounded-[50px] font-semibold text-sm px-5 py-2.5 ml-1 hover:opacity-100 hover:cursor-pointer opacity-90`}
+`;
+
+export const CreateGroupAdded = styled.div`
+  ${tw`text-primary bg-gray-500 rounded-[50px] font-semibold text-sm px-5 py-2.5 ml-1 hover:cursor-default`}
 `;

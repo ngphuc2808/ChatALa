@@ -19,7 +19,7 @@ const ChatList = ({ roomSelected, setRoomSelected }: IChatList) => {
 
   const roomSelect = async (index: number) => {
     if (roomSelected !== index) {
-      dispatch(roomInfoActions.requestRoomInfo(null));
+      // dispatch(roomInfoActions.requestRoomInfo(null));
 
       const result = await RoomApi.getRoomInfo(
         roomList.list[index].roomInfo._id

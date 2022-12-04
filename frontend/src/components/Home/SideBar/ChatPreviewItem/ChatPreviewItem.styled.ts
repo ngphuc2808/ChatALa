@@ -39,6 +39,6 @@ export const Wrapper = styled.div`
 `;
 
 export const ChatPreviewItem = styled.div<{ active?: boolean }>`
-  ${tw`flex items-center relative hover:cursor-pointer hover:bg-dark rounded-[20px]`}
+  ${tw`flex items-center my-1 relative hover:cursor-pointer hover:bg-dark rounded-[20px]`}
   ${({ active }) => active && tw`bg-darker shadow-md`}
 `;

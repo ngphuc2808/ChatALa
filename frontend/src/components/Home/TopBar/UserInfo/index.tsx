@@ -1,31 +1,30 @@
-import Image from 'next/image';
-import { useState } from 'react';
-import { HiOutlineX, HiPencil } from 'react-icons/hi';
-import { UserAvatar, UserName } from '../../../../utils/dataConfig';
+import Image from "next/image";
+import { useState } from "react";
+import { HiOutlineX, HiPencil } from "react-icons/hi";
+import { UserAvatar, UserName } from "../../../../utils/dataConfig";
 
-import * as S from './UserInfo.styled';
-import SettingInfo from '../SettingInfo';
-import { formatDate } from '../../../Global/ProcessFunctions';
+import * as S from "./UserInfo.styled";
+import SettingInfo from "../SettingInfo";
+import { formatDate } from "../../../Global/ProcessFunctions";
+import { useSelector } from "react-redux";
+import { selectUserState } from "../../../../features/redux/slices/userSlice";
 
 interface IUserInfo {
-  phone: string;
-  avatar: string;
-  banner: string;
-  name: string;
-  gender: string;
-  dob: string;
+  friendProfile?: {
+    phone: string;
+    avatar: string;
+    banner: string;
+    name: string;
+    gender: string;
+    dob: string;
+  };
   setUserInfoModal: (userInfo: boolean) => void;
 }
 
-const UserInfo = ({
-  phone,
-  avatar,
-  banner,
-  name,
-  gender,
-  dob,
-  setUserInfoModal,
-}: IUserInfo) => {
+const UserInfo = ({ friendProfile, setUserInfoModal }: IUserInfo) => {
+  const user = useSelector(selectUserState);
+  const { phone, avatar, banner, name, gender, dob } = friendProfile || user.info;
+
   const [editInfo, setEditInfo] = useState(false);
   const [seeAvatar, setSeeAvatar] = useState(false);
   return (
@@ -35,7 +34,7 @@ const UserInfo = ({
           <S.ModalOverlay onClick={() => setSeeAvatar(false)} />
           <S.ModalAvatarBody>
             <S.Figure>
-              <Image src={avatar} layout='fill' objectFit='contain' />
+              <Image src={avatar} layout="fill" objectFit="contain" />
             </S.Figure>
           </S.ModalAvatarBody>
         </S.ModalAvatar>
@@ -49,10 +48,10 @@ const UserInfo = ({
               <HiOutlineX onClick={() => setUserInfoModal(false)} />
             </S.Title>
             <S.Banner>
-              <Image src={banner} layout='fill' objectFit='cover' />
+              <Image src={banner} layout="fill" objectFit="cover" />
             </S.Banner>
             <S.Avatar onClick={() => setSeeAvatar(true)}>
-              <Image src={avatar} layout='fill' objectFit='cover' />
+              <Image src={avatar} layout="fill" objectFit="cover" />
             </S.Avatar>
           </S.Header>
           <S.Content>
@@ -69,10 +68,10 @@ const UserInfo = ({
               <span>{formatDate(dob)}</span>
             </S.Info>
           </S.Content>
-          <S.Button>
+          {!friendProfile && <S.Button>
             <HiPencil />
             <span onClick={() => setEditInfo(true)}>Update information</span>
-          </S.Button>
+          </S.Button>}
           {editInfo && (
             <SettingInfo
               name={name}

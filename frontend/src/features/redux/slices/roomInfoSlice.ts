@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { AppState } from '../store';
-import { HYDRATE } from 'next-redux-wrapper';
-import { roomInfo } from '../../../utils/types';
+import { createSlice } from "@reduxjs/toolkit";
+import { AppState } from "../store";
+import { HYDRATE } from "next-redux-wrapper";
+import { roomInfo } from "../../../utils/types";
 
 // Type for our state
 export interface roomInfoState {
@@ -9,7 +9,7 @@ export interface roomInfoState {
   loading: boolean;
 }
 
-const roomInfoInitialState = null
+const roomInfoInitialState = null;
 
 // Initial state
 const initialState: roomInfoState = {
@@ -19,7 +19,7 @@ const initialState: roomInfoState = {
 
 // Actual Slice
 export const roomInfoSlice = createSlice({
-  name: 'roomInfo',
+  name: "roomInfo",
   initialState,
   reducers: {
     requestRoomInfo(state, action) {
@@ -53,5 +53,3 @@ export const roomInfoSlice = createSlice({
 export const roomInfoActions = roomInfoSlice.actions;
 
 export const selectRoomInfoState = (state: AppState) => state.roomInfo;
-
-export default roomInfoSlice.reducer;

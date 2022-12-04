@@ -67,7 +67,7 @@ export type UserRegister = {
   password: string;
 };
 
-export type UserLogin = {
+export type userLogin = {
   phone: string;
   password: string;
 };

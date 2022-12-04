@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { AppState } from '../store';
-import { HYDRATE } from 'next-redux-wrapper';
-import { userInfo } from '../../../utils/types';
+import { createSlice } from "@reduxjs/toolkit";
+import { AppState } from "../store";
+import { HYDRATE } from "next-redux-wrapper";
+import { userInfo } from "../../../utils/types";
 
 // Type for our state
 export interface UserState {
@@ -10,15 +10,15 @@ export interface UserState {
 }
 
 const userInfoInitialState = {
-  _id: '',
-  avatar: '',
-  banner: '',
-  name: '',
-  phone: '',
-  gender: '',
-  dob: '',
-  createdAt: '',
-  updatedAt: '',
+  _id: "",
+  avatar: "",
+  banner: "",
+  name: "",
+  phone: "",
+  gender: "",
+  dob: "",
+  createdAt: "",
+  updatedAt: "",
   __v: 0,
 };
 
@@ -30,7 +30,7 @@ const initialState: UserState = {
 
 // Actual Slice
 export const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     requestUserInfo(state, action) {
@@ -43,7 +43,7 @@ export const userSlice = createSlice({
       state.info = action.payload;
     },
 
-    clearUserInfo (state, action) {
+    clearUserInfo(state, action) {
       state.loading = false;
       state.info = userInfoInitialState;
     },
@@ -64,5 +64,3 @@ export const userSlice = createSlice({
 export const userActions = userSlice.actions;
 
 export const selectUserState = (state: AppState) => state.user;
-
-export default userSlice.reducer;

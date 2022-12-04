@@ -1,13 +1,6 @@
 import Image from "next/image";
 import * as S from "./ChatArea.styled";
-import {
-  FormEvent,
-  useRef,
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react";
+import { FormEvent, useRef, useState, useEffect, useCallback } from "react";
 import ChatMsg from "./ChatMsg";
 import EmojiPicker, { EmojiStyle, EmojiClickData } from "emoji-picker-react";
 import MoreOptions from "./MoreOptions";
@@ -16,7 +9,7 @@ import {
   validImageTypes,
 } from "../../Global/ProcessFunctions";
 import * as Yup from "yup";
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import FilePreview from "./FilePreview";
 import DropZone from "react-dropzone";
 import {
@@ -32,13 +25,18 @@ import {
   selectMessageState,
 } from "../../../features/redux/slices/messageSlice";
 import { selectRoomInfoState } from "../../../features/redux/slices/roomInfoSlice";
-import { API_KEY, MessageApi } from "../../../services/api/messages";
+import {
+  API_KEY,
+  MessageApi,
+  CLOUD_NAME,
+} from "../../../services/api/messages";
 import { Socket } from "socket.io-client";
-import { PulseLoader } from "react-spinners";
+import { ClipLoader, PulseLoader } from "react-spinners";
 import { debounce } from "lodash";
 import { selectRoomListState } from "../../../features/redux/slices/roomListSlice";
 import { selectUserState } from "../../../features/redux/slices/userSlice";
 import { FiChevronsDown } from "react-icons/fi";
+import { API_URL } from "../../../services/api/urls";
 
 interface IChatArea {
   socket: Socket<ServerToClientEvents, ClientToServerEvents>;
@@ -126,7 +124,8 @@ const ChatArea = ({ socket }: IChatArea) => {
   const checkChatScrollBottom = (e: any) => {
     //e.target.scrollTop is bottom when value is 0, scroll up cause value goes negative
     //Check if chat scroll at bottom
-    if (e.target.scrollTop === 0) {
+    if (e.target.scrollTop >= 0) {
+      setNewMsgNoti(false);
       setChatAtBottom(true);
     } else {
       setChatAtBottom(false);
@@ -240,12 +239,11 @@ const ChatArea = ({ socket }: IChatArea) => {
     form.append("api_key", API_KEY);
     form.append("timestamp", signedKey.timestamp.toString());
     form.append("signature", signedKey.signature);
-    console.log(form);
 
     // let uploadedFile: any = undefined;
 
     const response = await fetch(
-      "https://api.cloudinary.com/v1_1/dzikgumce/auto/upload",
+      `${API_URL.uploadFile}/${CLOUD_NAME}/auto/upload`,
       {
         method: "POST",
         body: form,
@@ -254,12 +252,9 @@ const ChatArea = ({ socket }: IChatArea) => {
       return response.json();
     });
 
-    const uploadedFile = response.secure_url;
-    console.log(response);
-
     // const uploadedFile = await MessageApi.uploadFile(form);
 
-    return { name, url: uploadedFile, type };
+    return { name, url: response.secure_url, type };
   };
 
   //Upload files
@@ -284,7 +279,6 @@ const ChatArea = ({ socket }: IChatArea) => {
 
       const uploadedFiles = await uploadFiles(values.files);
       values.files = uploadedFiles as unknown as File[];
-      console.log(uploadedFiles);
 
       try {
         const res = await MessageApi.send(values);
@@ -344,7 +338,7 @@ const ChatArea = ({ socket }: IChatArea) => {
         validationSchema={validationSchema}
         enableReinitialize
       >
-        {({ values, setFieldValue, submitForm }) => (
+        {({ values, setFieldValue, submitForm, isSubmitting }) => (
           <DropZone
             onDrop={(acceptedFiles) =>
               fileDropped(acceptedFiles, values, setFieldValue)
@@ -376,18 +370,23 @@ const ChatArea = ({ socket }: IChatArea) => {
                     ))}
                   </S.ChatAreaMainMsgInner>
                 </S.ChatAreaMainMsg>
+                {isSubmitting && (
+                  <S.ChatAreaMainMsgLoading
+                    size={20}
+                    speedMultiplier={0.5}
+                    color="#769FCD"
+                  ></S.ChatAreaMainMsgLoading>
+                )}
                 {chatScrollBottom && (
                   <S.ChatAreaMainScrollBottom onClick={scrollToNewMsg} />
                 )}
                 {toggleTyping && (
-                  <S.ChatAreaMainTyping>
-                    <PulseLoader
-                      speedMultiplier={0.5}
-                      size={7}
-                      color="#769FCD"
-                      margin={2}
-                    />
-                  </S.ChatAreaMainTyping>
+                  <S.ChatAreaMainTyping
+                    speedMultiplier={0.5}
+                    size={7}
+                    color="#769FCD"
+                    margin={2}
+                  ></S.ChatAreaMainTyping>
                 )}
                 {newMsgNoti && (
                   <S.ChatAreaMainNewNoti onClick={() => newMsgNotiClick()}>
