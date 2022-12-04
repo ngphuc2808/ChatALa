@@ -57,7 +57,7 @@ const CreateGroup = ({ setToggleCreateGroup }: ICreateGroup) => {
       });
 
       try {
-        const createdRoom = await RoomApi.createGroup(users);
+        const createdRoom = await RoomApi.createRoom(users);
         if (createdRoom) {
           const rooms = await RoomApi.getRoomList();
           dispatch(roomListActions.setRoomList(rooms.result));

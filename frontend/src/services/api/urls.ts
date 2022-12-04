@@ -14,11 +14,12 @@ export const API_URL = {
   getRoomInfo: `${API_BASE}/room`,
   getLoggedUser: `${API_BASE}/user/getLoggedUser`,
   userFind: `${API_BASE}/user/find`,
+  getFriendRequestList: `${API_BASE}/friend/request`,
   friendRequest: `${API_BASE}/friend/request`,
   friendAccept: `${API_BASE}/friend/accept`,
   friendDecline: `${API_BASE}/friend/decline`,
   sendMessage: `${API_BASE}/message`,
   getSignedKey: `${API_BASE}/util/signedKey`,
-  createGroup: `${API_BASE}/room`,
+  createRoom: `${API_BASE}/room`,
   uploadFile: `https://api.cloudinary.com/v1_1`,
 };

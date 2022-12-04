@@ -2,8 +2,8 @@ import http from "../http";
 import { API_URL } from "./urls";
 
 export const RoomApi = {
-  createGroup: async function (users: any): Promise<any> {
-    return await http.post(API_URL.createGroup, { isGroup: true, users });
+  createRoom: async function (users: any, isGroup: boolean = false): Promise<any> {
+    return await http.post(API_URL.createRoom, { isGroup, users });
   },
   getRoomList: async function (): Promise<any> {
     return await http.get(API_URL.getRoomList);

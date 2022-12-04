@@ -4,6 +4,36 @@ const Friends = require("../models/friendModel");
 const ErrorHandler = require("../utils/errorHandler");
 const Users = require("../models/userModel");
 
+const getFriendRequestList = asyncHandler(async (req, res, next) => {
+  const id = req.user._id;
+  let listRequest = [];
+
+  const listPending = await Notifications.find({
+    receiveId: id,
+    status: "Pending",
+  });
+
+  for(const pending of listPending) {
+    if (pending.receiveId.toString() === id.toString()) {
+      let getUser = await Users.findById(pending.requestId);
+      listRequest.push({
+        _id: pending._id,
+        uid: pending.requestId,
+        name: getUser.name,
+        avatar: getUser.avatar,
+        banner: getUser.banner,
+        phone: getUser.phone,
+        gender: getUser.gender,
+        dob: getUser.dob,
+        createdAt: pending.createdAt,
+        updatedAt: pending.updatedAt
+      });
+    }
+  }
+
+  res.status(200).json(listRequest);
+});
+
 const friendReq = asyncHandler(async (req, res, next) => {
   const id = req.user._id;
   const receiveId = req.params.id;
@@ -25,7 +55,6 @@ const friendReq = asyncHandler(async (req, res, next) => {
       receiveId: receiveId,
       requestId: id,
     });
-
     return res.status(200).json({
       message: "Request successfully",
     });
@@ -59,6 +88,7 @@ const friendAccept = asyncHandler(async (req, res, next) => {
       uid1: notification.requestId,
       uid2: notification.receiveId,
     });
+
     return res.status(200).json({
       message: "Accept successfully",
     });
@@ -203,6 +233,7 @@ const friendList = asyncHandler(async (req, res, next) => {
 });
 
 module.exports = {
+  getFriendRequestList,
   friendReq,
   friendAccept,
   friendDecline,

@@ -132,15 +132,22 @@ const setAvatar = {
 };
 
 const getFriendRequestList = {
-  url: "api/friend",
+  url: "api/friend/request",
   auth: true,
   method: "Get",
   req: {},
   res: [
     {
+      _id: String,
       uid: String,
-      name: String,
       avatar: String,
+      banner: String,
+      name: String,
+      phone: String,
+      gender: String,
+      dob: String,
+      createdAt: String,
+      updatedAt: String,
     },
   ],
 };

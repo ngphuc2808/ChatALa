@@ -31,6 +31,10 @@ export const NotiList = styled.div`
   }
 `;
 
+export const NotiText = styled.div`
+  ${tw`text-base italic p-3 text-center rounded-[50px] bg-[#bedee7] text-black`}
+`;
+
 export const NotiItem = styled.div`
   ${tw`flex p-2 rounded-[20px] my-1.5 items-center relative w-full bg-dark`}
 `;
@@ -41,7 +45,7 @@ export const NotiInfo = styled.div`
 
 export const NotiAvatar = styled.figure`
   ${tw`relative w-[55px] h-[55px] rounded-full overflow-hidden flex-shrink-0`}
-  border: 2px solid black;
+  border: 1px solid gray;
 `;
 export const NotiNameWrapper = styled.div`
   ${tw`ml-3.5`}
@@ -60,9 +64,9 @@ export const NotiOption = styled.div`
 `;
 
 export const NotiAccept = styled(NotiOption)`
-  ${tw`bg-blue-500`}
+  ${tw`bg-green-500`}
 `;
 
 export const NotiDecline = styled(NotiOption)`
-  ${tw`bg-gray-500`}
+  ${tw`bg-red-500`}
 `;

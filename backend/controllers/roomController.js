@@ -60,31 +60,27 @@ const getRoomList = asyncHandler(async (req, res, next) => {
   const rooms = await Rooms.find({ "users.uid": req.user._id });
 
   let result = [];
-  if (rooms.length > 0) {
-    rooms.forEach((room) => {
-      if (!room.isGroup) {
-        let roomName;
-        let roomAvatar;
-        if (room.users[0].uid.toString() === req.user._id.toString()) {
-          roomName = room.users[1].nickname;
-          roomAvatar = room.users[1].avatar;
-        } else {
-          roomName = room.users[0].nickname;
-          roomAvatar = room.users[0].avatar;
-        }
-        result.push({ roomName, roomAvatar, roomInfo: room });
+  rooms.forEach((room) => {
+    if (!room.isGroup) {
+      let roomName;
+      let roomAvatar;
+      if (room.users[0].uid.toString() === req.user._id.toString()) {
+        roomName = room.users[1].nickname;
+        roomAvatar = room.users[1].avatar;
+      } else {
+        roomName = room.users[0].nickname;
+        roomAvatar = room.users[0].avatar;
       }
-      else{
-        result.push({ roomName: room.groupName, roomAvatar: "", roomInfo: room });
-      }
-    });
+      result.push({ roomName, roomAvatar, roomInfo: room });
+    }
+    else{
+      result.push({ roomName: room.groupName, roomAvatar: "", roomInfo: room });
+    }
+  });
 
-    res.status(200).json({
-      result,
-    });
-  } else {
-    return next(new ErrorHandler("Chat room not found!", 404));
-  }
+  res.status(200).json({
+    result,
+  });
 });
 
 const getRoomInfo = asyncHandler(async (req, res, next) => {

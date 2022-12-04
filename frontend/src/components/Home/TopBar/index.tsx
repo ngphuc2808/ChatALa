@@ -21,6 +21,7 @@ import {
 import { Socket } from "socket.io-client";
 import { roomInfoActions, selectRoomInfoState } from "../../../features/redux/slices/roomInfoSlice";
 import { roomListActions } from "../../../features/redux/slices/roomListSlice";
+import { FriendApi } from '../../../services/api/friend';
 
 interface ITopBar {
   socket: Socket<ServerToClientEvents, ClientToServerEvents>;
@@ -36,15 +37,23 @@ const TopBar = ({ socket }: ITopBar) => {
   const [action, setAction] = useState(false);
 
   const user = useSelector(selectUserState);
+  
   const roomInfo = useSelector(selectRoomInfoState);
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const [listNoti, setListNoti] = useState([]);
 
   const getLoggedUser = async () => {
     dispatch(userActions.requestUserInfo(null));
     const result = await UsersApi.getLoggedUser();
     if (result) dispatch(userActions.setUserInfo(result));
   };
+
+  const getListNotify = async () => {
+    const listNotify = await FriendApi.friendRequestList();
+    setListNoti(listNotify);
+  }
 
   const logout = async () => {
     await UsersApi.logout();
@@ -63,7 +72,6 @@ const TopBar = ({ socket }: ITopBar) => {
         const res = await UsersApi.userFind({ search: searchInput });
         setSearchResult(res.result);
         setSearchModal(true);
-        console.log(res);
       } catch (err) {
         console.log(err);
       }
@@ -75,8 +83,9 @@ const TopBar = ({ socket }: ITopBar) => {
 
   useEffect(() => {
     getLoggedUser();
-  }, []);
-
+    getListNotify();
+  }, [])
+  
   useEffect(() => {
     let t: any;
     if (!action) {
@@ -129,9 +138,12 @@ const TopBar = ({ socket }: ITopBar) => {
             )}
           </S.Search>
           <S.Option>
-            <S.OptionNotify onClick={() => setActiveNotiModal(true)} />
+            <S.OptionNotifyWrapper>
+              <S.OptionNotify onClick={() => setActiveNotiModal(true)}/> 
+              { listNoti.length > 0 && <S.OptionNotifyNumber number={listNoti.length}>{ listNoti.length < 100 ? listNoti.length : '99+' }</S.OptionNotifyNumber> }
+            </S.OptionNotifyWrapper>
             {activeNotiModal && (
-              <NotiModal setActiveNotiModal={setActiveNotiModal} />
+              <NotiModal listNoti={listNoti} getListNotify={getListNotify} setActiveNotiModal={setActiveNotiModal} />
             )}
             <S.OptionSetting onClick={() => setSettingVisible(true)} />
             {settingVisible && (

@@ -64,3 +64,18 @@ export const OptionLogOut = styled(ImExit)`
 export const OptionNotify = styled(IoNotificationsCircleSharp)`
   ${tw`hover:cursor-pointer mx-2 text-[30px]`}
 `;
+
+export const NotifyNumber = styled.div`
+  ${tw`hover:cursor-pointer text-[18px] w-[30px] h-[30px] text-center leading-[30px] text-red-500 bg-[#769fcd] rounded-[50px] border-[1px] border-solid border-red-500`}
+`;
+
+export const OptionNotifyWrapper = styled.div`
+  ${tw`relative`}
+`;
+
+export const OptionNotifyNumber = styled.div<{ number: number }>`
+  ${tw`flex justify-center items-center absolute text-[12px] text-red-500 top-[-2px] right-[9px] font-semibold text-left`}
+  text-shadow: 2px 0 #fff, -2px 0 #fff, 0 2px #fff, 0 -2px #fff,
+              1px 1px #fff, -1px -1px #fff, 1px -1px #fff, -1px 1px #fff;
+  ${({number}) => number >= 100 && tw`right-0`}
+`;

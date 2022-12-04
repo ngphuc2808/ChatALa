@@ -3,6 +3,9 @@ import http from '../http';
 import { API_URL } from './urls';
 
 export const FriendApi = {
+  friendRequestList: async function(): Promise<any>{
+    return await http.get(API_URL.getFriendRequestList)
+  },
   friendList: async function(): Promise<any>{
     return await http.get(API_URL.getFriendList)
   },
