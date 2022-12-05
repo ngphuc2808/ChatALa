@@ -29,27 +29,15 @@ const Home = () => {
   // const socket = useRef<Socket<ServerToClientEvents, ClientToServerEvents>>();
   const socket = useSocketContext();
 
-  // useEffect(() => {
-  //   socket.current = io(BASEURL);
-  // }, []);
-
   useEffect(() => {
-    if (user.loading === false && user.info._id !== "") {
-      // @ts-ignore
-      socket.emit("newUserConnect", user.info._id);
-      // @ts-ignore
-      socket.on("getUsers", (users) => {
-        console.log(users);
-        dispatch(
-          roomListActions.setActiveRoom({ users, loggedUid: user.info._id })
-        );
-      });
-      // @ts-ignore
-      socket.on("newLastMsg", (result) => {
-        dispatch(roomListActions.setNewLastMsg(result));
-      });
-    }
-  }, [user]);
+    // @ts-ignore
+    socket.on("newLastMsg", (result) => {
+      dispatch(roomListActions.setNewLastMsg(result));
+    });
+    socket.on("new room", () => {
+      getRoomList();
+    });
+  }, []);
 
   const getRoomList = async () => {
     try {
@@ -74,7 +62,7 @@ const Home = () => {
       dispatch(friendListActions.setFriendList(friends));
     } catch (err: any) {
       if (err.error?.error.statusCode === 400) {
-        alert(err.error.message)
+        alert(err.error.message);
       }
     }
   };
@@ -87,13 +75,10 @@ const Home = () => {
   return (
     <>
       <S.HomeContainer>
-        {/* @ts-ignore */}
-        <TopBar socket={socket} />
+        <TopBar />
         <S.Wrapper>
-          {/* @ts-ignore */}
-          <SideBar socket={socket} />
-          {/* @ts-ignore */}
-          {roomInfo.info ? <ChatArea socket={socket} /> : <Welcome />}
+          <SideBar />
+          {roomInfo.info ? <ChatArea /> : <Welcome />}
         </S.Wrapper>
       </S.HomeContainer>
     </>

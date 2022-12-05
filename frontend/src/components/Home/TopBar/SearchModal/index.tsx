@@ -1,9 +1,10 @@
-import * as S from './SearchModal.styled';
-import * as React from 'react';
-import Image from 'next/image';
-import { useOutsideClick } from '../../../Global/ProcessFunctions';
-import { SearchResult } from '../../../../utils/types';
-import { FriendApi } from '../../../../services/api/friend';
+import * as S from "./SearchModal.styled";
+import * as React from "react";
+import Image from "next/image";
+import { useOutsideClick } from "../../../Global/ProcessFunctions";
+import { SearchResult } from "../../../../utils/types";
+import { FriendApi } from "../../../../services/api/friend";
+import { useSocketContext } from "../../../../contexts/socket";
 interface ISearchModalModal {
   setSearchModal: (isActive: boolean) => void;
   searchResult: SearchResult[];
@@ -19,11 +20,14 @@ const SearchModal = ({
     setSearchModal(false);
   };
 
+  const socket = useSocketContext()
+
   const SearchModalRef = useOutsideClick(handleOutsideClick);
 
   const friendRequest = async (id: string) => {
     try {
       const res = await FriendApi.friendRequest(id);
+      socket.emit("receiveNoti", id)
       setAction(true);
     } catch (err) {
       console.log(err);
@@ -60,18 +64,18 @@ const SearchModal = ({
                 <S.SearchModalAvatar>
                   <Image
                     src={data.avatar}
-                    alt='avatar'
-                    layout='fill'
-                    objectFit='cover'
+                    alt="avatar"
+                    layout="fill"
+                    objectFit="cover"
                   />
                 </S.SearchModalAvatar>
                 <S.SearchModalNameWrapper>
                   <S.SearchModalName>{data.name}</S.SearchModalName>
                 </S.SearchModalNameWrapper>
               </S.SearchModalInfo>
-              {data.status === 'available' ? (
+              {data.status === "available" ? (
                 <S.SearchModalMessage>Message</S.SearchModalMessage>
-              ) : data.status === 'receive' ? (
+              ) : data.status === "receive" ? (
                 <S.FlexWrap>
                   <S.SearchModalAccept
                     onClick={() => friendAccept(data.notificationId)}
@@ -84,7 +88,7 @@ const SearchModal = ({
                     Decline
                   </S.SearchModalDecline>
                 </S.FlexWrap>
-              ) : data.status === 'request' ? (
+              ) : data.status === "request" ? (
                 <S.SearchModalPending>Pending</S.SearchModalPending>
               ) : (
                 <S.SearchModalAddFriend onClick={() => friendRequest(data._id)}>

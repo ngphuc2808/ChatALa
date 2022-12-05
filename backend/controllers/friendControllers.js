@@ -13,7 +13,7 @@ const getFriendRequestList = asyncHandler(async (req, res, next) => {
     status: "Pending",
   });
 
-  for(const pending of listPending) {
+  for (const pending of listPending) {
     if (pending.receiveId.toString() === id.toString()) {
       let getUser = await Users.findById(pending.requestId);
       listRequest.push({
@@ -26,7 +26,7 @@ const getFriendRequestList = asyncHandler(async (req, res, next) => {
         gender: getUser.gender,
         dob: getUser.dob,
         createdAt: pending.createdAt,
-        updatedAt: pending.updatedAt
+        updatedAt: pending.updatedAt,
       });
     }
   }
@@ -56,7 +56,7 @@ const friendReq = asyncHandler(async (req, res, next) => {
       requestId: id,
     });
     return res.status(200).json({
-      message: "Request successfully",
+      receiveId,
     });
   } else {
     return next(new ErrorHandler("Already friend!", 400));

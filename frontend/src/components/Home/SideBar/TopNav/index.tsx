@@ -1,20 +1,11 @@
-import ChatPreviewItem from '../ChatPreviewItem';
 import * as S from './TopNav.styled';
 import { useState } from 'react';
 import CreateGroup from './CreateGroup';
 import ShowFriends from './ShowFriends';
-import { useDispatch } from 'react-redux';
-import { roomInfoActions } from '../../../../features/redux/slices/roomInfoSlice';
 
-interface ITopNav {
-  setRoomSelected: (number: number) => void;
-}
-
-const TopNav = ({ setRoomSelected }: ITopNav) => {
+const TopNav = () => {
   const [toggleCreateGroup, setToggleCreateGroup] = useState(false);
   const [toggleShowFriends, setToggleShowFriends] = useState(false);
-
-  const dispatch = useDispatch();
 
   return (
     <S.Wrapper>

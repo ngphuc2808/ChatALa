@@ -68,13 +68,17 @@ const removeUser = (socketId) => {
 io.on("connection", (socket) => {
   console.log("A user connected".magenta.bold);
 
-  socket.on("newUserConnect", (uid) => {
+  socket.on("logged", (uid) => {
     addUser(uid, socket.id);
     io.emit("getUsers", users);
   });
 
-  socket.on("roomSelected", (roomId, uid) => {
+  socket.on("room join", (roomId) => {
     socket.join(roomId);
+  });
+
+  socket.on("room leave", (roomId) => {
+    socket.leave(roomId);
   });
 
   socket.on("logout", (roomId) => {
@@ -87,6 +91,20 @@ io.on("connection", (socket) => {
   socket.on("typing", (roomId) => {
     socket.to(roomId).emit("typing");
   });
+
+  socket.on("stop typing", (roomId) => {
+    socket.to(roomId).emit("stop typing");
+  });
+
+  socket.on("receiveNoti", (receiveId) => {
+    const receiveUser = users.find(user => user.uid.toString() === receiveId.toString());
+    socket.to(receiveUser.socketId).emit("receiveNoti")
+  });
+
+  socket.on("new room", (receiveId) => {
+    const receiveUser = users.find(user => user.uid.toString() === receiveId.toString());
+    socket.to(receiveUser.socketId).emit("new room")
+  })
 
   // socket.on("sendMessage", (message, roomId) => {
   //   console.log("new message: ", message);

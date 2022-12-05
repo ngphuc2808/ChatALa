@@ -37,18 +37,16 @@ import { selectRoomListState } from "../../../features/redux/slices/roomListSlic
 import { selectUserState } from "../../../features/redux/slices/userSlice";
 import { FiChevronsDown } from "react-icons/fi";
 import { API_URL } from "../../../services/api/urls";
+import { useSocketContext } from "../../../contexts/socket";
 
-interface IChatArea {
-  socket: Socket<ServerToClientEvents, ClientToServerEvents>;
-}
-
-const ChatArea = ({ socket }: IChatArea) => {
+const ChatArea = () => {
   const dispatch = useDispatch();
 
   const messages = useSelector(selectMessageState);
   const roomInfo = useSelector(selectRoomInfoState);
   const roomList = useSelector(selectRoomListState);
   const user = useSelector(selectUserState);
+  const socket = useSocketContext();
 
   const [toggleEmoji, setToggleEmoji] = useState(false);
   const [toggleOption, setToggleOption] = useState(false);
@@ -76,24 +74,27 @@ const ChatArea = ({ socket }: IChatArea) => {
 
   //Handle Typing and Receive new messages
   useEffect(() => {
-    if (socket) {
-      //@ts-ignore
-      socket.on("typing", () => {
-        setToggleTyping((val) => !val);
-      });
-      // @ts-ignore
-      socket.on("receiveMessage", (result) => {
-        //add new message if not sender
-        if (result.senderId !== user.info._id) {
-          dispatch(messageActions.newMessage(result));
-        }
-      });
-    }
+    //@ts-ignore
+    socket.on("typing", () => {
+      console.log("typing")
+      setToggleTyping(true);
+    });
+    socket.on("stop typing", () => {
+      console.log("stop typing")
+      setToggleTyping(false);
+    });
+    // @ts-ignore
+    socket.on("receiveMessage", (result) => {
+      //add new message if not sender
+      if (result.senderId !== user.info._id) {
+        dispatch(messageActions.newMessage(result));
+      }
+    });
   }, []);
   const debounceTyping = useCallback(
     debounce(() => {
       //@ts-ignore
-      socket.emit("typing", roomInfo.info?.roomInfo._id);
+      socket.emit("stop typing", roomInfo.info?.roomInfo._id);
       setSendTyping(false);
     }, 1500),
     []
@@ -277,10 +278,9 @@ const ChatArea = ({ socket }: IChatArea) => {
     if (values.msg !== "" || values.files.length > 0) {
       setToggleEmoji(false);
 
-      const uploadedFiles = await uploadFiles(values.files);
-      values.files = uploadedFiles as unknown as File[];
-
       try {
+        const uploadedFiles = await uploadFiles(values.files);
+        values.files = uploadedFiles as unknown as File[];
         const res = await MessageApi.send(values);
 
         dispatch(messageActions.newMessage(res.result));
