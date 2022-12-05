@@ -16,6 +16,7 @@ import { selectUserState } from "../src/features/redux/slices/userSlice";
 import { messageActions } from "../src/features/redux/slices/messageSlice";
 import { friendListActions } from "../src/features/redux/slices/friendListSlice";
 import { FriendApi } from "../src/services/api/friend";
+import { useSocketContext } from "../src/contexts/socket";
 
 const Home = () => {
   const router = useRouter();
@@ -25,25 +26,26 @@ const Home = () => {
   const user = useSelector(selectUserState);
 
   //socket client
-  const socket = useRef<Socket<ServerToClientEvents, ClientToServerEvents>>();
+  // const socket = useRef<Socket<ServerToClientEvents, ClientToServerEvents>>();
+  const socket = useSocketContext();
 
-  useEffect(() => {
-    socket.current = io(BASEURL);
-  }, []);
+  // useEffect(() => {
+  //   socket.current = io(BASEURL);
+  // }, []);
 
   useEffect(() => {
     if (user.loading === false && user.info._id !== "") {
       // @ts-ignore
-      socket.current.emit("newUserConnect", user.info._id);
+      socket.emit("newUserConnect", user.info._id);
       // @ts-ignore
-      socket.current.on("getUsers", (users) => {
+      socket.on("getUsers", (users) => {
         console.log(users);
         dispatch(
           roomListActions.setActiveRoom({ users, loggedUid: user.info._id })
         );
       });
       // @ts-ignore
-      socket.current.on("newLastMsg", (result) => {
+      socket.on("newLastMsg", (result) => {
         dispatch(roomListActions.setNewLastMsg(result));
       });
     }
@@ -59,7 +61,6 @@ const Home = () => {
       if (err.error?.error.statusCode === 401) {
         if (err.error.message === "Unauthorized!") {
           alert("Your session is over, redirecting to login page.");
-          socket.current?.disconnect();
           router.push("/login");
         }
       }
@@ -87,12 +88,12 @@ const Home = () => {
     <>
       <S.HomeContainer>
         {/* @ts-ignore */}
-        <TopBar socket={socket.current} />
+        <TopBar socket={socket} />
         <S.Wrapper>
           {/* @ts-ignore */}
-          <SideBar socket={socket.current} />
+          <SideBar socket={socket} />
           {/* @ts-ignore */}
-          {roomInfo.info ? <ChatArea socket={socket.current} /> : <Welcome />}
+          {roomInfo.info ? <ChatArea socket={socket} /> : <Welcome />}
         </S.Wrapper>
       </S.HomeContainer>
     </>

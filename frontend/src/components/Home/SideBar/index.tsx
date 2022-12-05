@@ -19,7 +19,7 @@ const SideBar = ({ socket }: ISideBar) => {
   const roomList = useSelector(selectRoomListState);
 
   useEffect(() => {
-    if(roomSelected !== -2){
+    if(roomSelected !== -1 && roomList.loading === false){
       //@ts-ignore
       socket && socket.emit('roomSelected', roomList.list[roomSelected].roomInfo._id)
     }
