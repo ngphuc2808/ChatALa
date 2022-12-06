@@ -1,6 +1,7 @@
-import styled from 'styled-components';
-import tw from 'twin.macro';
-import { FiMoreHorizontal } from 'react-icons/fi';
+import styled, { keyframes } from "styled-components";
+import tw from "twin.macro";
+import { FiMoreHorizontal } from "react-icons/fi";
+import { merge, slideInUp, zoomIn } from "react-animations";
 
 export const ChatMsg = styled.div`
   ${tw`flex items-end mb-1`}
@@ -11,6 +12,12 @@ export const ChatMsgText = styled.div`
   width: fit-content;
 `;
 
+export const ChatMsgSenderName = styled.div<{ position: string }>`
+  ${tw`absolute bottom-[-20px] left-[14px] text-[12px] text-gray-500 whitespace-nowrap invisible`}
+  ${({ position }) =>
+    (position === "bottom" || position === "alone") && tw`visible`}
+`;
+
 export const ChatMsgTextTail = styled.div`
   ${tw`absolute w-[30px] h-[30px] rounded-full`}
   &:before {
@@ -19,9 +26,9 @@ export const ChatMsgTextTail = styled.div`
 `;
 
 export const ChatMsgAvatar = styled.figure<{ position: string }>`
-  ${tw`relative w-[40px] h-[40px] rounded-full overflow-hidden flex-shrink-0 mb-[-5px] z-10 invisible shadow-sm`}
+  ${tw`relative w-[40px] h-[40px] rounded-full shadow-md overflow-hidden flex-shrink-0 mb-[-5px] z-10 invisible`}
   ${({ position }) =>
-    (position === 'bottom' || position === 'alone') && tw`visible`}
+    (position === "bottom" || position === "alone") && tw`visible`}
   border: 1px solid gray;
 `;
 
@@ -50,9 +57,7 @@ export const ChatMsgFileImages = styled.div<{ imgNum: number }>`
 
 export const ChatMsgFileImage = styled.figure<{ imgNum: number }>`
   ${tw`relative rounded-[5px] w-full mx-0.5 hover:cursor-pointer overflow-hidden shadow-md`}
-  ${({ imgNum }) =>
-    imgNum >= 2
-      && `aspect-ratio: 1`}
+  ${({ imgNum }) => imgNum >= 2 && `aspect-ratio: 1`}
 `;
 
 export const ChatMsgFiles = styled.div`
@@ -76,31 +81,34 @@ export const ChatMsgUnSend = styled.div`
   width: fit-content;
 `;
 
+const MsgAnimate = keyframes`${merge(zoomIn, slideInUp)}`;
+
 export const ChatMsgWrapper = styled.div`
-  ${tw`flex flex-col max-w-[70%]`}
+  ${tw`relative flex flex-col max-w-[70%]`}
   width: fit-content;
+  animation: 0.2s ${MsgAnimate};
 `;
 
 export const ChatMsgLeft = styled(ChatMsg)<{ position: string }>`
   ${tw`relative`}
   ${({ position }) =>
-    (position === 'bottom' || position === 'alone') && tw`mb-7`}
+    (position === "bottom" || position === "alone") && tw`mb-7`}
 
   ${ChatMsgUnSend} {
     ${tw`ml-2`}
     ${({ position }) =>
-      position === 'alone'
+      position === "alone"
         ? tw`rounded-2xl rounded-bl-none`
-        : position === 'top'
+        : position === "top"
         ? tw`rounded-2xl rounded-bl-none`
         : tw`rounded-r-2xl`}
   }
   ${ChatMsgText} {
     ${tw`bg-primary ml-2`}
     ${({ position }) =>
-      position === 'alone'
+      position === "alone"
         ? tw`rounded-2xl rounded-bl-none`
-        : position === 'top'
+        : position === "top"
         ? tw`rounded-2xl rounded-bl-none`
         : tw`rounded-r-2xl`}
   }
@@ -109,8 +117,8 @@ export const ChatMsgLeft = styled(ChatMsg)<{ position: string }>`
   }
   ${ChatMsgTextTail} {
     ${({ position }) =>
-      position !== 'bottom' && position !== 'alone' && tw`invisible`}
-    ${tw`bg-primary bottom-[-5px] left-[31px]`}
+      position !== "bottom" && position !== "alone" && tw`invisible`}
+    ${tw`bg-primary bottom-[-5px] left-[-13px]`}
     &::before {
       ${tw`rounded-full absolute h-[50px] w-[50px] left-[-28px] bottom-[-3px]`}
       content: '';
@@ -120,14 +128,14 @@ export const ChatMsgLeft = styled(ChatMsg)<{ position: string }>`
 export const ChatMsgRight = styled(ChatMsg)<{ position: string }>`
   ${tw`relative flex-row-reverse items-center`}
   ${({ position }) =>
-    (position === 'bottom' || position === 'alone') && tw`mb-7`}
+    (position === "bottom" || position === "alone") && tw`mb-7`}
 
   ${ChatMsgUnSend} {
     ${tw`mr-2`}
     ${({ position }) =>
-      position === 'alone'
+      position === "alone"
         ? tw`rounded-2xl rounded-br-none`
-        : position === 'top'
+        : position === "top"
         ? tw`rounded-2xl rounded-br-none`
         : tw`rounded-l-2xl`}
   }
@@ -137,15 +145,15 @@ export const ChatMsgRight = styled(ChatMsg)<{ position: string }>`
   ${ChatMsgText} {
     ${tw`bg-darker mr-2 rounded-br-[0]`}
     ${({ position }) =>
-      position === 'alone'
+      position === "alone"
         ? tw`rounded-2xl rounded-br-none`
-        : position === 'top'
+        : position === "top"
         ? tw`rounded-2xl rounded-br-none`
         : tw`rounded-l-2xl`}
   }
   ${ChatMsgTextTail} {
     ${({ position }) =>
-      position !== 'bottom' && position !== 'alone' && tw`invisible`}
+      position !== "bottom" && position !== "alone" && tw`invisible`}
     ${tw`bg-darker bottom-[-5px] right-[-8px]`}
     &::before {
       ${tw`rounded-full absolute h-[50px] w-[50px] right-[-28px] bottom-[-3px]`}
@@ -157,6 +165,9 @@ export const ChatMsgRight = styled(ChatMsg)<{ position: string }>`
   }
   ${ChatMsgFileImages} {
     ${tw`mr-2.5`}
+  }
+  ${ChatMsgSenderName} {
+    ${tw`text-right left-auto right-[14px]`}
   }
 
   &:hover {

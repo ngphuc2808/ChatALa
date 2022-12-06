@@ -12,12 +12,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import FilePreview from "./FilePreview";
 import DropZone from "react-dropzone";
-import {
-  ClientToServerEvents,
-  messageSendType,
-  messageType,
-  ServerToClientEvents,
-} from "../../../utils/types";
+import { messageSendType, messageType } from "../../../utils/types";
 import ChatImageZoom from "./ChatMsgImageZoom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -30,8 +25,6 @@ import {
   MessageApi,
   CLOUD_NAME,
 } from "../../../services/api/messages";
-import { Socket } from "socket.io-client";
-import { ClipLoader, PulseLoader } from "react-spinners";
 import { debounce } from "lodash";
 import { selectRoomListState } from "../../../features/redux/slices/roomListSlice";
 import { selectUserState } from "../../../features/redux/slices/userSlice";
@@ -60,6 +53,11 @@ const ChatArea = () => {
   const [chatAtBottom, setChatAtBottom] = useState(true);
   const [chatScrollBottom, setChatScrollBottom] = useState(false);
   const [status, setStatus] = useState(1);
+  const [formValues, setFormValues] = useState<messageSendType>({
+    roomId: roomInfo.info?.roomInfo._id || "",
+    msg: "",
+    files: [],
+  });
 
   //Handle status
   const handleStatus = () => {
@@ -76,11 +74,11 @@ const ChatArea = () => {
   useEffect(() => {
     //@ts-ignore
     socket.on("typing", () => {
-      console.log("typing")
+      console.log("typing");
       setToggleTyping(true);
     });
     socket.on("stop typing", () => {
-      console.log("stop typing")
+      console.log("stop typing");
       setToggleTyping(false);
     });
     // @ts-ignore
@@ -99,8 +97,9 @@ const ChatArea = () => {
     }, 1500),
     []
   );
-  const onInputChange = (setFieldValue: any) => {
-    setFieldValue("msg", chatInput.current?.innerText);
+  const onInputChange = () => {
+    // setFieldValue("msg", chatInput.current?.innerText);
+    // setFormValues(values);
     if (!sendTyping) {
       setSendTyping(true);
       //@ts-ignore
@@ -185,11 +184,7 @@ const ChatArea = () => {
   };
 
   //Form
-  const initialValues = {
-    roomId: roomInfo.info?.roomInfo._id || "",
-    msg: "",
-    files: [],
-  };
+  const initialValues = formValues;
 
   const validationSchema = Yup.object().shape({
     msg: Yup.string(),
@@ -211,6 +206,7 @@ const ChatArea = () => {
       }
 
       setFieldValue("files", files);
+      setFormValues(values);
       e.currentTarget.value = "";
     }
   };
@@ -226,6 +222,7 @@ const ChatArea = () => {
     }
 
     setFieldValue("files", files);
+    setFormValues(values);
   };
 
   const uploadFile = async (
@@ -275,9 +272,10 @@ const ChatArea = () => {
 
   //Submit
   const onSubmit = async (values: messageSendType, { setFieldValue }: any) => {
-    if (values.msg !== "" || values.files.length > 0) {
+    if (chatInput.current.innerText !== "" || values.files.length > 0) {
       setToggleEmoji(false);
-
+      values.msg = chatInput.current.innerText
+      
       try {
         const uploadedFiles = await uploadFiles(values.files);
         values.files = uploadedFiles as unknown as File[];
@@ -285,7 +283,6 @@ const ChatArea = () => {
 
         dispatch(messageActions.newMessage(res.result));
         chatInput.current!.innerText = "";
-        setFieldValue("msg", "");
         setFieldValue("files", []);
       } catch (err) {
         console.log(err);
@@ -434,7 +431,7 @@ const ChatArea = () => {
                         username={roomInfo.info!.roomName}
                         contentEditable
                         ref={chatInput}
-                        onInput={() => onInputChange(setFieldValue)}
+                        onInput={() => onInputChange()}
                         onKeyDown={(e) => {
                           if (e.code === "Enter" && !e.shiftKey) {
                             e.preventDefault();

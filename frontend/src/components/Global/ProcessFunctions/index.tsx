@@ -100,13 +100,22 @@ const padTo2Digits = (num: number) => {
   return num.toString().padStart(2, '0');
 };
 
-export const formatDate = (_date: string) => {
+export const formatDate = (_date: string, seperator: string = '/', detail?: boolean) => {
   const date = new Date(_date);
-  return [
+  const resultDate = [
     padTo2Digits(date.getDate()),
     padTo2Digits(date.getMonth() + 1),
     date.getFullYear(),
-  ].join('/');
+  ]
+
+  const resultTime = []
+
+  if(detail){
+    resultTime.unshift(date.getMinutes())
+    resultTime.unshift(date.getHours())
+  }
+
+  return resultTime.join(':') + '-' + resultDate.join(seperator)
 };
 
 export const useOutsideClick = (callback: () => void) => {

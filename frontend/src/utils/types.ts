@@ -16,13 +16,13 @@ export type info = {
   gender: string;
   dob: string | Date;
   avatar: string;
-}
+};
 
 export type updateUserInfo = {
   name: string;
   gender: string;
   dob: string | Date;
-}
+};
 
 export type messageSendType = {
   roomId: string;
@@ -60,7 +60,7 @@ export type roomInfo = {
 
 export type roomUser = {
   avatar: string;
-  nickName: string;
+  nickname: string;
   role: boolean;
   uid: string;
   _id: string;

@@ -4,7 +4,11 @@ import { useSelector } from "react-redux";
 import { selectRoomInfoState } from "../../../../features/redux/slices/roomInfoSlice";
 import { selectUserState } from "../../../../features/redux/slices/userSlice";
 import { messageType } from "../../../../utils/types";
-import { getFileIcon, shorterChars } from "../../../Global/ProcessFunctions";
+import {
+  formatDate,
+  getFileIcon,
+  shorterChars,
+} from "../../../Global/ProcessFunctions";
 import * as S from "./ChatMsg.styled";
 import ChatMsgOption from "./ChatMsgOption";
 
@@ -52,6 +56,15 @@ const ChatMsg = ({
       return sender!.avatar;
     } else {
       return roomInfo.info!.roomAvatar;
+    }
+  };
+
+  const getSenderName = () => {
+    if (roomInfo.info?.roomInfo.isGroup) {
+      const sender = roomInfo.info.roomInfo.users.find(
+        (user) => user.uid === data.senderId
+      );
+      return sender!.nickname + " " + formatDate(data.updatedAt, ".", true);
     }
   };
 
@@ -104,6 +117,9 @@ const ChatMsg = ({
                     )}
                   </S.ChatMsgFiles>
                 )}
+                <S.ChatMsgSenderName position={position}>
+                  {getSenderName()}
+                </S.ChatMsgSenderName>
               </>
             ) : (
               <S.ChatMsgUnSend>Message has been recovered</S.ChatMsgUnSend>
@@ -169,6 +185,11 @@ const ChatMsg = ({
                         )
                     )}
                   </S.ChatMsgFiles>
+                )}
+                {roomInfo.info.roomInfo.isGroup && (
+                  <S.ChatMsgSenderName position={position}>
+                    {getSenderName()}
+                  </S.ChatMsgSenderName>
                 )}
               </>
             )}
