@@ -6,7 +6,7 @@ const Rooms = require("../models/roomModel");
 
 const router = express.Router();
 
-router.route("/signedKey").get(authMiddleware, signedKey);
+router.route("/signedKey").post(authMiddleware, signedKey);
 router.route("/test").get(async (req, res, next) => {});
 module.exports = router;
 

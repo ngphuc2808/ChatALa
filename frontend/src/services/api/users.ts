@@ -1,5 +1,5 @@
 import http from "../http";
-import { UserRegister, userLogin } from "../../utils/types";
+import { UserRegister, userLogin, updateUserInfo } from "../../utils/types";
 
 import { API_URL } from "./urls";
 
@@ -22,7 +22,12 @@ export const UsersApi = {
   userFind: async function (search: any): Promise<any> {
     return await http.post(API_URL.userFind, search);
   },
-
+  editUserInfo: async function (user: updateUserInfo): Promise<any> {
+    return await http.post(API_URL.editUserInfo, user);
+  },
+  editAvatar: async function (avatar: string): Promise<any> {
+    return await http.post(API_URL.editAvatar, { avatar });
+  },
   //   list: async function (params?: any): Promise<any> {
   //     return await http.get(API_URL.login, { params: params })
   //   },

@@ -7,6 +7,7 @@ const signedKey = asyncHandler(async (req, res, next) => {
   const signature = cloudinary.utils.api_sign_request(
     {
       timestamp: timestamp,
+      public_id: req.body.public_id
     },
     process.env.CLOUDINARY_API_SECRET
   );

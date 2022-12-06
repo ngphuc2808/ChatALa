@@ -8,6 +8,8 @@ export const API_URL = {
   register: `${API_BASE}/user/register`,
   login: `${API_BASE}/user/login`,
   logout: `${API_BASE}/user/logout`,
+  editUserInfo: `${API_BASE}/user/update`,
+  editAvatar: `${API_BASE}/user/update/avatar`,
   resetPassword: `${API_BASE}/auth/password/reset`,
   getRoomList: `${API_BASE}/room`,
   getFriendList: `${API_BASE}/friend`,

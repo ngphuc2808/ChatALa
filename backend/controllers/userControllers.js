@@ -3,6 +3,7 @@ const Users = require("../models/userModel");
 const { generateJWT } = require("../utils/utilFunctions");
 const ErrorHandler = require("../utils/errorHandler");
 const Friends = require("../models/friendModel");
+const Rooms = require("../models/roomModel");
 const Notifications = require("../models/notificationModel");
 
 const checkUser = asyncHandler(async (req, res, next) => {
@@ -182,6 +183,63 @@ const findUser = asyncHandler(async (req, res, next) => {
   });
 });
 
+const editUserInfo = asyncHandler(async (req, res, next) => {
+  const id = req.user._id;
+  const { name, gender, dob } = req.body;
+
+  const user = await Users.findByIdAndUpdate(
+    id,
+    { $set: { name, gender, dob  } },
+    {
+      new: true,
+    }
+  );
+
+  await Rooms.findOneAndUpdate(
+    { "users.uid": id },
+    { $set: { "users.$.nickname": name } },
+    {
+      new: true,
+      upsert: true
+    }
+  );
+  
+  console.log(id);
+
+  res.status(200).json({
+    user,
+    message: "Update Info Successfully!",
+  });
+
+});
+
+const editAvatar = asyncHandler(async (req, res, next) => {
+  const id = req.user._id;
+  const { avatar } = req.body;
+
+  const user = await Users.findByIdAndUpdate(
+    id,
+    { $set: { avatar } },
+    {
+      new: true,
+    }
+  );
+
+  await Rooms.findOneAndUpdate(
+    { "users.uid": id },
+    { $set: { "users.$.avatar": avatar } },
+    {
+      new: true,
+    }
+  );
+
+  res.status(200).json({
+    user,
+    message: "Update Avatar Successfully!",
+  });
+
+});
+
 module.exports = {
   checkUser,
   registerUser,
@@ -189,4 +247,6 @@ module.exports = {
   findUser,
   getLoggedUser,
   logoutUser,
+  editUserInfo,
+  editAvatar
 };

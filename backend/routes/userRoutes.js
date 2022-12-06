@@ -7,6 +7,8 @@ const {
   findUser,
   getLoggedUser,
   logoutUser,
+  editUserInfo,
+  editAvatar
 } = require("../controllers/userControllers");
 
 const router = express.Router();
@@ -17,5 +19,7 @@ router.route("/login").post(loginUser);
 router.route("/getLoggedUser").get(authMiddleware, getLoggedUser);
 router.route("/find").post(authMiddleware, findUser);
 router.route("/logout").get(authMiddleware, logoutUser);
+router.route("/update").post(authMiddleware, editUserInfo);
+router.route("/update/avatar").post(authMiddleware, editAvatar);
 
 module.exports = router;

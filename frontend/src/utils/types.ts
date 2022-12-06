@@ -11,6 +11,19 @@ export type userInfo = {
   __v: number;
 };
 
+export type info = {
+  name: string;
+  gender: string;
+  dob: string | Date;
+  avatar: string;
+}
+
+export type updateUserInfo = {
+  name: string;
+  gender: string;
+  dob: string | Date;
+}
+
 export type messageSendType = {
   roomId: string;
   msg: string;

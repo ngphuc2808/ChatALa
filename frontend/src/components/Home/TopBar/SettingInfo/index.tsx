@@ -4,18 +4,32 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import Cropper from "react-easy-crop";
-import { useState, ChangeEvent } from "react";
+import { useState, FormEvent } from "react";
 import { HiOutlineX } from "react-icons/hi";
 import { AiFillCamera } from "react-icons/ai";
 
 import * as Yup from "yup";
-import { Formik, ErrorMessage } from "formik";
-
 import * as S from "./SettingInfo.styled";
+import {
+  validImageTypes,
+} from "../../../Global/ProcessFunctions";
+import { Formik, ErrorMessage } from "formik";
 import { UserAvatar } from "../../../../utils/dataConfig";
+import { updateUserInfo, info } from "../../../../utils/types"
+import {
+  API_KEY,
+  MessageApi,
+  CLOUD_NAME,
+} from "../../../../services/api/messages";
+import { API_URL } from "../../../../services/api/urls";
 import CropImage from "./CropImage";
+import { UsersApi } from "../../../../services/api/users"
+import { useDispatch } from "react-redux";
+import { userActions } from "../../../../features/redux/slices/userSlice";
+import { json } from "stream/consumers";
 
 interface ISetingInfo {
+  id: string;
   name: string;
   gender: string;
   dob: string;
@@ -24,18 +38,20 @@ interface ISetingInfo {
 }
 
 const SettingInfo = ({
+  id,
   name,
   gender,
   dob,
   avatar,
   setEditInfo,
 }: ISetingInfo) => {
+  const dispatch = useDispatch();
   const [previewAvt, setPreviewAvt] = useState<string>(avatar);
-  // const [cropImage, setCropImage] = useState<any>();
   const [cropImage, setCropImage] = useState<string | ArrayBuffer | null>(null);
   const [modalCrop, setModalCrop] = useState(false);
 
   const initialValues = {
+    id: id || "",
     name: name || "",
     gender: gender || "male",
     dob: dob || new Date(),
@@ -46,27 +62,85 @@ const SettingInfo = ({
     setEditInfo(false);
   };
 
-  const handleCrop = (e: ChangeEvent) => {
-    const input = e.target as HTMLInputElement;
+  const handleCrop = (e: FormEvent<HTMLInputElement>) => {
+    let input = e.currentTarget;
     if (input.files?.length) {
       const reader = new FileReader();
       reader.addEventListener("load", () => {
-        setModalCrop(true);
-        setCropImage(reader.result);
+        const typeImage = reader.result.slice(0, 10);        
+        if(typeImage !== 'data:image') {
+          alert('Please choose an image file')
+        } else {
+          setModalCrop(true);
+          setCropImage(reader.result);
+        }
       });
       reader.readAsDataURL(input.files[0]);
     }
+    e.currentTarget.value = null;    
   };
 
-  const onSubmit = (values: {
-    name: string;
-    gender: string;
-    dob: string | Date;
-    avatar: string;
-  }) => {
-    const newData = values;
-    newData.name = values.name.trim().replace(/ +/g, " ");
-    console.log("submits: ", newData);
+  const uploadFile = async (
+    file: File
+  ) => {
+
+    const signedKey = await MessageApi.getSignedKey(id);
+
+    const form = new FormData();
+    form.append("file", file);
+    form.append("public_id", id);
+    form.append("api_key", API_KEY);
+    form.append("timestamp", signedKey.timestamp.toString());
+    form.append("signature", signedKey.signature);
+    
+    
+    const response = await fetch(
+      `${API_URL.uploadFile}/${CLOUD_NAME}/auto/upload`,
+      {
+        method: "POST",
+        body: form,
+      }
+    ).then((response) => {
+      return response.json();
+    });
+
+    console.log(response.secure_url);
+    
+
+    return { url: response.secure_url };
+    
+  };
+
+  const onSubmit = async (values: info) => {      
+    try {
+      let updated = false
+      
+      if(avatar !== values.avatar) {
+        // @ts-ignores 
+        const fileAvt = new File([values.avatar], id, { type: values.avatar.type });
+        const avatarUrl = await uploadFile(fileAvt);
+        const result = await UsersApi.editAvatar(avatarUrl.url);
+        alert(result.message);
+        updated = true;
+      }
+        
+      if(name !== values.name || gender !== values.gender || dob !== values.dob) {
+        const newValue: updateUserInfo = {
+          name: values.name,
+          gender: values.gender,
+          dob: values.dob
+        }
+        const result = await UsersApi.editUserInfo(newValue);
+        alert(result.message);
+        updated = true;
+      }
+      if(updated) {
+        const result = await UsersApi.getLoggedUser();
+        dispatch(userActions.setUserInfo(result));
+      }
+    } catch(error) {
+      console.log(error);
+    }
   };
 
   return (

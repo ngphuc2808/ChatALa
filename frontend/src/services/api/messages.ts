@@ -9,8 +9,8 @@ export const MessageApi = {
   send: async function (message: messageSendType): Promise<any> {
     return await http.post(API_URL.sendMessage, message);
   },
-  getSignedKey: async function (): Promise<any> {
-    return await http.get(API_URL.getSignedKey);
+  getSignedKey: async function (public_id?: string): Promise<any> {
+    return await http.post(API_URL.getSignedKey, { public_id });
   },
   uploadFile: async function (formData: FormData): Promise<any> {
     return await http.post(

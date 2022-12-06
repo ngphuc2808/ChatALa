@@ -57,11 +57,13 @@ const editUserInfo = {
   auth: true,
   method: "POST",
   req: {
+    avatar: String,
     name: String,
     gender: String,
     dob: Date,
   },
   res: {
+    avatar: String,
     name: String,
     gender: String,
     dob: Date,
