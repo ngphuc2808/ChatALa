@@ -37,7 +37,7 @@ const Login = () => {
       const result = await UsersApi.login(values);
       result && router.push("/");
     } catch (error: any) {
-      if (error.statusCode === 404) {
+      if (error?.error?.statusCode === 404) {
         setSubmitting(false);
         alert("Wrong password or phone number!");
       } else {
