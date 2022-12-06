@@ -1,21 +1,28 @@
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { selectRoomInfoState } from '../../../../features/redux/slices/roomInfoSlice';
-import { selectUserState } from '../../../../features/redux/slices/userSlice';
-import { messageType } from '../../../../utils/types';
-import { getFileIcon, shorterChars } from '../../../Global/ProcessFunctions';
-import * as S from './ChatMsg.styled';
-import ChatMsgOption from './ChatMsgOption';
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectRoomInfoState } from "../../../../features/redux/slices/roomInfoSlice";
+import { selectUserState } from "../../../../features/redux/slices/userSlice";
+import { messageType } from "../../../../utils/types";
+import { getFileIcon, shorterChars } from "../../../Global/ProcessFunctions";
+import * as S from "./ChatMsg.styled";
+import ChatMsgOption from "./ChatMsgOption";
 
 interface IChatMsg {
   data: messageType;
   position: string;
   setToggleImageZoom: (toggle: boolean) => void;
-  setImageZoomList: (value: Array<{ name: string; url: string; type: string }>) => void;
+  setImageZoomList: (
+    value: Array<{ name: string; url: string; type: string }>
+  ) => void;
 }
 
-const ChatMsg = ({ data, position, setToggleImageZoom, setImageZoomList }: IChatMsg) => {
+const ChatMsg = ({
+  data,
+  position,
+  setToggleImageZoom,
+  setImageZoomList,
+}: IChatMsg) => {
   const [toggleOption, setToggleOption] = useState(false);
   const [images, setImages] = useState<
     Array<{ name: string; url: string; type: string }>
@@ -27,15 +34,26 @@ const ChatMsg = ({ data, position, setToggleImageZoom, setImageZoomList }: IChat
   const getImageList = () => {
     const _images: Array<{ name: string; url: string; type: string }> = [];
     data.files.forEach((file) => {
-      if (file.type === 'image') _images.push(file);
+      if (file.type === "image") _images.push(file);
     });
     setImages(_images);
   };
 
   const imageZoomClick = () => {
-    setImageZoomList(images)
-    setToggleImageZoom(true)
-  }
+    setImageZoomList(images);
+    setToggleImageZoom(true);
+  };
+
+  const getSenderAvatar = () => {
+    if (roomInfo.info?.roomInfo.isGroup) {
+      const sender = roomInfo.info.roomInfo.users.find(
+        (user) => user.uid === data.senderId
+      );
+      return sender!.avatar;
+    } else {
+      return roomInfo.info!.roomAvatar;
+    }
+  };
 
   useEffect(() => {
     getImageList();
@@ -49,7 +67,7 @@ const ChatMsg = ({ data, position, setToggleImageZoom, setImageZoomList }: IChat
             {!data.unSend ? (
               <>
                 {data.files.length === 0 && <S.ChatMsgTextTail />}
-                {data.msg !== '' && <S.ChatMsgText>{data.msg}</S.ChatMsgText>}
+                {data.msg !== "" && <S.ChatMsgText>{data.msg}</S.ChatMsgText>}
                 {images?.length > 0 && (
                   <S.ChatMsgFileImages
                     imgNum={images?.length}
@@ -60,7 +78,7 @@ const ChatMsg = ({ data, position, setToggleImageZoom, setImageZoomList }: IChat
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={image.url}
-                          alt='image'
+                          alt="image"
                           // layout='fill'
                           // objectFit='cover'
                           draggable={false}
@@ -73,7 +91,7 @@ const ChatMsg = ({ data, position, setToggleImageZoom, setImageZoomList }: IChat
                   <S.ChatMsgFiles>
                     {data.files.map(
                       (file, index) =>
-                        file.type === 'file' && (
+                        file.type === "file" && (
                           <S.ChatMsgFile key={index}>
                             <S.ChatMsgFileIcon>
                               {getFileIcon(file)}
@@ -102,23 +120,21 @@ const ChatMsg = ({ data, position, setToggleImageZoom, setImageZoomList }: IChat
         </S.ChatMsgRight>
       ) : (
         <S.ChatMsgLeft position={position}>
-          {roomInfo.info!.roomAvatar && (
-            <S.ChatMsgAvatar position={position}>
-              <Image
-                src={roomInfo.info!.roomAvatar}
-                alt='avatar'
-                layout='fill'
-                objectFit='cover'
-              />
-            </S.ChatMsgAvatar>
-          )}
+          <S.ChatMsgAvatar position={position}>
+            <Image
+              src={getSenderAvatar()}
+              alt="avatar"
+              layout="fill"
+              objectFit="cover"
+            />
+          </S.ChatMsgAvatar>
           <S.ChatMsgWrapper>
             {!data.unSend && data.files.length === 0 && <S.ChatMsgTextTail />}
             {data.unSend ? (
               <S.ChatMsgUnSend>Message has been recovered</S.ChatMsgUnSend>
             ) : (
               <>
-                {data.msg !== '' && <S.ChatMsgText>{data.msg}</S.ChatMsgText>}
+                {data.msg !== "" && <S.ChatMsgText>{data.msg}</S.ChatMsgText>}
                 {images?.length > 0 && (
                   <S.ChatMsgFileImages
                     imgNum={images?.length}
@@ -128,7 +144,7 @@ const ChatMsg = ({ data, position, setToggleImageZoom, setImageZoomList }: IChat
                       <S.ChatMsgFileImage key={index} imgNum={images?.length}>
                         <img
                           src={image.url}
-                          alt='image'
+                          alt="image"
                           // layout='fill'
                           // objectFit='cover'
                           draggable={false}
@@ -141,7 +157,7 @@ const ChatMsg = ({ data, position, setToggleImageZoom, setImageZoomList }: IChat
                   <S.ChatMsgFiles>
                     {data.files.map(
                       (file, index) =>
-                        file.type === 'file' && (
+                        file.type === "file" && (
                           <S.ChatMsgFile key={index}>
                             <S.ChatMsgFileIcon>
                               {getFileIcon(file)}

@@ -97,14 +97,18 @@ io.on("connection", (socket) => {
   });
 
   socket.on("receiveNoti", (receiveId) => {
-    const receiveUser = users.find(user => user.uid.toString() === receiveId.toString());
-    socket.to(receiveUser.socketId).emit("receiveNoti")
+    const receiveUser = users.find(
+      (user) => user.uid.toString() === receiveId.toString()
+    );
+    socket.to(receiveUser.socketId).emit("receiveNoti");
   });
 
   socket.on("new room", (receiveId) => {
-    const receiveUser = users.find(user => user.uid.toString() === receiveId.toString());
-    socket.to(receiveUser.socketId).emit("new room")
-  })
+    const receiveUser = users.find(
+      (user) => user.uid.toString() === receiveId.toString()
+    );
+    receiveUser && socket.to(receiveUser.socketId).emit("new room");
+  });
 
   // socket.on("sendMessage", (message, roomId) => {
   //   console.log("new message: ", message);
