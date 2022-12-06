@@ -272,7 +272,7 @@ const ChatArea = () => {
 
   //Submit
   const onSubmit = async (values: messageSendType, { setFieldValue }: any) => {
-    if (chatInput.current.innerText !== "" || values.files.length > 0) {
+    if (chatInput.current.innerText.trim() !== "" || values.files.length > 0) {
       setToggleEmoji(false);
       values.msg = chatInput.current.innerText
       
