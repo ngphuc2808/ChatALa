@@ -5,6 +5,9 @@ import { useOutsideClick } from "../../../Global/ProcessFunctions";
 import { SearchResult } from "../../../../utils/types";
 import { FriendApi } from "../../../../services/api/friend";
 import { useSocketContext } from "../../../../contexts/socket";
+import { RoomApi } from "../../../../services/api/room";
+import { roomListActions } from "../../../../features/redux/slices/roomListSlice";
+import { useDispatch } from "react-redux";
 interface ISearchModalModal {
   setSearchModal: (isActive: boolean) => void;
   searchResult: SearchResult[];
@@ -20,24 +23,44 @@ const SearchModal = ({
     setSearchModal(false);
   };
 
-  const socket = useSocketContext()
+  const socket = useSocketContext();
+  const dispatch = useDispatch();
 
   const SearchModalRef = useOutsideClick(handleOutsideClick);
 
   const friendRequest = async (id: string) => {
     try {
       const res = await FriendApi.friendRequest(id);
-      socket.emit("receiveNoti", id)
+      socket.emit("receiveNoti", id);
       setAction(true);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const friendAccept = async (id: string) => {
+  const friendAccept = async (
+    notificationId: string,
+    uid: string,
+    nickname: string,
+    avatar: string
+  ) => {
     try {
-      const res = await FriendApi.friendAccept(id);
+      const res = await FriendApi.friendAccept(notificationId);
       setAction(true);
+
+      const userToRoom = [
+        {
+          uid,
+          nickname,
+          avatar,
+        },
+      ];
+      const createdRoom = await RoomApi.createRoom(userToRoom);
+      if (createdRoom) {
+        const rooms = await RoomApi.getRoomList();
+        dispatch(roomListActions.setRoomList(rooms.result));
+        socket.emit("new room", uid);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -78,7 +101,14 @@ const SearchModal = ({
               ) : data.status === "receive" ? (
                 <S.FlexWrap>
                   <S.SearchModalAccept
-                    onClick={() => friendAccept(data.notificationId)}
+                    onClick={() =>
+                      friendAccept(
+                        data.notificationId,
+                        data._id,
+                        data.name,
+                        data.avatar
+                      )
+                    }
                   >
                     Accept
                   </S.SearchModalAccept>
