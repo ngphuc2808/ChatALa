@@ -41,6 +41,10 @@ const ChatArea = () => {
   const user = useSelector(selectUserState);
   const socket = useSocketContext();
 
+  const chatInput = useRef<HTMLSpanElement>(null);
+  const bottomDiv = useRef<HTMLDivElement>(null);
+  const chatMainMsg = useRef<HTMLDivElement>(null);
+
   const [toggleEmoji, setToggleEmoji] = useState(false);
   const [toggleOption, setToggleOption] = useState(false);
   const [toggleImageZoom, setToggleImageZoom] = useState(false);
@@ -50,7 +54,6 @@ const ChatArea = () => {
   const [toggleTyping, setToggleTyping] = useState(false);
   const [sendTyping, setSendTyping] = useState(false);
   const [newMsgNoti, setNewMsgNoti] = useState(false);
-  const [chatAtBottom, setChatAtBottom] = useState(true);
   const [chatScrollBottom, setChatScrollBottom] = useState(false);
   const [status, setStatus] = useState(1);
   const [formValues, setFormValues] = useState<messageSendType>({
@@ -85,6 +88,9 @@ const ChatArea = () => {
     socket.on("receiveMessage", (result) => {
       //add new message if not sender
       if (result.senderId !== user.info._id) {
+        if (chatMainMsg.current.scrollTop < 0) {
+          setNewMsgNoti(true);
+        }
         dispatch(messageActions.newMessage(result));
       }
     });
@@ -108,10 +114,6 @@ const ChatArea = () => {
     debounceTyping();
   };
 
-  //chatInput
-  const chatInput = useRef<HTMLSpanElement>(null);
-  const bottomDiv = useRef<HTMLDivElement>(null);
-
   //Handle scroll to new msg
   const scrollToNewMsg = () => {
     if (bottomDiv.current)
@@ -121,35 +123,30 @@ const ChatArea = () => {
     scrollToNewMsg();
     setNewMsgNoti(false);
   };
-  const checkChatScrollBottom = (e: any) => {
+  const checkChatScrollBottom = () => {
     //e.target.scrollTop is bottom when value is 0, scroll up cause value goes negative
     //Check if chat scroll at bottom
-    if (e.target.scrollTop >= 0) {
+    if (chatMainMsg.current.scrollTop >= 0) {
       setNewMsgNoti(false);
-      setChatAtBottom(true);
-    } else {
-      setChatAtBottom(false);
     }
 
     //Check if chat scroll smaller than -500px then show scroll down button
-    if (e.target.scrollTop > -500) {
+    if (chatMainMsg.current.scrollTop > -500) {
       setChatScrollBottom(false);
     } else {
       setChatScrollBottom(true);
     }
   };
-  useEffect(() => {
-    if (messages.list.length > 0) {
-      if (
-        messages.list[messages.list.length - 1].senderId !== user.info._id &&
-        !chatAtBottom
-      ) {
-        setNewMsgNoti(true);
-      } else {
-        scrollToNewMsg();
-      }
-    }
-  }, [messages]);
+
+  // useEffect(() => {
+  //   if (messages.list.length > 0) {
+  //     if (messages.list[0].senderId !== user.info._id && !chatAtBottom) {
+  //       setNewMsgNoti(true);
+  //     } else {
+  //       scrollToNewMsg();
+  //     }
+  //   }
+  // }, [messages]);
 
   //Emoji
   const handleEmojiOutsideClick = () => {
@@ -162,22 +159,42 @@ const ChatArea = () => {
   };
 
   //Message
+  const skipDeletedMessage = (
+    index: number,
+    plus: boolean
+  ) => {
+    const list = messages.list;
+
+    let i = 1;
+    if (plus) {
+      while (list[index + i]?.deleted) {
+        i++;
+      }
+    } else {
+      while (list[index - i]?.deleted) {
+        i++;
+      }
+    }
+
+    return i;
+  };
+
   const setMessagePosition = (data: messageType, index: number) => {
     const list = messages.list;
 
     if (
-      data.senderId !== list[index + 1]?.senderId &&
-      data.senderId === list[index - 1]?.senderId
+      data.senderId !== list[index + skipDeletedMessage(index, true)]?.senderId &&
+      data.senderId === list[index - skipDeletedMessage(index, false)]?.senderId
     )
       return "top";
     else if (
-      data.senderId === list[index - 1]?.senderId &&
-      data.senderId === list[index + 1]?.senderId
+      data.senderId === list[index - skipDeletedMessage(index, false)]?.senderId &&
+      data.senderId === list[index + skipDeletedMessage(index, true)]?.senderId
     )
       return "middle";
     else if (
-      data.senderId !== list[index - 1]?.senderId &&
-      data.senderId !== list[index + 1]?.senderId
+      data.senderId !== list[index - skipDeletedMessage(index, false)]?.senderId &&
+      data.senderId !== list[index + skipDeletedMessage(index, true)]?.senderId
     )
       return "alone";
     else return "bottom";
@@ -274,8 +291,8 @@ const ChatArea = () => {
   const onSubmit = async (values: messageSendType, { setFieldValue }: any) => {
     if (chatInput.current.innerText.trim() !== "" || values.files.length > 0) {
       setToggleEmoji(false);
-      values.msg = chatInput.current.innerText
-      
+      values.msg = chatInput.current.innerText;
+
       try {
         const uploadedFiles = await uploadFiles(values.files);
         values.files = uploadedFiles as unknown as File[];
@@ -351,7 +368,10 @@ const ChatArea = () => {
                     setToggleImageZoom={setToggleImageZoom}
                   />
                 )}
-                <S.ChatAreaMainMsg onScroll={(e) => checkChatScrollBottom(e)}>
+                <S.ChatAreaMainMsg
+                  ref={chatMainMsg}
+                  onScroll={checkChatScrollBottom}
+                >
                   <S.ChatAreaMainMsgInner>
                     <S.ChatAreaMainMsgInnerBottom
                       ref={bottomDiv}

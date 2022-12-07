@@ -65,7 +65,7 @@ const CreateGroup = ({ setToggleCreateGroup }: ICreateGroup) => {
         }
       } catch (err: any) {
         console.log(err);
-        if (err.errors?.error.statusCode === 400) {
+        if (err?.error.statusCode === 400) {
           alert(err.errors.message);
         }
       }

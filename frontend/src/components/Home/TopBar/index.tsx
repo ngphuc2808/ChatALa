@@ -40,7 +40,6 @@ const TopBar = () => {
   const [listNoti, setListNoti] = useState([]);
 
   const getLoggedUser = async () => {
-    dispatch(userActions.requestUserInfo(null));
     const result = await UsersApi.getLoggedUser();
     if (result) dispatch(userActions.setUserInfo(result));
   };
@@ -54,7 +53,6 @@ const TopBar = () => {
     await UsersApi.logout();
     //@ts-ignore
     socket.emit("logout", roomInfo.info?.roomInfo._id);
-    socket.disconnect();
     dispatch(userActions.clearUserInfo(null));
     dispatch(roomInfoActions.clearRoomInfo(null));
     dispatch(roomListActions.clearRoomList(null));

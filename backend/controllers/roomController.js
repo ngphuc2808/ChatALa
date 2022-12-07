@@ -3,6 +3,7 @@ const Rooms = require("../models/roomModel");
 const Messages = require("../models/messageModel");
 const ErrorHandler = require("../utils/errorHandler");
 const Users = require("../models/userModel");
+const mongoose = require("mongoose");
 
 const createRoom = asyncHandler(async (req, res, next) => {
   const { isGroup, users } = req.body;

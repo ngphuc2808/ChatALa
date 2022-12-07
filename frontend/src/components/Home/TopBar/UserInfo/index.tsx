@@ -8,16 +8,10 @@ import SettingInfo from "../SettingInfo";
 import { formatDate } from "../../../Global/ProcessFunctions";
 import { useSelector } from "react-redux";
 import { selectUserState } from "../../../../features/redux/slices/userSlice";
+import { userInfo } from "../../../../utils/types";
 
 interface IUserInfo {
-  friendProfile?: {
-    phone: string;
-    avatar: string;
-    banner: string;
-    name: string;
-    gender: string;
-    dob: string;
-  };
+  friendProfile?: userInfo;
   setUserInfoModal: (userInfo: boolean) => void;
 }
 

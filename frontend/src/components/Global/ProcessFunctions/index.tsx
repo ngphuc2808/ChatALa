@@ -108,14 +108,16 @@ export const formatDate = (_date: string, seperator: string = '/', detail?: bool
     date.getFullYear(),
   ]
 
-  const resultTime = []
+  let resultTime = ""
 
   if(detail){
-    resultTime.unshift(date.getMinutes())
-    resultTime.unshift(date.getHours())
+    const temp = []
+    temp.unshift(padTo2Digits(date.getMinutes()))
+    temp.unshift(date.getHours())
+    resultTime = temp.join(":") + ' - '
   }
 
-  return resultTime.join(':') + '-' + resultDate.join(seperator)
+  return resultTime + resultDate.join(seperator)
 };
 
 export const useOutsideClick = (callback: () => void) => {

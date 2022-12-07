@@ -9,10 +9,14 @@ import { UsersApi } from "../../services/api/users";
 import { ClipLoader } from "react-spinners";
 import { BsEyeSlash, BsEye } from "react-icons/bs";
 import { useState } from "react";
+import { useSocketContext } from "../../contexts/socket";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const router = useRouter();
+
   const [eye, setEye] = useState<boolean>(false);
+
   const initialValues = {
     phone: "",
     password: "",
@@ -32,10 +36,11 @@ const Login = () => {
         "Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number."
       ),
   });
+
   const handleSubmit = async (values: userLogin, { setSubmitting }: any) => {
     try {
-      const result = await UsersApi.login(values);
-      result && router.push("/");
+      await UsersApi.login(values);
+      router.push("/");
     } catch (error: any) {
       if (error?.error?.statusCode === 404) {
         setSubmitting(false);

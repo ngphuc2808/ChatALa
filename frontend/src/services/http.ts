@@ -11,7 +11,7 @@ const http = Axios.create({
 http.interceptors.response.use(
   (response: AxiosResponse) => response.data,
   (error) => {
-    return Promise.reject(error.response.data ? error.response.data : error);
+    return Promise.reject(error.response?.data ? error.response.data : error);
   }
 );
 

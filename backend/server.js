@@ -110,6 +110,20 @@ io.on("connection", (socket) => {
     receiveUser && socket.to(receiveUser.socketId).emit("new room");
   });
 
+  socket.on("unsend msg", (receiveId, msgId) => {
+    const receiveUser = users.find(
+      (user) => user.uid.toString() === receiveId.toString()
+    );
+    receiveUser && socket.to(receiveUser.socketId).emit("unsend msg", msgId);
+  });
+
+  socket.on("delete msg", (receiveId, msgId) => {
+    const receiveUser = users.find(
+      (user) => user.uid.toString() === receiveId.toString()
+    );
+    receiveUser && socket.to(receiveUser.socketId).emit("delete msg", msgId);
+  });
+
   // socket.on("sendMessage", (message, roomId) => {
   //   console.log("new message: ", message);
   //   console.log("roomId: ", roomId);

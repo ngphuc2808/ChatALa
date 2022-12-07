@@ -4,15 +4,11 @@ import SideBar from "../src/components/Home/SideBar";
 import TopBar from "../src/components/Home/TopBar";
 import Welcome from "../src/components/Home/Welcome";
 import { withRouter, useRouter } from "next/router";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { RoomApi } from "../src/services/api/room";
 import { useDispatch, useSelector } from "react-redux";
 import { roomListActions } from "../src/features/redux/slices/roomListSlice";
 import { selectRoomInfoState } from "../src/features/redux/slices/roomInfoSlice";
-import { io, Socket } from "socket.io-client";
-import { BASEURL } from "../src/services/api/urls";
-import { ClientToServerEvents, ServerToClientEvents } from "../src/utils/types";
-import { selectUserState } from "../src/features/redux/slices/userSlice";
 import { messageActions } from "../src/features/redux/slices/messageSlice";
 import { friendListActions } from "../src/features/redux/slices/friendListSlice";
 import { FriendApi } from "../src/services/api/friend";
@@ -23,7 +19,6 @@ const Home = () => {
 
   const dispatch = useDispatch();
   const roomInfo = useSelector(selectRoomInfoState);
-  const user = useSelector(selectUserState);
 
   //socket client
   // const socket = useRef<Socket<ServerToClientEvents, ClientToServerEvents>>();
@@ -37,6 +32,12 @@ const Home = () => {
     socket.on("new room", () => {
       getRoomList();
     });
+    socket.on("unsend msg", (msgId) => {
+      dispatch(messageActions.unsend(msgId));
+    });
+    socket.on("delete msg", (msgId) => {
+      dispatch(messageActions.delete(msgId));
+    });
   }, []);
 
   const getRoomList = async () => {
@@ -45,7 +46,8 @@ const Home = () => {
       const rooms = await RoomApi.getRoomList();
       dispatch(roomListActions.setRoomList(rooms.result));
     } catch (err: any) {
-      if (err.error.statusCode === 401) {
+      console.log(err);
+      if (err?.error.statusCode === 401) {
         if (err.message === "Unauthorized!") {
           alert("Your session is over, redirecting to login page.");
           router.push("/login");
@@ -60,8 +62,8 @@ const Home = () => {
       const friends = await FriendApi.friendList();
       dispatch(friendListActions.setFriendList(friends));
     } catch (err: any) {
-      if (err.error.statusCode === 400) {
-        alert(err.message);
+      if (err?.error.statusCode === 400) {
+        alert(err.error.message);
       }
     }
   };

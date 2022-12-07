@@ -52,6 +52,25 @@ const findUser = {
   ],
 };
 
+const findUserById = {
+  url: "api/user/find/:id",
+  auth: true,
+  method: "GET",
+  req: {},
+  res: {
+    _id: String,
+    avatar: String,
+    banner: String,
+    name: String,
+    phone: String,
+    gender: String,
+    dob: String,
+    createdAt: String,
+    updatedAt: String,
+    __v: Number,
+  },
+};
+
 const editUserInfo = {
   url: "api/user/update",
   auth: true,
@@ -227,7 +246,7 @@ const getRoomInfo = {
 };
 
 const changeRoomName = {
-  url: "api/room/:id/change-name",
+  url: "api/room/:roomId/change-name",
   auth: true,
   method: "PUT",
   req: {
@@ -239,7 +258,7 @@ const changeRoomName = {
 };
 
 const setNickname = {
-  url: "api/room/:id/nickname",
+  url: "api/room/:roomId/nickname",
   auth: true,
   method: "PUT",
   req: {
@@ -252,7 +271,7 @@ const setNickname = {
 };
 
 const addMember = {
-  url: "api/room/:id/member",
+  url: "api/room/:roomId/member",
   auth: true,
   method: "POST",
   req: {

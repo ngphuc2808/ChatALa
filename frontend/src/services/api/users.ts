@@ -22,6 +22,9 @@ export const UsersApi = {
   userFind: async function (search: any): Promise<any> {
     return await http.post(API_URL.userFind, search);
   },
+  userFindById: async function (id: string): Promise<any> {
+    return await http.get(`${API_URL.userFind}/${id}`);
+  },
   editUserInfo: async function (user: updateUserInfo): Promise<any> {
     return await http.post(API_URL.editUserInfo, user);
   },

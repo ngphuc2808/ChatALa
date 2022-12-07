@@ -25,5 +25,6 @@ export const API_URL = {
   deleteMessage: `${API_BASE}/message`,
   getSignedKey: `${API_BASE}/util/signedKey`,
   createRoom: `${API_BASE}/room`,
+  changeNickname: `${API_BASE}/room`,
   uploadFile: `https://api.cloudinary.com/v1_1`,
 };

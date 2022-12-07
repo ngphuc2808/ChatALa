@@ -82,6 +82,11 @@ export const roomListSlice = createSlice({
       state.list = roomListInitialState;
     },
 
+    changeNickname(state, action) {
+      const index = state.list.findIndex(room => room.roomInfo._id === action.payload.roomId)
+      state.list[index].roomName = action.payload.nickname
+    }
+
     // Special reducer for hydrating the state. Special case for next-redux-wrapper
     // extraReducers: {
     //   // @ts-ignore

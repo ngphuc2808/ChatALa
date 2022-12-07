@@ -55,6 +55,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
         sameSite: "none",
       });
       res.status(200).json({
+        user,
         message: "Login successfully",
       });
     } else {
@@ -189,29 +190,27 @@ const editUserInfo = asyncHandler(async (req, res, next) => {
   const { name, gender, dob } = req.body;
 
   const date = new Date();
-  const userDob = new Date(dob); 
+  const userDob = new Date(dob);
 
-  if(userDob < date) {
+  if (userDob < date) {
     const user = await Users.findByIdAndUpdate(
       id,
-      { $set: { name, gender, dob  } },
+      { $set: { name, gender, dob } },
       {
         new: true,
       }
     );
 
-    await Rooms.find({"users.id": id, "users.nickname": username}).updateMany(
+    await Rooms.find({ "users.id": id, "users.nickname": username }).updateMany(
       { $set: { "users.$.nickname": name } }
     );
-  
+
     res.status(200).json({
       user,
       message: "Update Info Successfully!",
     });
   } else {
-    return next(
-      new ErrorHandler("Please enter correct date of birth!", 404)
-    );
+    return next(new ErrorHandler("Please enter correct date of birth!", 404));
   }
 });
 
@@ -239,7 +238,14 @@ const editAvatar = asyncHandler(async (req, res, next) => {
     user,
     message: "Update Avatar Successfully!",
   });
+});
 
+const findUserById = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+
+  const user = await Users.findById(id);
+
+  res.status(200).json(user);
 });
 
 module.exports = {
@@ -250,5 +256,6 @@ module.exports = {
   getLoggedUser,
   logoutUser,
   editUserInfo,
-  editAvatar
+  editAvatar,
+  findUserById,
 };
