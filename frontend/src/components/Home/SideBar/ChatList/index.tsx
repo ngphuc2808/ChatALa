@@ -61,7 +61,7 @@ const ChatList = () => {
             </React.Fragment>
           ))
         ) : (
-          <i>You don't have any room chat</i>
+          <i>You don&apos;t have any room chat</i>
         )}
       </S.Wrapper>
     </S.ChatList>
