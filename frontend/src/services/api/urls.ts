@@ -21,6 +21,8 @@ export const API_URL = {
   friendAccept: `${API_BASE}/friend/accept`,
   friendDecline: `${API_BASE}/friend/decline`,
   sendMessage: `${API_BASE}/message`,
+  unsendMessage: `${API_BASE}/message`,
+  deleteMessage: `${API_BASE}/message`,
   getSignedKey: `${API_BASE}/util/signedKey`,
   createRoom: `${API_BASE}/room`,
   uploadFile: `https://api.cloudinary.com/v1_1`,

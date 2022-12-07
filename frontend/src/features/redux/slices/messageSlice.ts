@@ -41,6 +41,16 @@ export const messageSlice = createSlice({
       state.list = messageInitialState;
     },
 
+    unsend(state, action) {
+      const index = state.list.findIndex((msg) => msg._id === action.payload);
+      state.list[index].unSend = true;
+    },
+
+    delete(state, action) {
+      const index = state.list.findIndex((msg) => msg._id === action.payload);
+      state.list[index].deleted = true;
+    }
+
     // Special reducer for hydrating the state. Special case for next-redux-wrapper
     // extraReducers: {
     //   // @ts-ignore

@@ -74,7 +74,7 @@ const ChatMsg = ({
 
   return (
     <>
-      {data.senderId === user.info._id ? (
+      {data.senderId === user.info._id && !data.deleted ? (
         <S.ChatMsgRight position={position}>
           <S.ChatMsgWrapper>
             {!data.unSend ? (
@@ -129,7 +129,7 @@ const ChatMsg = ({
             <S.ChatMsgMoreIconWrapper>
               <S.ChatMsgMoreIcon onClick={() => setToggleOption(true)} />
               {toggleOption && (
-                <ChatMsgOption setToggleOption={setToggleOption} />
+                <ChatMsgOption msgId={data._id} setToggleOption={setToggleOption} />
               )}
             </S.ChatMsgMoreIconWrapper>
           )}

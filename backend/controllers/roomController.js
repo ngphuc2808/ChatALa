@@ -89,7 +89,7 @@ const getRoomInfo = asyncHandler(async (req, res, next) => {
   const messages = await Messages.find({
     roomId: roomId,
   })
-    .sort({ updatedAt: -1 })
+    .sort({ createdAt: -1 })
     .limit(50);
 
   let roomAvatar = roomInfo.users[0].avatar;

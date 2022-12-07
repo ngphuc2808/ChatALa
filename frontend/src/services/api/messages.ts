@@ -9,6 +9,12 @@ export const MessageApi = {
   send: async function (message: messageSendType): Promise<any> {
     return await http.post(API_URL.sendMessage, message);
   },
+  unsend: async function (msgId: string): Promise<any> {
+    return await http.put(`${API_URL.unsendMessage}/${msgId}/unsend`);
+  },
+  delete: async function (msgId: string): Promise<any> {
+    return await http.delete(`${API_URL.unsendMessage}/${msgId}/delete`);
+  },
   getSignedKey: async function (public_id?: string): Promise<any> {
     return await http.post(API_URL.getSignedKey, { public_id });
   },
