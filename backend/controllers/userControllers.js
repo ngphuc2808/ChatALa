@@ -56,7 +56,6 @@ const loginUser = asyncHandler(async (req, res, next) => {
       });
       res.status(200).json({
         message: "Login successfully",
-        user,
       });
     } else {
       return next(
@@ -185,32 +184,35 @@ const findUser = asyncHandler(async (req, res, next) => {
 
 const editUserInfo = asyncHandler(async (req, res, next) => {
   const id = req.user._id;
+  const username = req.user.name;
+
   const { name, gender, dob } = req.body;
 
-  const user = await Users.findByIdAndUpdate(
-    id,
-    { $set: { name, gender, dob  } },
-    {
-      new: true,
-    }
-  );
+  const date = new Date();
+  const userDob = new Date(dob); 
 
-  await Rooms.findOneAndUpdate(
-    { "users.uid": id },
-    { $set: { "users.$.nickname": name } },
-    {
-      new: true,
-      upsert: true
-    }
-  );
+  if(userDob < date) {
+    const user = await Users.findByIdAndUpdate(
+      id,
+      { $set: { name, gender, dob  } },
+      {
+        new: true,
+      }
+    );
+
+    await Rooms.find({"users.id": id, "users.nickname": username}).updateMany(
+      { $set: { "users.$.nickname": name } }
+    );
   
-  console.log(id);
-
-  res.status(200).json({
-    user,
-    message: "Update Info Successfully!",
-  });
-
+    res.status(200).json({
+      user,
+      message: "Update Info Successfully!",
+    });
+  } else {
+    return next(
+      new ErrorHandler("Please enter correct date of birth!", 404)
+    );
+  }
 });
 
 const editAvatar = asyncHandler(async (req, res, next) => {

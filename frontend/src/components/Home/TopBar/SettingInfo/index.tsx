@@ -130,7 +130,7 @@ const SettingInfo = ({
           gender: values.gender,
           dob: values.dob
         }
-        const result = await UsersApi.editUserInfo(newValue);
+        const result = await UsersApi.editUserInfo(newValue);        
         alert(result.message);
         updated = true;
       }
@@ -139,7 +139,7 @@ const SettingInfo = ({
         dispatch(userActions.setUserInfo(result));
       }
     } catch(error) {
-      console.log(error);
+      alert(error.message);
     }
   };
 

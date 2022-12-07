@@ -134,11 +134,11 @@ const changeRoomName = asyncHandler(async (req, res, next) => {
 
 const setNickname = asyncHandler(async (req, res, next) => {
   const roomId = req.params.roomId;
-  const { uid, nickName } = req.body;
+  const { uid, nickname } = req.body;
 
   const room = await Rooms.findOneAndUpdate(
     { _id: roomId, "users.uid": uid },
-    { $set: { "users.$.nickName": nickName } },
+    { $set: { "users.$.nickname": nickname } },
     {
       new: true,
     }
@@ -173,7 +173,7 @@ const addMember = asyncHandler(async (req, res, next) => {
           users: {
             uid: uid,
             role: false,
-            nickName: getMember.name,
+            nickname: getMember.name,
             avatar: getMember.avatar,
           },
         },
