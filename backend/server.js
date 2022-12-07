@@ -142,5 +142,3 @@ app.use("/api/util", utilRoutes);
 
 //middleware
 app.use(errorMiddleware); //handle error
-
-module.exports = app;
