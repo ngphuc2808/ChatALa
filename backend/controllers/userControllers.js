@@ -51,8 +51,8 @@ const loginUser = asyncHandler(async (req, res, next) => {
       res.cookie("token", generateJWT(user._id), {
         signed: true,
         httpOnly: true,
-        // secure: true,
-        // sameSite: "none",
+        secure: true,
+        sameSite: "none",
       });
       res.status(200).json({
         message: "Login successfully",
