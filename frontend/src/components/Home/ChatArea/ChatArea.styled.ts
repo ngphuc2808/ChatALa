@@ -93,14 +93,13 @@ export const ChatAreaMainMsgInner = styled.div`
 
 export const ChatAreaMainMsgInnerBottom = styled.div``;
 
-
 export const ChatAreaMainTyping = styled(PulseLoader)`
   ${tw`absolute bg-primary px-1 ml-0.5 py-1 mb-[-10px] rounded-[10px] bottom-[85px] shadow-md z-20`}
 `;
 
 export const ChatAreaMainMsgLoading = styled(ClipLoader)`
-${tw`absolute bottom-[80px] right-[40px]`}
-`
+  ${tw`absolute bottom-[80px] right-[40px]`}
+`;
 
 export const ChatAreaMainScrollBottom = styled(BsChevronCompactDown)`
   ${tw`absolute transition-all text-[25px] rounded-full bottom-[-3px] hover:cursor-pointer hover:bottom-[-5px]`}
@@ -142,7 +141,7 @@ export const ChatAreaMainInputFile = styled.label`
 `;
 
 export const ChatAreaMainInputMsg = styled.div`
-  ${tw`flex flex-grow shadow items-center p-1.5 bg-[#DFE2E2] ml-2.5 rounded-[20px] relative`}
+  ${tw`flex flex-grow shadow items-center p-1.5 bg-[#DFE2E2] ml-2.5 rounded-[20px] relative mr-[60px]`}
 `;
 
 export const ChatAreaMainInputEmoji = styled(BsEmojiLaughingFill)`

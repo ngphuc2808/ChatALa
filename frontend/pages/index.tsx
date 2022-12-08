@@ -13,6 +13,7 @@ import { messageActions } from "../src/features/redux/slices/messageSlice";
 import { friendListActions } from "../src/features/redux/slices/friendListSlice";
 import { FriendApi } from "../src/services/api/friend";
 import { useSocketContext } from "../src/contexts/socket";
+import Script from "next/script";
 
 const Home = () => {
   const router = useRouter();
@@ -81,6 +82,18 @@ const Home = () => {
           <SideBar />
           {roomInfo.info ? <ChatArea /> : <Welcome />}
         </S.Wrapper>
+        <div
+          id="rasa-chat-widget"
+          data-websocket-url="https://rasa-bot-api-xwnzyf6ivq-ue.a.run.app"
+          style={{
+            bottom: "50px",
+            right: "50px",
+          }}
+        ></div>
+        <Script
+          src="https://unpkg.com/@rasahq/rasa-chat"
+          type="application/javascript"
+        ></Script>
       </S.HomeContainer>
     </>
   );

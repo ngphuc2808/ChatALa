@@ -44,3 +44,9 @@ a {
 .epr-search {
   border-radius: 24px !important;
 }
+
+
+#rasa-chat-widget-container {
+  bottom: 35px;
+  right: 35px;
+}
