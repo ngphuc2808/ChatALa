@@ -152,7 +152,7 @@ const ChatMsg = ({
             <S.ChatMsgWrapper>
               {!data.unSend && data.files.length === 0 && <S.ChatMsgTextTail />}
               {data.unSend ? (
-                <S.ChatMsgUnSend>Message has been recovered</S.ChatMsgUnSend>
+                <S.ChatMsgUnSend>Message has been unsend</S.ChatMsgUnSend>
               ) : (
                 <>
                   {data.msg !== "" && <S.ChatMsgText>{data.msg}</S.ChatMsgText>}
