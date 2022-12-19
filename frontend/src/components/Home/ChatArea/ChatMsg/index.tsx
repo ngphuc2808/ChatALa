@@ -124,7 +124,7 @@ const ChatMsg = ({
                   </S.ChatMsgSenderName>
                 </>
               ) : (
-                <S.ChatMsgUnSend>Message has been unsent</S.ChatMsgUnSend>
+                <S.ChatMsgUnSend>Message has been unsend</S.ChatMsgUnSend>
               )}
             </S.ChatMsgWrapper>
             {!data.unSend && (
