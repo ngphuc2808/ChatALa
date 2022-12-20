@@ -5,7 +5,7 @@ export const ChangePassword = styled.div`
   ${tw`px-[30px] py-5`}
 `;
 
-export const Form = styled.div`
+export const Form = styled.form`
   ${tw`flex flex-col`}
 `;
 
@@ -14,11 +14,11 @@ export const Title = styled.p`
 `;
 
 export const Input = styled.input`
-  ${tw`outline-none text-base px-[10px] py-[5px] w-full text-gray-500 relative z-10 bg-transparent`}
+  ${tw`border-b-[1px] border-b-darker outline-none text-base px-[10px] py-[5px] w-full text-gray-500 relative z-10 bg-transparent`}
 `;
 
 export const InputWrap = styled.div`
-  ${tw`border-b-[1px] border-b-darker inline-block w-[80%] mb-5 relative ml-[10px]`}
+  ${tw`inline-block w-[80%] mb-5 relative ml-[10px]`}
 `;
 
 export const Label = styled.label<{ active: boolean }>`
@@ -27,7 +27,7 @@ export const Label = styled.label<{ active: boolean }>`
 `;
 
 export const ErrorMsg = styled.div`
-  ${tw``}
+  ${tw`text-xs text-red-500 text-right mt-2`}
 `;
 
 export const Button = styled.button`

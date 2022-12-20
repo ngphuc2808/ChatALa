@@ -34,14 +34,24 @@ const userSchema = mongoose.Schema(
 );
 
 userSchema.methods.matchPassword = async function (password) {
-  const user = await Users.findOne({phone: this.phone}).select("password")
+  const user = await Users.findOne({ phone: this.phone }).select("password");
   return bcrypt.compareSync(password, user.password);
 };
 
 userSchema.pre("save", async function (next) {
-  if (!this.isModified) next();
+  if (!this.isModified) return next();
 
   this.password = await bcrypt.hashSync(this.password);
+});
+
+userSchema.pre("findOneAndUpdate", async function (next) {
+  console.log("sweet");
+  const password = this.getUpdate().$set.password;
+  if (!password) return next();
+
+  this.getUpdate().$set.password = await bcrypt.hashSync(
+    this.getUpdate().$set.password
+  );
 });
 
 const Users = mongoose.model("Users", userSchema, COLLECTION_USERS);

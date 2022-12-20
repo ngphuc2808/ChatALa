@@ -2,92 +2,116 @@ import { ErrorMessage, Formik } from "formik";
 import { useState } from "react";
 import * as Yup from "yup";
 import * as S from "./ChangePassword.styled";
+import { useFormik } from "formik";
+import { UsersApi } from "../../../../../services/api/users";
 
 const validationSchema = Yup.object().shape({
-  newPassword: Yup.string()
+  oldPassword: Yup.string().required("This field is required."),
+  password: Yup.string()
     .required("This field is required.")
     .matches(
+      //fail special signature validation
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
       "Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number."
     ),
-  confirmPassword: Yup.string()
-    .required("This field is required.")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-      "Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number."
-    ),
+  confirmPassword: Yup.string().oneOf(
+    [Yup.ref("password"), null],
+    "Passwords must match"
+  ),
 });
 
 const ChangePassword = () => {
-  const initialValues = {
-    newPassword: "",
-    confirmPassword: "",
-  };
+  const formik = useFormik({
+    initialValues: {
+      oldPassword: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      try {
+        const res = await UsersApi.changePassword(
+          values.oldPassword,
+          values.password
+        );
+        alert(res.message);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  });
 
   const [focus, setFocus] = useState("");
-  const [input, setInput] = useState({
-    newPassword: "",
-    confirmPassword: "",
-  });
 
   return (
     <S.ChangePassword>
       <S.Title>Change Password</S.Title>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={(data) => {
-          console.log("submits: ", data);
-        }}
-        enableReinitialize
-      >
-        <S.Form>
-          <S.InputWrap>
-            <S.Input
-              name="newPassword"
-              onFocus={(e) => setFocus(e.target.name)}
-              onInput={(e) =>
-                setInput({
-                  ...input,
-                  [e.currentTarget.name]: e.currentTarget.value,
-                })
-              }
-              onBlur={(e) => setFocus("")}
-            />
-            <ErrorMessage name="newPassword" component={S.ErrorMsg} />
-            <S.Label
-              htmlFor="newPassword"
-              active={focus === "newPassword" || input.newPassword !== ""}
-            >
-              New Password
-            </S.Label>
-          </S.InputWrap>
-          <S.InputWrap>
-            <S.Input
-              type="password"
-              name="confirmPassword"
-              onFocus={(e) => setFocus(e.target.name)}
-              onInput={(e) =>
-                setInput({
-                  ...input,
-                  [e.currentTarget.name]: e.currentTarget.value,
-                })
-              }
-              onBlur={() => setFocus("")}
-            />
-            <ErrorMessage name="confirmPassword" component={S.ErrorMsg} />
-            <S.Label
-              htmlFor="confirmPassword"
-              active={focus === "confirmPassword" || input.confirmPassword !== ""}
-            >
-              Confirm Password
-            </S.Label>
-          </S.InputWrap>
-          <S.ButtonWrap>
-            <S.Button>Update</S.Button>
-          </S.ButtonWrap>
-        </S.Form>
-      </Formik>
+
+      <S.Form onSubmit={formik.handleSubmit}>
+        <S.InputWrap>
+          <S.Input
+            type="password"
+            name="oldPassword"
+            onFocus={(e) => setFocus(e.target.name)}
+            value={formik.values.oldPassword}
+            onChange={formik.handleChange}
+            onBlur={(e) => setFocus("")}
+          />
+          <S.Label
+            htmlFor="oldPassword"
+            active={focus === "oldPassword" || formik.values.oldPassword !== ""}
+          >
+            Old Password
+          </S.Label>
+          {formik.errors.oldPassword && formik.touched.oldPassword && (
+            <S.ErrorMsg>{formik.errors.oldPassword}</S.ErrorMsg>
+          )}
+        </S.InputWrap>
+        <S.InputWrap>
+          <S.Input
+            type="password"
+            name="password"
+            onFocus={(e) => setFocus(e.target.name)}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={(e) => setFocus("")}
+          />
+          <S.Label
+            htmlFor="password"
+            active={focus === "password" || formik.values.password !== ""}
+          >
+            New Password
+          </S.Label>
+          {formik.errors.password && formik.touched.password && (
+            <S.ErrorMsg>{formik.errors.password}</S.ErrorMsg>
+          )}
+        </S.InputWrap>
+        <S.InputWrap>
+          <S.Input
+            type="password"
+            name="confirmPassword"
+            onFocus={(e) => setFocus(e.target.name)}
+            value={formik.values.confirmPassword}
+            onChange={formik.handleChange}
+            onBlur={() => setFocus("")}
+          />
+          <S.Label
+            htmlFor="confirmPassword"
+            active={
+              focus === "confirmPassword" ||
+              formik.values.confirmPassword !== ""
+            }
+          >
+            Confirm Password
+          </S.Label>
+          {formik.errors.confirmPassword && formik.touched.confirmPassword && (
+            <S.ErrorMsg>{formik.errors.confirmPassword}</S.ErrorMsg>
+          )}
+        </S.InputWrap>
+        <S.ButtonWrap>
+          <S.Button type="submit">Update</S.Button>
+        </S.ButtonWrap>
+      </S.Form>
     </S.ChangePassword>
   );
 };

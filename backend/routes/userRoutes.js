@@ -9,7 +9,8 @@ const {
   logoutUser,
   editUserInfo,
   editAvatar,
-  findUserById
+  findUserById,
+  changePassword,
 } = require("../controllers/userControllers");
 
 const router = express.Router();
@@ -23,5 +24,6 @@ router.route("/find/:id").get(authMiddleware, findUserById);
 router.route("/logout").get(authMiddleware, logoutUser);
 router.route("/update").post(authMiddleware, editUserInfo);
 router.route("/update/avatar").post(authMiddleware, editAvatar);
+router.route("/update/password").post(authMiddleware, changePassword);
 
 module.exports = router;

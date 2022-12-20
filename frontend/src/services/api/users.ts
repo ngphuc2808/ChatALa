@@ -31,6 +31,15 @@ export const UsersApi = {
   editAvatar: async function (avatar: string): Promise<any> {
     return await http.post(API_URL.editAvatar, { avatar });
   },
+  changePassword: async function (
+    oldPassword: string,
+    newPassword: string
+  ): Promise<any> {
+    return await http.post(API_URL.changePassword, {
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+    });
+  },
   //   list: async function (params?: any): Promise<any> {
   //     return await http.get(API_URL.login, { params: params })
   //   },

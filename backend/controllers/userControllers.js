@@ -248,6 +248,33 @@ const findUserById = asyncHandler(async (req, res, next) => {
   res.status(200).json(user);
 });
 
+const changePassword = asyncHandler(async (req, res, next) => {
+  const id = req.user._id;
+  const { oldPassword, newPassword } = req.body;
+
+  const user = await Users.findOne({ _id: id });
+
+  if (user) {
+    if (await user.matchPassword(oldPassword)) {
+      const result = await Users.findOneAndUpdate(
+        { _id: id },
+        {
+          $set: {
+            password: newPassword,
+          },
+        },
+        { new: true }
+      );
+      console.log(result);
+      res.status(200).json({
+        message: "Update Password Successfully!",
+      });
+    } else {
+      res.status(500).json({ error: "Wrong password enter" });
+    }
+  }
+});
+
 module.exports = {
   checkUser,
   registerUser,
@@ -258,4 +285,5 @@ module.exports = {
   editUserInfo,
   editAvatar,
   findUserById,
+  changePassword,
 };
