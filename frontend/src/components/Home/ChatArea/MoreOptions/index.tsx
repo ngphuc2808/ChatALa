@@ -10,6 +10,7 @@ import UserInfo from "../../TopBar/UserInfo";
 import { selectUserState } from "../../../../features/redux/slices/userSlice";
 import { useSelector } from "react-redux";
 import { UsersApi } from "../../../../services/api/users";
+import GroupMembers from "./GroupMembers";
 
 interface IMoreOptions {
   setToggleOption: (toggle: boolean) => void;
@@ -31,9 +32,15 @@ const MoreOptions = ({
   const [mediaExtend, setMediaExtend] = useState(false);
   const [toggleNickname, setToggleNickname] = useState(false);
   const [toggleFriendProfile, setToggleFriendProfile] = useState(false);
+  const [toggleGroupMembers, setToggleGroupMembers] = useState(false);
   const [friendProfile, setFriendProfile] = useState<userInfo>();
 
   const user = useSelector(selectUserState);
+
+  // in case change nickname event happend
+  const userNeedChange = roomInfo.roomInfo.users.find(
+    (it) => it.uid !== user.info._id
+  );
 
   const seeFriendProfile = async () => {
     const friend = roomInfo.roomInfo.users.find(
@@ -76,7 +83,9 @@ const MoreOptions = ({
             </S.NormalItem>
           )}
           {roomInfo.roomInfo.isGroup && (
-            <S.NormalItem>Group Members</S.NormalItem>
+            <S.NormalItem onClick={() => setToggleGroupMembers(true)}>
+              Group Members
+            </S.NormalItem>
           )}
           {!roomInfo.roomInfo.isGroup && <S.DeleteItem>Block</S.DeleteItem>}
           <S.DeleteItem>Delete this chat</S.DeleteItem>
@@ -129,6 +138,7 @@ const MoreOptions = ({
         <NicknameModal
           setToggleNickname={setToggleNickname}
           roomInfo={roomInfo}
+          userNeedChange={userNeedChange}
         />
       )}
       {toggleFriendProfile && (
@@ -136,6 +146,9 @@ const MoreOptions = ({
           friendProfile={friendProfile}
           setUserInfoModal={setToggleFriendProfile}
         />
+      )}
+      {toggleGroupMembers && (
+        <GroupMembers setToggleGroupMembers={setToggleGroupMembers} />
       )}
     </S.MoreOptions>
   );
