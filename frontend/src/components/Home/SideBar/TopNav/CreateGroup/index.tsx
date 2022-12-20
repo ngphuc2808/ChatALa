@@ -107,11 +107,8 @@ const CreateGroup = ({ setToggleCreateGroup }: ICreateGroup) => {
         )}
         <S.GreateGroupList>
           {friends.list.map((data, index) => (
-            <S.CreateGroupItem
-              key={index}
-              onClick={() => showFriendProfile(data)}
-            >
-              <S.CreateGroupInfo>
+            <S.CreateGroupItem key={index}>
+              <S.CreateGroupInfo onClick={() => showFriendProfile(data)}>
                 <S.CreateGroupAvatar>
                   <Image
                     src={data.avatar}

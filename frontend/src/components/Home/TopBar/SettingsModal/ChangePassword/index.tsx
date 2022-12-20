@@ -1,33 +1,33 @@
-import { ErrorMessage, Formik } from 'formik';
-import { useState } from 'react';
-import * as Yup from 'yup';
-import * as S from './ChangePassword.styled';
+import { ErrorMessage, Formik } from "formik";
+import { useState } from "react";
+import * as Yup from "yup";
+import * as S from "./ChangePassword.styled";
 
 const validationSchema = Yup.object().shape({
-  password: Yup.string()
-    .required('This field is required.')
+  newPassword: Yup.string()
+    .required("This field is required.")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-      'Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number.'
+      "Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number."
     ),
-  passwordConfirm: Yup.string()
-    .required('This field is required.')
+  confirmPassword: Yup.string()
+    .required("This field is required.")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-      'Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number.'
+      "Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number."
     ),
 });
 
 const ChangePassword = () => {
   const initialValues = {
-    phoneNumber: '',
-    password: '',
+    newPassword: "",
+    confirmPassword: "",
   };
 
-  const [focus, setFocus] = useState('');
+  const [focus, setFocus] = useState("");
   const [input, setInput] = useState({
-    phoneNumber: '',
-    password: '',
+    newPassword: "",
+    confirmPassword: "",
   });
 
   return (
@@ -37,13 +37,14 @@ const ChangePassword = () => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={(data) => {
-          console.log('submits: ', data);
+          console.log("submits: ", data);
         }}
+        enableReinitialize
       >
         <S.Form>
           <S.InputWrap>
             <S.Input
-              name='phoneNumber'
+              name="newPassword"
               onFocus={(e) => setFocus(e.target.name)}
               onInput={(e) =>
                 setInput({
@@ -51,20 +52,20 @@ const ChangePassword = () => {
                   [e.currentTarget.name]: e.currentTarget.value,
                 })
               }
-              onBlur={(e) => setFocus('')}
+              onBlur={(e) => setFocus("")}
             />
-            <ErrorMessage name='phoneNumber' component={S.ErrorMsg} />
+            <ErrorMessage name="newPassword" component={S.ErrorMsg} />
             <S.Label
-              htmlFor='phoneNumber'
-              active={focus === 'phoneNumber' || input.phoneNumber !== ''}
+              htmlFor="newPassword"
+              active={focus === "newPassword" || input.newPassword !== ""}
             >
-              Phone number
+              New Password
             </S.Label>
           </S.InputWrap>
           <S.InputWrap>
             <S.Input
-              type='password'
-              name='password'
+              type="password"
+              name="confirmPassword"
               onFocus={(e) => setFocus(e.target.name)}
               onInput={(e) =>
                 setInput({
@@ -72,14 +73,14 @@ const ChangePassword = () => {
                   [e.currentTarget.name]: e.currentTarget.value,
                 })
               }
-              onBlur={() => setFocus('')}
+              onBlur={() => setFocus("")}
             />
-            <ErrorMessage name='password' component={S.ErrorMsg} />
+            <ErrorMessage name="confirmPassword" component={S.ErrorMsg} />
             <S.Label
-              htmlFor='password'
-              active={focus === 'password' || input.password !== ''}
+              htmlFor="confirmPassword"
+              active={focus === "confirmPassword" || input.confirmPassword !== ""}
             >
-              Password
+              Confirm Password
             </S.Label>
           </S.InputWrap>
           <S.ButtonWrap>
