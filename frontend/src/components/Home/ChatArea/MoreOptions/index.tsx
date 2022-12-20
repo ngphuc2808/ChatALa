@@ -47,9 +47,13 @@ const MoreOptions = ({
   return (
     <S.MoreOptions ref={moreOptionsRef} toggleOption={toggleOption}>
       <S.RoomInfo>
-        <S.RoomInfoAvatar>
-          <Image src={roomInfo.roomAvatar} alt="avatar" layout="fill" />
-        </S.RoomInfoAvatar>
+        {roomInfo.roomInfo.isGroup ? (
+          <S.RoomInfoGroupAvatar />
+        ) : (
+          <S.RoomInfoAvatar>
+            <Image src={roomInfo.roomAvatar} alt="avatar" layout="fill" />
+          </S.RoomInfoAvatar>
+        )}
         <S.RoomInfoNameWrap>
           <S.RoomInfoName>
             {roomInfo.roomInfo.isGroup

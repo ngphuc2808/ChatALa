@@ -2,6 +2,7 @@ import styled, { keyframes } from 'styled-components';
 import tw from 'twin.macro';
 import { merge, zoomIn, slideInRight, slideInDown } from 'react-animations';
 import { AiOutlineEdit } from 'react-icons/ai';
+import { HiUserGroup } from 'react-icons/hi';
 
 const cbAnimate1 = merge(slideInRight, slideInDown);
 const MoreOptionAnimate = keyframes`${slideInRight}`;
@@ -22,6 +23,10 @@ export const RoomInfoTitle = styled.div`
 
 export const RoomInfoAvatar = styled.figure`
   ${tw`relative w-[60px] h-[60px] rounded-full overflow-hidden mt-4 mb-2 border-2 border-darker`}
+`;
+
+export const RoomInfoGroupAvatar = styled(HiUserGroup)`
+  ${tw`text-gray-600 text-[60px] mt-4 mb-2 rounded-full`}
 `;
 
 export const RoomInfoNameWrap = styled.div`
