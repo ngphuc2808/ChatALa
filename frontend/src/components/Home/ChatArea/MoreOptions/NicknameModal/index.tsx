@@ -7,23 +7,23 @@ import {
 import { roomListActions } from "../../../../../features/redux/slices/roomListSlice";
 import { selectUserState } from "../../../../../features/redux/slices/userSlice";
 import { RoomApi } from "../../../../../services/api/room";
-import { roomInfo } from "../../../../../utils/types";
+import { roomInfo, roomUser } from "../../../../../utils/types";
 import * as S from "./NicknameModal.styled";
 
 interface INickname {
   setToggleNickname: (toggle: boolean) => void;
   roomInfo: roomInfo;
+  userNeedChange: roomUser;
 }
 
-const NicknameModal = ({ setToggleNickname, roomInfo }: INickname) => {
+const NicknameModal = ({
+  setToggleNickname,
+  roomInfo,
+  userNeedChange,
+}: INickname) => {
   const input = useRef<HTMLInputElement>();
 
-  const user = useSelector(selectUserState);
   const dispatch = useDispatch();
-
-  const userNeedChange = roomInfo.roomInfo.users.find(
-    (it) => it.uid !== user.info._id
-  );
 
   const saveNickname = async () => {
     try {
@@ -38,12 +38,13 @@ const NicknameModal = ({ setToggleNickname, roomInfo }: INickname) => {
           nickname: input.current.value,
         })
       );
-      dispatch(
-        roomListActions.changeNickname({
-          roomId: roomInfo.roomInfo._id,
-          nickname: input.current.value,
-        })
-      );
+      !roomInfo.roomInfo.isGroup &&
+        dispatch(
+          roomListActions.changeNickname({
+            roomId: roomInfo.roomInfo._id,
+            nickname: input.current.value,
+          })
+        );
       setToggleNickname(false);
     } catch (err) {
       console.log(err);
@@ -55,7 +56,9 @@ const NicknameModal = ({ setToggleNickname, roomInfo }: INickname) => {
     <S.NicknameModal>
       <S.NicknameOverlay onClick={() => setToggleNickname(false)} />
       <S.NicknameBody>
-        <S.NicknameTitle>Change nickname for {roomInfo.roomName}</S.NicknameTitle>
+        <S.NicknameTitle>
+          Change nickname for {roomInfo.roomName}
+        </S.NicknameTitle>
         <S.NicknameInput maxLength={50} ref={input} />
         <S.NicknameSave onClick={saveNickname}>Save</S.NicknameSave>
       </S.NicknameBody>
