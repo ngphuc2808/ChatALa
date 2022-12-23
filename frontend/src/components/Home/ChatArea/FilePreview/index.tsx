@@ -1,10 +1,6 @@
-import Image from 'next/image';
-import * as S from './FilePreview.styled';
-import {
-  getFileIcon,
-  shorterChars,
-  validImageTypes,
-} from '../../../Global/ProcessFunctions';
+import Image from "next/image";
+import * as S from "./FilePreview.styled";
+import { getFileIcon, validImageTypes } from "../../../Global/ProcessFunctions";
 
 interface IFilePreview {
   files: Array<File>;
@@ -15,7 +11,7 @@ interface IFilePreview {
 const FilePreview = ({ files, index, setFieldValue }: IFilePreview) => {
   const removeFile = () => {
     files.splice(index, 1);
-    setFieldValue('files', files);
+    setFieldValue("files", files);
   };
 
   return validImageTypes.includes(files[index].type) ? (
@@ -23,9 +19,9 @@ const FilePreview = ({ files, index, setFieldValue }: IFilePreview) => {
       <S.FilePreviewImageFigure>
         <Image
           src={URL.createObjectURL(files[index])}
-          alt='imagePreview'
-          objectFit='cover'
-          layout='fill'
+          alt="imagePreview"
+          objectFit="cover"
+          layout="fill"
         />
       </S.FilePreviewImageFigure>
       <S.FilePreviewRemove onClick={removeFile} />
@@ -33,9 +29,7 @@ const FilePreview = ({ files, index, setFieldValue }: IFilePreview) => {
   ) : (
     <S.FilePreview>
       <S.FilePreviewIcon>{getFileIcon(files[index])}</S.FilePreviewIcon>
-      <S.FilePreviewName>
-        {shorterChars(files[index].name, 25)}
-      </S.FilePreviewName>
+      <S.FilePreviewName>{files[index].name}</S.FilePreviewName>
       <S.FilePreviewRemove onClick={removeFile} />
     </S.FilePreview>
   );

@@ -11,7 +11,7 @@ export const FilePreviewIcon = styled.div`
 `;
 
 export const FilePreviewName = styled.div`
-  ${tw`ml-1.5 w-[120px] text-[16px] font-semibold text-darker`}
+  ${tw`ml-1.5 w-[120px] text-[16px] font-semibold text-darker whitespace-nowrap overflow-ellipsis overflow-hidden`}
 `;
 
 export const FilePreviewImage = styled.div`

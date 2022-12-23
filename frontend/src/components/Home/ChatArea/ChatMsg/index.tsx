@@ -7,7 +7,6 @@ import { messageType } from "../../../../utils/types";
 import {
   formatDate,
   getFileIcon,
-  shorterChars,
 } from "../../../Global/ProcessFunctions";
 import * as S from "./ChatMsg.styled";
 import ChatMsgOption from "./ChatMsgOption";
@@ -112,7 +111,7 @@ const ChatMsg = ({
                                 {getFileIcon(file)}
                               </S.ChatMsgFileIcon>
                               <S.ChatMsgFileName>
-                                {shorterChars(file.name, 25)}
+                                {file.name}
                               </S.ChatMsgFileName>
                             </S.ChatMsgFile>
                           )
@@ -184,7 +183,7 @@ const ChatMsg = ({
                                 {getFileIcon(file)}
                               </S.ChatMsgFileIcon>
                               <S.ChatMsgFileName>
-                                {shorterChars(file.name, 25)}
+                                {file.name}
                               </S.ChatMsgFileName>
                             </S.ChatMsgFile>
                           )
