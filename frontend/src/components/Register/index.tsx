@@ -38,6 +38,9 @@ const Register = () => {
   };
 
   const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .required("This field is required."),
+
     phone: Yup.string()
       .required("This field is required.")
       .matches(
@@ -92,7 +95,8 @@ const Register = () => {
         }
       });
     } catch (err: any) {
-      if (err.statusCode === 400) {
+      console.log(err);
+      if (err.error.statusCode === 400) {
         alert("Registration failed, Phone number already exists!");
       }
     }

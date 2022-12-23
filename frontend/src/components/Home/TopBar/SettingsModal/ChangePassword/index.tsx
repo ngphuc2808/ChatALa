@@ -11,13 +11,12 @@ const validationSchema = Yup.object().shape({
     .required("This field is required.")
     .matches(
       //fail special signature validation
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+      /^(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{8,}$/,
       "Password minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter and 1 number."
     ),
-  confirmPassword: Yup.string().oneOf(
-    [Yup.ref("password"), null],
-    "Passwords must match"
-  ),
+  confirmPassword: Yup.string()
+    .required("This field is required.")
+    .oneOf([Yup.ref("password"), null], "Passwords must match"),
 });
 
 const ChangePassword = () => {
@@ -36,7 +35,7 @@ const ChangePassword = () => {
         );
         alert(res.message);
       } catch (err) {
-        console.log(err);
+        alert(err.error);
       }
     },
   });

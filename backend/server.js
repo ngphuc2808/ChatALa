@@ -100,7 +100,9 @@ io.on("connection", (socket) => {
     const receiveUser = users.find(
       (user) => user.uid.toString() === receiveId.toString()
     );
-    socket.to(receiveUser.socketId).emit("receiveNoti");
+    if (receiveUser) {
+      socket.to(receiveUser.socketId).emit("receiveNoti");
+    }
   });
 
   socket.on("new room", (receiveId) => {
