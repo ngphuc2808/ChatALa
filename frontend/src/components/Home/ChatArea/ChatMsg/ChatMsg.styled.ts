@@ -69,7 +69,7 @@ export const ChatMsgFileIcon = styled.div`
 `;
 
 export const ChatMsgFileName = styled.div`
-  ${tw`ml-1.5 overflow-hidden text-[16px] font-semibold text-darker`}
+  ${tw`ml-1.5 overflow-hidden text-[16px] font-semibold text-darker whitespace-nowrap overflow-ellipsis`}
 `;
 
 export const ChatMsgFile = styled.a`
