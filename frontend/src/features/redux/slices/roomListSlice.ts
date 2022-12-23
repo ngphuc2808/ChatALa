@@ -44,25 +44,26 @@ export const roomListSlice = createSlice({
       const activeUser: Array<{ socketId: string; uid: string }> =
         action.payload.users;
       const loggedUid = action.payload.loggedUid;
-
-      state.list.forEach((room, index) => {
-        if (!room.roomInfo.isGroup) {
-          if (
-            activeUser.some(
-              (user) =>
-                user.uid === room.roomInfo.users[0].uid &&
-                user.uid !== loggedUid
-            ) ||
-            activeUser.some(
-              (user) =>
-                user.uid === room.roomInfo.users[1].uid &&
-                user.uid !== loggedUid
+      if (loggedUid !== "") {
+        state.list.forEach((room, index) => {
+          if (!room.roomInfo.isGroup) {
+            if (
+              activeUser.some(
+                (user) =>
+                  user.uid === room.roomInfo.users[0].uid &&
+                  user.uid !== loggedUid
+              ) ||
+              activeUser.some(
+                (user) =>
+                  user.uid === room.roomInfo.users[1].uid &&
+                  user.uid !== loggedUid
+              )
             )
-          )
-            state.activeList[index] = 1;
-          else state.activeList[index] = 0;
-        }
-      });
+              state.activeList[index] = 1;
+            else state.activeList[index] = 0;
+          }
+        });
+      }
     },
 
     setNewLastMsg(state, action) {
@@ -83,9 +84,11 @@ export const roomListSlice = createSlice({
     },
 
     changeNickname(state, action) {
-      const index = state.list.findIndex(room => room.roomInfo._id === action.payload.roomId)
-      state.list[index].roomName = action.payload.nickname
-    }
+      const index = state.list.findIndex(
+        (room) => room.roomInfo._id === action.payload.roomId
+      );
+      state.list[index].roomName = action.payload.nickname;
+    },
 
     // Special reducer for hydrating the state. Special case for next-redux-wrapper
     // extraReducers: {
