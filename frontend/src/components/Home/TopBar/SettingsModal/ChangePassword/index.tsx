@@ -36,7 +36,7 @@ const ChangePassword = () => {
         );
         alert(res.message);
       } catch (err) {
-        console.log(err);
+        alert(err.error);
       }
     },
   });
