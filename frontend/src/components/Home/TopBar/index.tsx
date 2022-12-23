@@ -98,16 +98,17 @@ const TopBar = () => {
 
   useEffect(() => {
     let t: any;
-    if (!action) {
-      t = setTimeout(() => {
-        getSearchResult();
-      }, 500);
-    } else {
+    t = setTimeout(() => {
+      getSearchResult();
+    }, 500);
+    return () => clearTimeout(t);
+  }, [searchInput]);
+  useEffect(() => {
+    if (action) {
       getSearchResult();
       setAction(false);
     }
-    return () => clearTimeout(t);
-  }, [searchInput, action]);
+  }, [action]);
 
   return (
     <S.Container>
