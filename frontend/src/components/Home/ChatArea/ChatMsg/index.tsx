@@ -107,7 +107,12 @@ const ChatMsg = ({
                       {data.files.map(
                         (file, index) =>
                           file.type === "file" && (
-                            <S.ChatMsgFile key={index}>
+                            <S.ChatMsgFile
+                              key={index}
+                              href={file.url}
+                              target="_blank"
+                              download
+                            >
                               <S.ChatMsgFileIcon>
                                 {getFileIcon(file)}
                               </S.ChatMsgFileIcon>
@@ -179,7 +184,12 @@ const ChatMsg = ({
                       {data.files.map(
                         (file, index) =>
                           file.type === "file" && (
-                            <S.ChatMsgFile key={index}>
+                            <S.ChatMsgFile
+                              key={index}
+                              href={file.url}
+                              target="_blank"
+                              download
+                            >
                               <S.ChatMsgFileIcon>
                                 {getFileIcon(file)}
                               </S.ChatMsgFileIcon>

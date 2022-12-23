@@ -72,7 +72,7 @@ export const ChatMsgFileName = styled.div`
   ${tw`ml-1.5 overflow-hidden text-[16px] font-semibold text-darker`}
 `;
 
-export const ChatMsgFile = styled.div`
+export const ChatMsgFile = styled.a`
   ${tw`relative flex items-center mt-1 mx-2 h-[50px] pl-1.5 pr-3.5 py-1 bg-primary rounded-[10px] shadow-md`}
 `;
 
