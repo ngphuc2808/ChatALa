@@ -69,7 +69,7 @@ export const roomListSlice = createSlice({
     setNewLastMsg(state, action) {
       const message = action.payload;
       const roomIndex = state.list.findIndex(
-        (room) => room.roomInfo._id === message.roomId
+        (room) => room.roomInfo._id.toString() === message.roomId.toString()
       );
 
       state.list[roomIndex].roomInfo.lastMsg =

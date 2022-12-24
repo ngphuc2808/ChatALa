@@ -159,10 +159,7 @@ const ChatArea = () => {
   };
 
   //Message
-  const skipDeletedMessage = (
-    index: number,
-    plus: boolean
-  ) => {
+  const skipDeletedMessage = (index: number, plus: boolean) => {
     const list = messages.list;
 
     let i = 1;
@@ -183,17 +180,20 @@ const ChatArea = () => {
     const list = messages.list;
 
     if (
-      data.senderId !== list[index + skipDeletedMessage(index, true)]?.senderId &&
+      data.senderId !==
+        list[index + skipDeletedMessage(index, true)]?.senderId &&
       data.senderId === list[index - skipDeletedMessage(index, false)]?.senderId
     )
       return "top";
     else if (
-      data.senderId === list[index - skipDeletedMessage(index, false)]?.senderId &&
+      data.senderId ===
+        list[index - skipDeletedMessage(index, false)]?.senderId &&
       data.senderId === list[index + skipDeletedMessage(index, true)]?.senderId
     )
       return "middle";
     else if (
-      data.senderId !== list[index - skipDeletedMessage(index, false)]?.senderId &&
+      data.senderId !==
+        list[index - skipDeletedMessage(index, false)]?.senderId &&
       data.senderId !== list[index + skipDeletedMessage(index, true)]?.senderId
     )
       return "alone";
@@ -301,6 +301,7 @@ const ChatArea = () => {
         dispatch(messageActions.newMessage(res.result));
         chatInput.current!.innerText = "";
         setFieldValue("files", []);
+        scrollToNewMsg();
       } catch (err) {
         console.log(err);
       }
