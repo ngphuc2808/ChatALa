@@ -276,7 +276,7 @@ const ChatArea = () => {
   const uploadFiles = async (files: File[]) => {
     const signedKey = await MessageApi.getSignedKey();
 
-    const uploadedFiles = [];
+    let uploadedFiles = [];
 
     // This for loop won't run if no files are selected
     for (let i = 0; i < files.length; i++) {
